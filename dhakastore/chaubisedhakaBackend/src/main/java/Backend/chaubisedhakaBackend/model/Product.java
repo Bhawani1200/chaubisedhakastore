@@ -11,13 +11,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Product {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer productId;
     private String productName;
+    private String image;
     private String description;
     private Integer quantity;
     private double price;
+    private double discount;
     private double specialPrice;
 
 
