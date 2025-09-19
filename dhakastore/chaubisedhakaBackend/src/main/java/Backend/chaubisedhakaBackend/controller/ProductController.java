@@ -29,4 +29,24 @@ public class ProductController {
         ProductResponse productResponse=productService.getAllProducts();
         return new ResponseEntity<>(productResponse,HttpStatus.OK);
     }
+
+    @GetMapping("/public/categories/{categoryId}/products")
+    public ResponseEntity<ProductResponse>getProductsByCategory(@PathVariable Long categoryId){
+        ProductResponse productResponse=productService.searchCategoryById(categoryId);
+        return new ResponseEntity<>(productResponse,HttpStatus.OK);
+    }
+
+    @GetMapping("/public/products/keyword/{keyword}")
+    public ResponseEntity<ProductResponse>getProductsByKeyword(@PathVariable String keyword){
+        ProductResponse productResponse=productService.searchProductByKeyword(keyword);
+        return new ResponseEntity<>(productResponse,HttpStatus.FOUND);
+    }
+
+    @PutMapping("/admin/products/{productId}")
+    public ResponseEntity<ProductDTO>updateProduct(@RequestBody Product product,
+                                                         @PathVariable Long productId){
+        ProductDTO productResponse=productService.updateProduct(productId,product);
+        return  new ResponseEntity<>(productResponse,HttpStatus.OK);
+
+    }
 }

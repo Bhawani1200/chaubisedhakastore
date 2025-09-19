@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -48,5 +47,44 @@ public class ProductServiceImpl implements ProductService{
         ProductResponse productResponse=new ProductResponse();
         productResponse.setContent(productDTOS);
         return productResponse;
+    }
+
+    @Override
+    public ProductResponse searchCategoryById(Long categoryId) {
+        Category category=categoryRepository.findById(categoryId)
+                .orElseThrow(()->new ResourceNotFoundException("Category","categoryId",categoryId));
+        List<Product>products=productRepository.findByCategoryOrderByPriceAsc(category);
+        List<ProductDTO>productDTOS=products.stream()
+                .map(product->modelMapper.map(product,ProductDTO.class))
+                .toList();
+        ProductResponse productResponse=new ProductResponse();
+        productResponse.setContent(productDTOS);
+        return productResponse;
+    }
+
+    @Override
+    public ProductResponse searchProductByKeyword(String keyword) {
+        List<Product>products=productRepository.findByProductNameLikeIgnoreCase('%' + keyword + '%');
+        List<ProductDTO>productDTOS=products.stream()
+                .map(product->modelMapper.map(product,ProductDTO.class))
+                .toList();
+        ProductResponse productResponse=new ProductResponse();
+        productResponse.setContent(productDTOS);
+        return productResponse;
+    }
+
+    @Override
+    public ProductDTO updateProduct(Long productId, Product product) {
+        Product productFromDB=productRepository.findById(productId)
+                .orElseThrow(()->new ResourceNotFoundException("Product","productId",productId));
+        productFromDB.setProductName(product.getProductName());
+        productFromDB.setDescription(product.getDescription());
+        productFromDB.setQuantity(product.getQuantity());
+        productFromDB.setPrice(product.getPrice());
+        productFromDB.setDiscount(product.getDiscount());
+        productFromDB.setSpecialPrice(product.getSpecialPrice());
+
+        Product savedProduct=productRepository.save(productFromDB);
+        return modelMapper.map(savedProduct,ProductDTO.class);
     }
 }
