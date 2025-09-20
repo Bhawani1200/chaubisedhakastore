@@ -2,6 +2,7 @@ package Backend.chaubisedhakaBackend.service;
 
 import Backend.chaubisedhakaBackend.categoryRepository.CategoryRepository;
 import Backend.chaubisedhakaBackend.categoryRepository.ProductRepository;
+import Backend.chaubisedhakaBackend.exceptions.APIException;
 import Backend.chaubisedhakaBackend.exceptions.ResourceNotFoundException;
 import Backend.chaubisedhakaBackend.model.Category;
 import Backend.chaubisedhakaBackend.model.Product;
@@ -36,16 +37,29 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductDTO addProduct(ProductDTO productDTO, Long categoryId) {
-        Category category=categoryRepository.findById(categoryId)
-                .orElseThrow(()->new ResourceNotFoundException("Category","categoryId",categoryId));
-        Product product=modelMapper.map(productDTO,Product.class);
-        product.setCategory(category);
-        product.setImage("product.png");
-        double specialPrice=product.getPrice()-
-                ((product.getDiscount() * 0.01) * product.getPrice());
-        product.setSpecialPrice(specialPrice);
-        Product savedProduct=productRepository.save(product);
-        return modelMapper.map(savedProduct,ProductDTO.class);
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
+
+        boolean isProductNotPresent = true;
+        List<Product> products = category.getProducts();
+        for (Product value : products) {
+            if (value.getProductName().equals(productDTO.getProductName())) {
+                isProductNotPresent = false;
+                break;
+            }
+        }
+        if (isProductNotPresent) {
+            Product product = modelMapper.map(productDTO, Product.class);
+            product.setCategory(category);
+            product.setImage("product.png");
+            double specialPrice = product.getPrice() -
+                    ((product.getDiscount() * 0.01) * product.getPrice());
+            product.setSpecialPrice(specialPrice);
+            Product savedProduct = productRepository.save(product);
+            return modelMapper.map(savedProduct, ProductDTO.class);
+        }else{
+            throw new APIException("Product already exists");
+        }
     }
 
     @Override
@@ -54,6 +68,10 @@ public class ProductServiceImpl implements ProductService{
         List<ProductDTO>productDTOS=products.stream()
                 .map(product->modelMapper.map(product,ProductDTO.class))
                 .toList();
+
+        if(products.isEmpty()){
+            throw new APIException("The product does not exist");
+        }
         ProductResponse productResponse=new ProductResponse();
         productResponse.setContent(productDTOS);
         return productResponse;
