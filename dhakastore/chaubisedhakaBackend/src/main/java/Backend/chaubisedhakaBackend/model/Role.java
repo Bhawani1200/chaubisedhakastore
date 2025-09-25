@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @NoArgsConstructor
 @Data
 @Entity
@@ -22,4 +24,8 @@ public class Role {
     public Role(AppRole roleName) {
         this.roleName = roleName;
     }
+
+    @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST,CascadeType.MERGE},
+    orphanRemoval = true)
+    private Set<Product> products;
 }
