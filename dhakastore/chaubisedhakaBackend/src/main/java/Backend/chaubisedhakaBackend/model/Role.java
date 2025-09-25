@@ -1,11 +1,12 @@
 package Backend.chaubisedhakaBackend.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import java.util.Set;
-
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
@@ -17,6 +18,7 @@ public class Role {
     @Column(name="role_id")
     private Integer roleId;
 
+    @ToString.Exclude
     @Enumerated(EnumType.STRING)
     @Column(length=20,name = "role_name")
     private AppRole roleName;
@@ -25,7 +27,5 @@ public class Role {
         this.roleName = roleName;
     }
 
-    @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST,CascadeType.MERGE},
-    orphanRemoval = true)
-    private Set<Product> products;
+
 }
