@@ -28,6 +28,8 @@ public class JwtUtils {
     @Value("${spring.app.jwtSecret}")
     private String jwtSecret;
 
+
+
     public String getJwtFromHeader(HttpServletRequest request){
         String bearerToken=request.getHeader("Authorization");
         logger.debug("Authorization Header: {}",bearerToken);
@@ -58,7 +60,7 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    public Object validateJwtToken(String authToken){
+    public boolean validateJwtToken(String authToken){
         try{
              Jwts.parser()
                     .verifyWith((SecretKey) key())
