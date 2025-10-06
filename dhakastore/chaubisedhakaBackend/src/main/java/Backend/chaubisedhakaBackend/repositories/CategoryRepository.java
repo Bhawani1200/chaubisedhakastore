@@ -1,4 +1,4 @@
-package Backend.chaubisedhakaBackend.categoryRepository;
+package Backend.chaubisedhakaBackend.repositories;
 
 import Backend.chaubisedhakaBackend.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;

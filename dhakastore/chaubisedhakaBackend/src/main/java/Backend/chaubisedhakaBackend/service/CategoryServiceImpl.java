@@ -1,6 +1,6 @@
 package Backend.chaubisedhakaBackend.service;
 
-import Backend.chaubisedhakaBackend.categoryRepository.CategoryRepository;
+import Backend.chaubisedhakaBackend.repositories.CategoryRepository;
 import Backend.chaubisedhakaBackend.exceptions.APIException;
 import Backend.chaubisedhakaBackend.exceptions.ResourceNotFoundException;
 import Backend.chaubisedhakaBackend.model.Category;
