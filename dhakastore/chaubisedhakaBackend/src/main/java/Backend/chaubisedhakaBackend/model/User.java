@@ -1,7 +1,6 @@
 package Backend.chaubisedhakaBackend.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -30,20 +29,20 @@ public class User {
     @NotBlank
     @Size(max=20)
     @Column(name="username")
-    private String username;
+    private String userName;
 
     @NotBlank
-    @Size(max=20)
+    @Size(max=40)
     @Column(name="email")
     private String email;
 
     @NotBlank
-    @Size(max=20)
+    @Size(max=120)
     @Column(name="password")
     private  String password;
 
-    public User(String username, String email, String password) {
-        this.username = username;
+    public User(String userName, String email, String password) {
+        this.userName = userName;
         this.email = email;
         this.password = password;
     }
