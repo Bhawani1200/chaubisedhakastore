@@ -57,6 +57,13 @@ public class JwtUtils {
                return cookie;
     }
 
+    public ResponseCookie getCleanJwtCookie(){
+        ResponseCookie cookie=ResponseCookie.from(jwtCookie,null)
+                .path("/api")
+                .build();
+        return cookie;
+    }
+
     private String generateTokenFromUsername(String username) {
         return Jwts.builder()
                 .subject(username)
@@ -66,15 +73,6 @@ public class JwtUtils {
                 .compact();
     }
 
-    public String getTokenFromUsername(UserDetails userDetails){
-        String username=userDetails.getUsername();
-        return Jwts.builder()
-                .subject(username)
-                .issuedAt(new Date())
-                .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(key())
-                .compact();
-    }
 
     public String getUsernameFromJwtToken(String token){
         return Jwts.parser()
