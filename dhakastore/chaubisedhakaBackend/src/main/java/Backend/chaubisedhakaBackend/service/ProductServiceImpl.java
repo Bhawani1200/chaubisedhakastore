@@ -45,6 +45,7 @@ public class ProductServiceImpl implements ProductService{
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
         boolean isProductNotPresent = true;
+
         List<Product> products = category.getProducts();
         for (Product value : products) {
             if (value.getProductName().equals(productDTO.getProductName())) {
