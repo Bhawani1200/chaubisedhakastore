@@ -11,9 +11,14 @@ import Backend.chaubisedhakaBackend.repositories.CartItemRepository;
 import Backend.chaubisedhakaBackend.repositories.CartRepository;
 import Backend.chaubisedhakaBackend.repositories.ProductRepository;
 import Backend.chaubisedhakaBackend.util.AuthUtil;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +42,9 @@ public class CartServiceImpl implements CartService{
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    private CartService cartService;
 
     @Override
     public CartDTO addProductToCart(Long productId, Integer quantity) {
@@ -148,6 +156,71 @@ public class CartServiceImpl implements CartService{
                 .toList();
         cartDTO.setProducts(products);
         return cartDTO;
+    }
+
+    @PutMapping("/cart/products/{productId}/quantity/{operation}")
+    public ResponseEntity<CartDTO>updateCartProduct(@PathVariable Long productId,
+                                                    @PathVariable String operation){
+        CartDTO cartDTO=cartService.updateProductQuantityInCart(productId,
+                operation.equalsIgnoreCase("delete") ? -1 : 1 );
+        return new ResponseEntity<>(cartDTO, HttpStatus.OK);
+    }
+
+    @Transactional
+    @Override
+    public CartDTO updateProductQuantityInCart(Long productId, Integer quantity) {
+        String emailId=authUtil.loggedInEmail();
+
+        Cart userCart=cartRepository.findCartByEmail(emailId);
+
+        Long cartId=userCart.getCartId();
+
+        Cart cart=cartRepository.findById(cartId)
+                .orElseThrow(()->new ResourceNotFoundException("Cart","cartId",cartId));
+
+        Product product=productRepository.findById(productId)
+                .orElseThrow(()->new ResourceNotFoundException("Product","productId",productId));
+
+        if(product.getQuantity()==0){
+            throw new APIException(product.getProductName() + "is not available");
+        }
+
+        if(product.getQuantity() < quantity){
+            throw new APIException("Please,make order of the" + product.getProductName()+
+                    "less than or equal"+product.getQuantity() + ".");
+        }
+
+        CartItem cartItem=cartItemRepository.findCartItemByProductIdAndCartId(cartId,productId);
+
+        if(cartItem == null){
+            throw new APIException("Product" + product.getProductName() + "is not available in the cart");
+        }
+
+        cartItem.setProductPrice(product.getSpecialPrice());
+        cartItem.setQuantity(product.getQuantity()+quantity);
+        cartItem.setDiscount(product.getDiscount());
+        cart.setTotalPrice(cart.getTotalPrice() +(cartItem.getProductPrice() * quantity));
+        cartRepository.save(cart);
+
+        CartItem updatedItem=cartItemRepository.save(cartItem);
+        if(updatedItem.getQuantity() == 0){
+           cartItemRepository.deleteById(cartItem.getCartItemId());
+        }
+
+        CartDTO cartDTO=modelMapper.map(cart,CartDTO.class);
+
+        List<CartItem>cartItems=cart.getCartItems();
+
+        Stream<ProductDTO>productStream=cartItems.stream().map(item->{
+            ProductDTO pro=modelMapper.map(item.getProduct(),ProductDTO.class);
+            pro.setQuantity(item.getQuantity());
+            return pro;
+        });
+
+        cartDTO.setProducts(productStream.toList());
+
+        return cartDTO;
+
     }
 
 }
