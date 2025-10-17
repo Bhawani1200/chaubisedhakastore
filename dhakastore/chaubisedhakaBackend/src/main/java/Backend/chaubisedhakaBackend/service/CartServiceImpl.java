@@ -1,5 +1,4 @@
 package Backend.chaubisedhakaBackend.service;
-
 import Backend.chaubisedhakaBackend.exceptions.APIException;
 import Backend.chaubisedhakaBackend.exceptions.ResourceNotFoundException;
 import Backend.chaubisedhakaBackend.model.Cart;
@@ -14,13 +13,8 @@ import Backend.chaubisedhakaBackend.util.AuthUtil;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
-import java.util.ArrayList;
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -240,6 +234,30 @@ public class CartServiceImpl implements CartService{
         cartItemRepository.deleteCartItemByProductIdAndCartId(cartId,productId);
 
         return "Product" + cartItem.getProduct().getProductName() + "removed from the cart!!!";
+    }
+
+    @Override
+    public void updateProductInCarts(Long cartId, Long productId) {
+        Cart cart=cartRepository.findById(cartId)
+                .orElseThrow(()->new ResourceNotFoundException("Cart","cartId",cartId));
+
+        Product product=productRepository.findById(productId)
+                .orElseThrow(()->new ResourceNotFoundException("Product","productId",productId));
+
+        CartItem cartItem=cartItemRepository.findCartItemByProductIdAndCartId(cartId,productId);
+
+        if(cartItem==null){
+            throw new APIException("Product "+product.getProductName()+ "not available in the cart");
+        }
+
+        Double cartPrice=cart.getTotalPrice()-(cartItem.getProductPrice()*cartItem.getQuantity());
+
+        cartItem.setProductPrice(product.getSpecialPrice());
+
+        cart.setTotalPrice(cartPrice + (cartItem.getProductPrice() * cartItem.getQuantity()));
+
+        cartItem=cartItemRepository.save(cartItem);
+
     }
 
 }
