@@ -4,6 +4,10 @@ import Backend.chaubisedhakaBackend.model.User;
 import Backend.chaubisedhakaBackend.payload.AddressDTO;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 public interface AddressService {
     AddressDTO createAddress(@Valid AddressDTO addressDTO, User user);
+
+    List<AddressDTO> getAddresses();
 }
