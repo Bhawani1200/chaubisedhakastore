@@ -1,5 +1,6 @@
 package Backend.chaubisedhakaBackend.service;
 
+import Backend.chaubisedhakaBackend.exceptions.ResourceNotFoundException;
 import Backend.chaubisedhakaBackend.model.Address;
 import Backend.chaubisedhakaBackend.model.User;
 import Backend.chaubisedhakaBackend.payload.AddressDTO;
@@ -37,5 +38,12 @@ public class AddressServiceImpl implements AddressService{
         List<Address>addresses=addressRepository.findAll();
         return addresses.stream().map(address->modelMapper.map(address,AddressDTO.class))
                 .toList();
+    }
+
+    @Override
+    public AddressDTO getAddressesById(Long addressId) {
+        Address address=addressRepository.findById(addressId)
+                .orElseThrow(()->new ResourceNotFoundException("Address","adddressId",addressId));
+        return modelMapper.map(address,AddressDTO.class);
     }
 }
