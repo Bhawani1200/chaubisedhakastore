@@ -18,11 +18,9 @@ import java.util.List;
 @ToString
 @Table(name="products")
 public class Product {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer productId;
+    private Long productId;
 
     @NotBlank
     @Size(min=3,message = "Product name must contain at least 3 characters")

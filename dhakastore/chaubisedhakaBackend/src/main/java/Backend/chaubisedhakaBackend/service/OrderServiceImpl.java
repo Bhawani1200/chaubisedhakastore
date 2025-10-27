@@ -4,11 +4,10 @@ import Backend.chaubisedhakaBackend.exceptions.APIException;
 import Backend.chaubisedhakaBackend.exceptions.ResourceNotFoundException;
 import Backend.chaubisedhakaBackend.model.*;
 import Backend.chaubisedhakaBackend.payload.OrderDTO;
-import Backend.chaubisedhakaBackend.repositories.AddressRepository;
-import Backend.chaubisedhakaBackend.repositories.CartRepository;
-import Backend.chaubisedhakaBackend.repositories.OrderRepository;
-import Backend.chaubisedhakaBackend.repositories.PaymentRepository;
+import Backend.chaubisedhakaBackend.payload.OrderItemDTO;
+import Backend.chaubisedhakaBackend.repositories.*;
 import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +29,18 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    OrderItemRepository orderItemRepository;
+
+    @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
+    CartService cartService;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     @Transactional
@@ -56,10 +67,38 @@ public class OrderServiceImpl implements OrderService{
         order.setPayment(payment);
 
         Order savedOrder=orderRepository.save(order);
-        List<CartItem> cartItemList=new ArrayList<>();
-        if (cartItemList.isEmpty()){
+
+        List<CartItem> cartItems=cart.getCartItems();
+        if (cartItems.isEmpty()){
             throw new APIException("Cart is empty");
         }
-        return null;
+
+        List<OrderItem> orderItems=new ArrayList<>();
+        for(CartItem cartItem: cartItems) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setProduct(cartItem.getProduct());
+            orderItem.setQuantity(cartItem.getQuantity());
+            orderItem.setDiscount(cartItem.getDiscount());
+            orderItem.setOrderedProductPrice(cartItem.getProductPrice());
+            orderItem.setOrder(savedOrder);
+            orderItems.add(orderItem);
+
+        }
+            orderItems=orderItemRepository.saveAll(orderItems);
+
+            cart.getCartItems().forEach(item->{
+            int quantity=item.getQuantity();
+            Product product=item.getProduct();
+            product.setQuantity(product.getQuantity()-quantity);
+
+            productRepository.save(product);
+            cartService.deleteProductFromCart(cart.getCartId(),item.getProduct().getProductId());
+
+        });
+
+            OrderDTO orderDTO=modelMapper.map(savedOrder,OrderDTO.class);
+            orderItems.forEach(item->orderDTO.getOrderItems().add(modelMapper.map(item, OrderItemDTO.class)));
+            orderDTO.setAddressId(addressId);
+            return orderDTO;
     }
 }
