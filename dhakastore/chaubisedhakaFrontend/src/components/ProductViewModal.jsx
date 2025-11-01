@@ -97,7 +97,7 @@ function ProductViewModal({ open, setOpen, product, isAvailable }) {
                 <button
                   onClick={() => setOpen(false)}
                   type="button"
-                  className="px-4 py-2 font-semibold text-sm text-slate-700 hover:text-slate-800 hover:border-slate-800 rounded-md"
+                  className="px-4 py-2 border border-slate-400 font-semibold text-sm text-slate-700 rounded-md hover:border-slate-800 hover:text-slate-800"
                 >
                   Close
                 </button>
