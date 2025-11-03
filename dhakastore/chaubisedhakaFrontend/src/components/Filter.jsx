@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { FiArrowUp, FiRefreshCcw, FiRefreshCw, FiSearch } from "react-icons/fi";
+import { FiArrowUp, FiArrowDown,FiRefreshCw, FiSearch } from "react-icons/fi";
 import {
   Button,
   FormControl,
@@ -9,6 +9,7 @@ import {
   Select,
   Tooltip,
 } from "@mui/material";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 const Filter = () => {
   const categories = [
@@ -18,10 +19,43 @@ const Filter = () => {
     { categoryId: 4, categoryName: "daura-suruwal" },
   ];
 
+  const [searchParams] = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const pathname = useLocation().pathname;
+  const navigate = useNavigate();
+
   const [category, setCategory] = useState("all");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const currentCategory = searchParams.get("category") || "all";
+    const currentSortOrder = searchParams.get("sortby") || "asc";
+    const currentSearchTerm = searchParams.get("keyword") || "";
+
+    setCategory(currentCategory);
+    setSortOrder(currentSortOrder);
+    setSearchTerm(currentSearchTerm);
+  }, [searchParams]);
 
   const handleCategoryChange = (event) => {
+    const selectedCategory = event.target.value;
+    if (selectedCategory === "all") {
+      params.delete("category");
+    } else {
+      params.set("category", selectedCategory);
+      navigate(`${pathname}?${params}`);
+    }
     setCategory(event.target.value);
+  };
+
+  const toggleSortOrder = () => {
+    setSortOrder((prevOrder) => {
+      const newOrder = prevOrder === "asc" ? "desc" : "asc";
+      params.set("sortby", newOrder);
+      navigate(`${pathname}?${params}`);
+      return newOrder;
+    });
   };
 
   return (
@@ -61,12 +95,18 @@ const Filter = () => {
         {/* SORT BUTTON AND CLEAR BUTTON */}
         <Tooltip title="Sorted by price:asc">
           <Button
+          onClick={toggleSortOrder}
             variant="contained"
             color="primary"
             className="flex items-center gap-2 h-10"
           >
             Sort By
-            <FiArrowUp size={20} />
+            {sortOrder==="asc" ?(
+              <FiArrowUp size={20} />
+            ):(
+              <FiArrowDown size={20} />
+            )}
+            
           </Button>
         </Tooltip>
         <button className="flex items-center gap-2 bg-rose-900 text-white px-3 py-2 rounded-sm transition duration-300 ease-in shadow-md focus:outline-none">
