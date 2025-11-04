@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../store/actions";
 import Filter from "./Filter";
 import useProductFilter from "./useProductFilter";
+import { RotatingLines } from "react-loader-spinner";
 
 const Products = () => {
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
@@ -21,8 +22,18 @@ const Products = () => {
   return (
     <div className="lg:px-14 sm:px-8 px-4 py-14 2xl:w-[90%] 2xl:mx-auto">
       <Filter categories={categories ? categories : []} />
-      {isLoading ? (
-        <p>It is loading...</p>
+      {true ? (
+        <RotatingLines
+          visible={true}
+          height="96"
+          width="96"
+          color="grey"
+          strokeWidth="5"
+          animationDuration="0.75"
+          ariaLabel="rotating-lines-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
       ) : errorMessage ? (
         <div className="flex justify-center items-center h-[200px]">
           <FaExclamationTriangle className="text-slate-800 text-3xl mr-2" />
