@@ -19,7 +19,7 @@ public class Category {
     private Long categoryId;
 
     @NotBlank
-    @Size(min = 6,message = "Characters must be greater than 6 ")
+    @Size(min = 4,message = "Characters must be greater than 4")
     private String categoryName;
 
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)

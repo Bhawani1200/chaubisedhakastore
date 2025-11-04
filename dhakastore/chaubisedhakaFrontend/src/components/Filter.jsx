@@ -11,14 +11,7 @@ import {
 } from "@mui/material";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
-const Filter = () => {
-  const categories = [
-    { categoryId: 1, categoryName: "saree" },
-    { categoryId: 2, categoryName: "coat" },
-    { categoryId: 3, categoryName: "blouse" },
-    { categoryId: 4, categoryName: "daura-suruwal" },
-  ];
-
+const Filter = ({ categories }) => {
   const [searchParams] = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const pathname = useLocation().pathname;
