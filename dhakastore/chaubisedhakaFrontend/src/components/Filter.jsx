@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { FiArrowUp, FiArrowDown,FiRefreshCw, FiSearch } from "react-icons/fi";
+import { FiArrowUp, FiArrowDown, FiRefreshCw, FiSearch } from "react-icons/fi";
 import {
   Button,
   FormControl,
@@ -44,8 +44,8 @@ const Filter = () => {
       params.delete("category");
     } else {
       params.set("category", selectedCategory);
-      navigate(`${pathname}?${params}`);
     }
+    navigate(`${pathname}?${params}`);
     setCategory(event.target.value);
   };
 
@@ -95,18 +95,17 @@ const Filter = () => {
         {/* SORT BUTTON AND CLEAR BUTTON */}
         <Tooltip title="Sorted by price:asc">
           <Button
-          onClick={toggleSortOrder}
+            onClick={toggleSortOrder}
             variant="contained"
             color="primary"
             className="flex items-center gap-2 h-10"
           >
             Sort By
-            {sortOrder==="asc" ?(
+            {sortOrder === "asc" ? (
               <FiArrowUp size={20} />
-            ):(
+            ) : (
               <FiArrowDown size={20} />
             )}
-            
           </Button>
         </Tooltip>
         <button className="flex items-center gap-2 bg-rose-900 text-white px-3 py-2 rounded-sm transition duration-300 ease-in shadow-md focus:outline-none">
