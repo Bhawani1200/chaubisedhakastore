@@ -5,8 +5,9 @@ import { fetchCategories } from "../../store/actions";
 import Filter from "./Filter";
 import useProductFilter from "../../hook/useProductFilter";
 import Loader from "../shared/Loader";
-import PaginationForProduct from "../shared/PaginationForProduct";
+
 import ProductCard from "../shared/ProductCard";
+import PaginationForProduct from "../shared/PaginationForProducts";
 
 const Products = () => {
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
