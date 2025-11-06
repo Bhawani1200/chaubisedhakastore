@@ -3,6 +3,11 @@ import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 import { bannerList } from "../../utils";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+const colors = [
+  "bg-color-[#FDC200]",
+  "bg-color-[#FF2C2C]",
+  "bg-color-[#21AD61]",
+];
 const HeroBanner = () => {
   return (
     <div className="py-2 rounded-md">
@@ -20,7 +25,15 @@ const HeroBanner = () => {
       >
         {bannerList.map((item, i) => {
           <SwiperSlide>
-            <div></div>
+            <div
+              className={`carousel-item rounded-md sm:h-[500px] h-96 ${colors[i]}`}
+            >
+              <div className="flex justify-center items-center">
+                <div className="text-center">
+                  <h3>{item.title}</h3>
+                </div>
+              </div>
+            </div>
           </SwiperSlide>;
         })}
       </Swiper>
