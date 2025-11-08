@@ -124,14 +124,14 @@ const HeroSection = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
                   size="lg"
-                  className="text-3xl bg-blue-800 hover:bg-blue-600 rounded-md py-1 px-2"
+                  className="flex justify-center items-center text-3xl bg-blue-800 hover:bg-blue-600 rounded-md py-1 px-2"
                 >
                   <Link to="/products"> Shop Collection</Link>
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className=" text-3xl border-white text-white hover:bg-red-800 bg-transparent rounded-md  hover:text-foreground py-1 px-2"
+                  className="flex justify-center items-center text-3xl text-white hover:bg-slate-600 bg-slate-800 rounded-md  hover:text-foreground py-1 px-2"
                 >
                   Learn Our Story
                 </Button>
