@@ -2,18 +2,27 @@ import { FaSignInAlt, FaStore } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import Badge from "@mui/material/Badge";
 import { GiShoppingCart } from "react-icons/gi";
+import { RxCross2 } from "react-icons/rx";
+import { IoIosMenu } from "react-icons/io";
+import { useState } from "react";
 
 const Navbar = () => {
   const path = useLocation().pathname;
+  const [navbarOpen, setNavbarOpen] = useState(false);
+
   return (
-    <div className="h-[70px] bg-linear-to-r from-orange-400 to-pink-600 text-white z-50 flex items-center sticky top-0">
+    <div className="h-[70px] bg-gradient-to-r from-gray-800 to-black  text-white z-50 flex items-center sticky top-0">
       <div className="lg:px-14 sm:px-8 px-4 w-full flex justify-between">
         <Link className="flex items-center text-2xl font-bold" to="/">
           <FaStore className="text-2xl mr-2" />
           <span className="font-[poppins]">Chaubise-Dhaka</span>
         </Link>
-        <ul className="flex gap-4 text-slate-800">
-          <li className="font-[500px] transition-all duration-150">
+        <ul
+          className={`flex sm:gap-10 gap-4 sm:items-center  text-slate-800 sm:static absolute left-0 top-[70px] sm:shadow-none shadow-md ${
+            navbarOpen ? "h-fit sm:pb-0 pb-5" : "h-0 overflow-hidden"
+          }  transition-all duration-100 sm:h-fit sm:bg-none  bg-gradient-to-r from-gray-800 to-black   text-white sm:w-fit w-full sm:flex-row flex-col px-4 sm:px-0`}
+        >
+          <li className="font-medium transition-all duration-150">
             <Link
               className={`${
                 path === "/" ? "text-white  font-semibold" : "text-gray-200"
@@ -91,6 +100,16 @@ const Navbar = () => {
             </Link>
           </li>
         </ul>
+        <button
+          className="sm:hidden flex items-center sm:mt-0 mt-2"
+          onClick={() => setNavbarOpen(!navbarOpen)}
+        >
+          {navbarOpen ? (
+            <RxCross2 className="text-white text-3xl " />
+          ) : (
+            <IoIosMenu className="text-white text-3xl" />
+          )}
+        </button>
       </div>
     </div>
   );
