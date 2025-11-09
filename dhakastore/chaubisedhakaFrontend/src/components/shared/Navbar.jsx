@@ -11,16 +11,19 @@ const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   return (
-    <div className="h-[70px] bg-gradient-to-r from-gray-800 to-black  text-white z-50 flex items-center sticky top-0">
+    <div className="h-[70px] bg-linear-to-r from-gray-800 to-black  text-white z-50 flex items-center sticky top-0">
       <div className="lg:px-14 sm:px-8 px-4 w-full flex justify-between">
         <Link className="flex items-center text-2xl font-bold" to="/">
           <FaStore className="text-2xl mr-2" />
-          <span className="font-[poppins]">Chaubise-Dhaka</span>
+          <span className="font-[Poppins]">Chaubise Dhaka</span>
+          {/* <img src={logo}
+          className="h-14 w-auto"
+        /> */}
         </Link>
         <ul
           className={`flex sm:gap-10 gap-4 sm:items-center  text-slate-800 sm:static absolute left-0 top-[70px] sm:shadow-none shadow-md ${
             navbarOpen ? "h-fit sm:pb-0 pb-5" : "h-0 overflow-hidden"
-          }  transition-all duration-100 sm:h-fit sm:bg-none  bg-gradient-to-r from-gray-800 to-black   text-white sm:w-fit w-full sm:flex-row flex-col px-4 sm:px-0`}
+          }  transition-all duration-100 sm:h-fit sm:bg-none  bg-linear-to-r from-gray-800 to-black   text-white sm:w-fit w-full sm:flex-row flex-col px-4 sm:px-0`}
         >
           <li className="font-medium transition-all duration-150">
             <Link
@@ -47,13 +50,13 @@ const Navbar = () => {
           <li className="font-[500px] transition-all duration-150">
             <Link
               className={`${
-                path === "/contacts"
+                path === "/contact"
                   ? "text-white  font-semibold"
                   : "text-gray-200"
               }`}
-              to="/contacts"
+              to="/contact"
             >
-              Contacts
+              Contact
             </Link>
           </li>
           <li className="font-[500px] transition-all duration-150">
