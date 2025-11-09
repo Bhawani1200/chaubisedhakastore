@@ -4,5 +4,5 @@ import image3 from "../assets/sliders/image3.jpg"
 export {
     image1,
     image2,
-    image3
+    image3,
 }

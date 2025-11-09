@@ -12,6 +12,7 @@ const ProductCard = ({
   price,
   discount,
   specialPrice,
+  about = false,
 }) => {
   const [openProductViewModal, setOpenProductViewModel] = useState(false);
   const btnLoader = false;
@@ -19,8 +20,10 @@ const ProductCard = ({
   const isAvailable = quantity && Number(quantity) > 0;
 
   const handleProductView = (product) => {
-    setSelectedViewProduct(product);
-    setOpenProductViewModel(true);
+    if (!about) {
+      setSelectedViewProduct(product);
+      setOpenProductViewModel(true);
+    }
   };
   return (
     <div className="border rounded-lg shadow-xl overflow-hidden transition-shadow duration-300">
@@ -68,33 +71,35 @@ const ProductCard = ({
             {trauncateText(description, 80)}
           </p>
         </div>
-        <div className="flex items-center justify-between">
-          {specialPrice ? (
-            <div className="flex flex-col">
-              <span className="text-gray-400 line-through">
+        {!about && (
+          <div className="flex items-center justify-between">
+            {specialPrice ? (
+              <div className="flex flex-col">
+                <span className="text-gray-400 line-through">
+                  ${Number(price).toFixed(2)}
+                </span>
+                <span className="text-lg text-gray-700 ">
+                  ${Number(specialPrice).toFixed(2)}
+                </span>
+              </div>
+            ) : (
+              <span className="text-lg text-gray-700 ">
+                {" "}
                 ${Number(price).toFixed(2)}
               </span>
-              <span className="text-lg text-gray-700 ">
-                ${Number(specialPrice).toFixed(2)}
-              </span>
-            </div>
-          ) : (
-            <span className="text-lg text-gray-700 ">
-              {" "}
-              ${Number(price).toFixed(2)}
-            </span>
-          )}
-          <button
-            disabled={!isAvailable || btnLoader}
-            className={`bg-blue-500 ${
-              isAvailable ? "opacity-100 hover:bg-blue-600" : "opacity-70"
-            }
+            )}
+            <button
+              disabled={!isAvailable || btnLoader}
+              className={`bg-blue-500 ${
+                isAvailable ? "opacity-100 hover:bg-blue-600" : "opacity-70"
+              }
             text-white py-2 px-3 rounded-lg items-center transition-colors duration-300 w-36 flex justify-center`}
-          >
-            <FaShoppingCart className="mr-3" />
-            {isAvailable ? "Add to Cart" : "Stock Out"}
-          </button>
-        </div>
+            >
+              <FaShoppingCart className="mr-3" />
+              {isAvailable ? "Add to Cart" : "Stock Out"}
+            </button>
+          </div>
+        )}
       </div>
       <ProductViewModal
         open={openProductViewModal}
