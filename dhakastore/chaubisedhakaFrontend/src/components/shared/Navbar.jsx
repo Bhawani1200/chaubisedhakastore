@@ -79,8 +79,8 @@ const Navbar = () => {
           </li>
           <li className="font-[500px] transition-all duration-150">
             <Link
-              className="flex space-x-2 px-4 py-[6px] 
-              bg-gradient-to-r from bg-purple-600 to to-red-500
+              className="flex space-x-2 px-4 py-1.5 
+              bg-linear-to-r from bg-purple-600 to to-red-500
               text-white font-semibold rounded-md shadow-lg
               hover:from-purple-500 hover:to-red-400 transition-duration-300 ease-in-out transform
               "
