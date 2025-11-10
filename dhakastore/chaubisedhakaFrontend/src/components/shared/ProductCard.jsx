@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import ProductViewModal from "./ProductViewModal";
 import trauncateText from "../../utils/trauncateText";
+import { useDispatch } from "react-redux";
 
 const ProductCard = ({
   productId,
@@ -18,6 +19,7 @@ const ProductCard = ({
   const btnLoader = false;
   const [selectedViewProduct, setSelectedViewProduct] = useState("");
   const isAvailable = quantity && Number(quantity) > 0;
+  const dispatch = useDispatch();
 
   const handleProductView = (product) => {
     if (!about) {
@@ -25,6 +27,11 @@ const ProductCard = ({
       setOpenProductViewModel(true);
     }
   };
+
+  const addToCartHandler = (cartItems) => {
+    dispatch(addToCart(cartItems, 1));
+  };
+
   return (
     <div className="border rounded-lg shadow-xl overflow-hidden transition-shadow duration-300">
       <div
@@ -89,6 +96,17 @@ const ProductCard = ({
               </span>
             )}
             <button
+              onClick={() =>
+                addToCartHandler({
+                  image,
+                  productName,
+                  description,
+                  specialPrice,
+                  productId,
+                  price,
+                  quantity,
+                })
+              }
               disabled={!isAvailable || btnLoader}
               className={`bg-blue-500 ${
                 isAvailable ? "opacity-100 hover:bg-blue-600" : "opacity-70"
