@@ -3,6 +3,8 @@ import { FaShoppingCart } from "react-icons/fa";
 import ProductViewModal from "./ProductViewModal";
 import trauncateText from "../../utils/trauncateText";
 import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/actions";
+import toast from "react-hot-toast";
 
 const ProductCard = ({
   productId,
@@ -29,7 +31,7 @@ const ProductCard = ({
   };
 
   const addToCartHandler = (cartItems) => {
-    dispatch(addToCart(cartItems, 1));
+    dispatch(addToCart(cartItems, 1,toast));
   };
 
   return (
