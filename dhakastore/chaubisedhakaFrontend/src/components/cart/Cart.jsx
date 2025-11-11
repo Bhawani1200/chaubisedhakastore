@@ -1,5 +1,5 @@
-import React from "react";
-import { MdShoppingCart } from "react-icons/md";
+import { MdArrowBack, MdShoppingCart } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   return (
@@ -15,15 +15,36 @@ const Cart = () => {
         <div className="md:col-span-2 justify-self-start text-lg text-slate-800 lg:ps-4">
           Product
         </div>
-        <div className="justify-self-center text-slate-800">
-        Price
-        </div>
+        <div className="justify-self-center text-slate-800">Price</div>
 
-        <div className="justify-self-center text-slate-800">
-        Quantity
-        </div>
-        <div className="justify-self-center text-slate-800">
-        Total
+        <div className="justify-self-center text-slate-800">Quantity</div>
+        <div className="justify-self-center text-slate-800">Total</div>
+      </div>
+      <div className="border-t-[1.5px] border-slate-200 py-4 flex sm:flex-row sm:px-0 px-2 flex-cl sm:justify-between gap-4 ">
+        <div></div>
+        <div className="flex test-sm gap-1 flex-col">
+          <div className="flex justify-between w-full md:text-lg text-sm font-semibold">
+            <span>Sub-total</span>
+            <span>$600</span>
+          </div>
+          <p className="text-slate-500">
+            Shipping and taxes calculated at checkout
+          </p>
+          <Link className="w-full flex justify-end" to="/checkout">
+            <button className="text-1.5xl font-semibold w-[300px] py-2 px-4 rounded-md bg-blue-600 text-white flex items-center justify-center gap-2 hover:text-gray-300 transition duration-500">
+              <MdShoppingCart size={25} />
+              Checkout
+            </button>
+          </Link>
+          <Link
+            className="lex items-center mt-2 gap-2 text-slate-500"
+            to="/products"
+          >
+            <span>
+              <MdArrowBack />
+              Continue shopping
+            </span>
+          </Link>
         </div>
       </div>
     </div>
