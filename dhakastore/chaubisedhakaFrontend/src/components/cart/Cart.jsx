@@ -13,6 +13,10 @@ const Cart = () => {
     0
   );
 
+  if (!cart || cart.length === 0) {
+    return <h1>Cart is empty</h1>;
+  }
+
   return (
     <div className="lg:px-14 md:px-8 px-4 py-10">
       <div className="flex flex-col items-center mb-12">

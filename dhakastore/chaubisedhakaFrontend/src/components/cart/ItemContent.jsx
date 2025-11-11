@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { HiOutlineTrash } from "react-icons/hi";
+import SetQuantity from "./SetQuantity";
 
 const ItemContent = ({
   productId,
@@ -19,8 +21,43 @@ const ItemContent = ({
     <div className="grid md:grid-cols-5 grid-cols-4 md:text-lg text-sm gap-4 items-center rounded-md border border-slate-200 lg:px-4 py-4 p-2">
       <div className="md:col-span-2 justify-self-start flex flex-col gap-2">
         <div className="flex md:flex-row flex-col lg:gap-4 sm:gap-3 gap-0 items-start">
-            <h3></h3>
+          <h3 className="lg:text-[17px] text-sm text-slate-600 font-semibold">
+            {productName}
+          </h3>
         </div>
+        <div className="md:w-36 sm:w-24 w-12">
+          <img
+            src={image}
+            alt=""
+            className="md:h-36 sm:h-24 h-12 object-cover w-full rounded-md"
+          />
+          <div className="flex items-start gap-5 mt-3">
+            <button
+              onClick={() => {}}
+              className="flex items-center font-semibold space-x-2 px-4 py-1 text-xs border border-rose-600 text-rose-600 rounded-md hover:bg-rose-100 transition-colors duration-200"
+            >
+              <HiOutlineTrash size={15} className=" text-rose-600" />
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="justify-self-center lg:text-[17px] text-sm font-semibold text-slate-600">
+        {Number(specialPrice)}
+      </div>
+
+      <div className="justify-self-center lg:text-[17px] text-sm font-semibold text-slate-600">
+        {/* {Number(quantity)} */}
+        <SetQuantity
+          quantity={currentQuantity}
+          cardCounter={true}
+          handleQtyIncrease={() => {}}
+          handleQtyDecrease={() => {}}
+        />
+      </div>
+
+      <div className="justify-self-center lg:text-[17px] text-sm font-semibold text-slate-600">
+        {Number(specialPrice) * Number(currentQuantity)}
       </div>
     </div>
   );
