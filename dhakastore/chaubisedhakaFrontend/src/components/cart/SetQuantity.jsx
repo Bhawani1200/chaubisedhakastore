@@ -18,7 +18,7 @@ const SetQuantity = ({
         </button>
 
         <div className="text-red-500">{quantity}</div>
-        
+
         <button className={btnStyle} onClick={handleQtyIncrease}>
           +
         </button>
