@@ -53,7 +53,7 @@
 //                     </Link>
 //                   </div>
 //                   <div className="w-full flex justify-center lg:w-1/2 p-4">
-//                     <img src={item?.image} 
+//                     <img src={item?.image}
 //                      className="w-[600px] h-[500px] object-cover"/>
 //                   </div>
 //                 </div>
@@ -133,7 +133,7 @@ const HeroSection = () => {
                   variant="outline"
                   className="flex justify-center items-center text-3xl text-white hover:bg-slate-600 bg-slate-800 rounded-md  hover:text-foreground py-1 px-2"
                 >
-                  Learn Our Story
+                  <Link to="/about">Learn Our Story</Link>
                 </Button>
               </div>
             </div>

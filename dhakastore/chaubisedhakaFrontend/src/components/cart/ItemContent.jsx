@@ -47,7 +47,6 @@ const ItemContent = ({
       </div>
 
       <div className="justify-self-center lg:text-[17px] text-sm font-semibold text-slate-600">
-        {/* {Number(quantity)} */}
         <SetQuantity
           quantity={currentQuantity}
           cardCounter={true}
