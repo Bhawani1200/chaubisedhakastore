@@ -8,6 +8,8 @@ import {
   removeFromCart,
 } from "../../store/actions";
 import toast from "react-hot-toast";
+import { formatPrice } from "../../utils/formatPrice";
+import trauncateText from "../../utils/trauncateText";
 
 const ItemContent = ({
   productId,
@@ -51,13 +53,13 @@ const ItemContent = ({
       <div className="md:col-span-2 justify-self-start flex flex-col gap-2">
         <div className="flex md:flex-row flex-col lg:gap-4 sm:gap-3 gap-0 items-start">
           <h3 className="lg:text-[17px] text-sm text-slate-600 font-semibold">
-            {productName}
+            {trauncateText(productName)}
           </h3>
         </div>
-        <div className="md:w-36 sm:w-24 w-12">
+        <div className="relative md:w-36 sm:w-24 w-12">
           <img
             src={image}
-            alt=""
+            alt={productName}
             className="md:h-36 sm:h-24 h-12 object-cover w-full rounded-md"
           />
           <div className="flex items-start gap-5 mt-3">
@@ -82,7 +84,7 @@ const ItemContent = ({
         </div>
       </div>
       <div className="justify-self-center lg:text-[17px] text-sm font-semibold text-slate-600">
-        {Number(specialPrice)}
+        {formatPrice(Number(specialPrice))}
       </div>
 
       <div className="justify-self-center lg:text-[17px] text-sm font-semibold text-slate-600">
@@ -115,10 +117,11 @@ const ItemContent = ({
       </div>
 
       <div className="justify-self-center lg:text-[17px] text-sm font-semibold text-slate-600">
-        {Number(currentQuantity) * Number(specialPrice)}
+        {formatPrice(Number(currentQuantity) * Number(specialPrice))}
       </div>
     </div>
   );
 };
 
 export default ItemContent;
+
