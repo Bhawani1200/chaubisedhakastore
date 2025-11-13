@@ -5,10 +5,13 @@ import { GiShoppingCart } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import { IoIosMenu } from "react-icons/io";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const path = useLocation().pathname;
   const [navbarOpen, setNavbarOpen] = useState(false);
+
+  const { cart } = useSelector((state) => state.carts);
 
   return (
     <div className="h-[70px] bg-linear-to-r from-gray-800 to-black  text-white z-50 flex items-center sticky top-0">
@@ -80,7 +83,7 @@ const Navbar = () => {
             >
               <Badge
                 showZero
-                badgeContent={0}
+                badgeContent={cart?.length || 0}
                 color="primary"
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 overlap="circular"
