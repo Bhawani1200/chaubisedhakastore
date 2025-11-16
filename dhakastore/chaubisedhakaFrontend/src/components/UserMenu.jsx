@@ -1,10 +1,17 @@
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import React from "react";
+import { Link } from "react-router-dom";
+import { BiUser } from "react-icons/bi";
+import { FaShoppingCart } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { IoExitOutline } from "react-icons/io5";
+import BackDrop from "./BackDrop";
 
 const UserMenu = () => {
-
+  const { user } = useSelector((state) => state.auth);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -15,25 +22,24 @@ const UserMenu = () => {
     setAnchorEl(null);
   };
 
+  const logOutHandler = () => {};
+
   return (
-    <div>
-      <Button
-        id="demo-positioned-button"
-        aria-controls={open ? "demo-positioned-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
+    <div className="relative z-30">
+      <div
+        className="sm:border sm:border-slate-400 flex flex-row items-center gap-1 rounded-full cursor-pointer hover:shadow-md transition text-slate-700"
         onClick={handleClick}
       >
-        Dashboard
-      </Button>
+        <Avatar alt="menu" src="" />
+      </div>
       <Menu
-        id="demo-positioned-menu"
-        aria-labelledby="demo-positioned-button"
+        sx={{ width: "400px" }}
+        id="basic-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "top",
+          vertical: "bottom",
           horizontal: "left",
         }}
         transformOrigin={{
@@ -41,10 +47,27 @@ const UserMenu = () => {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <Link to="/profile">
+          <MenuItem className="flex gap-2" onClick={handleClose}>
+            <BiUser className="text-xl" />
+            <span className="font-bold text-[16px] mt-1">{user?.username}</span>
+          </MenuItem>
+        </Link>
+        <Link to="/profile/orders">
+          <MenuItem className="flex gap-2" onClick={handleClose}>
+            <FaShoppingCart className="text-xl" />
+            <span className="font-semibold">Orders</span>
+          </MenuItem>
+        </Link>
+
+        <MenuItem className="flex gap-2" onClick={logOutHandler}>
+          <div className="font-semibold w-full flex  items-center gap-2 bg-linear-to-tr from-purple-500 to-rose-500 px-4 py-1 text-white rounded-md ">
+            <IoExitOutline className="text-xl" />
+            <span className="font-semibold">Logout</span>
+          </div>
+        </MenuItem>
       </Menu>
+      {open && <BackDrop />}
     </div>
   );
 };
