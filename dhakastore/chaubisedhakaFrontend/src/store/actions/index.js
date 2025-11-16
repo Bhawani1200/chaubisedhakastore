@@ -135,7 +135,6 @@ export const increaseCartQuantity =
       payload: { ...data, quantity: newQuantity },
     });
 
-    // Update localStorage with updated cart
     const updatedCartItems =
       getState()?.carts?.cartItems ||
       getState()?.carts?.cart ||
@@ -163,3 +162,20 @@ export const removeFromCart = (data, toast) => (dispatch, getState) => {
   toast.success(`${data.productName} removed from the cart`);
   localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
 };
+
+export const authenticateLoginUser =
+  (sendData, toast, reset, navigate, setLoader) => async (dispatch) => {
+    const { data } = await api.post("/auth/signin", sendData);
+    dispatch({ type: "LOGIN_USER", payload: data });
+    localStorage.setItem("auth", JSON.stringify(data));
+    toast.success("Login success");
+    reset();
+    navigate("/");
+    try {
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Internal server error");
+    } finally {
+      setLoader(false);
+    }
+  };
