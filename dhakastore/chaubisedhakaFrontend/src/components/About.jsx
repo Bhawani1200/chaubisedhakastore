@@ -1,5 +1,4 @@
-import React from "react";
-import Products from "./products/Products";
+
 import ProductCard from "./shared/ProductCard";
 const products = [
   {

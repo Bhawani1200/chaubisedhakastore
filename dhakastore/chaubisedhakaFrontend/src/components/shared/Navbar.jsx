@@ -6,12 +6,14 @@ import { RxCross2 } from "react-icons/rx";
 import { IoIosMenu } from "react-icons/io";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import UserMenu from "../UserMenu";
 
 const Navbar = () => {
   const path = useLocation().pathname;
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   const { cart } = useSelector((state) => state.carts);
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <div className="h-[70px] bg-linear-to-r from-gray-800 to-black  text-white z-50 flex items-center sticky top-0">
@@ -92,19 +94,25 @@ const Navbar = () => {
               </Badge>
             </Link>
           </li>
-          <li className="font-[500px] transition-all duration-150">
-            <Link
-              className="flex  items-center space-x-2 px-4 py-1.5 
+          {user && user.id ? (
+            <div className="font-[500px] transition-all duration-150 ">
+           <UserMenu />
+            </div>
+          ) : (
+            <li className="font-[500px] transition-all duration-150">
+              <Link
+                className="flex  items-center space-x-2 px-4 py-1.5 
               bg-linear-to-r from bg-purple-600 to to-red-500
               text-white font-semibold rounded-md shadow-lg
               hover:from-purple-500 hover:to-red-400 transition-duration-300 ease-in-out transform
               "
-              to="/login"
-            >
-              <FaSignInAlt />
-              <span>Login</span>
-            </Link>
-          </li>
+                to="/login"
+              >
+                <FaSignInAlt />
+                <span>Login</span>
+              </Link>
+            </li>
+          )}
         </ul>
         <button
           className="sm:hidden flex items-center sm:mt-0 mt-2"
