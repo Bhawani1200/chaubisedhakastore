@@ -3,16 +3,20 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiUser } from "react-icons/bi";
 import { FaShoppingCart } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IoExitOutline } from "react-icons/io5";
 import BackDrop from "./BackDrop";
+import { logOutUser } from "../store/actions";
 
 const UserMenu = () => {
   const { user } = useSelector((state) => state.auth);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,7 +26,9 @@ const UserMenu = () => {
     setAnchorEl(null);
   };
 
-  const logOutHandler = () => {};
+  const logOutHandler = () => {
+    dispatch(logOutUser(navigate));
+  };
 
   return (
     <div className="relative z-30">
