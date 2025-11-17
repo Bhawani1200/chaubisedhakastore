@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import InputField from "../shared/InputField";
-import { AiOutlineLogin } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import InputField from "../shared/InputField";
+import { useDispatch } from "react-redux";
+import { authenticateLoginUser, registerNewUser } from "../../store/actions";
+import toast from "react-hot-toast";
+import { FaUserPlus } from "react-icons/fa";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
@@ -19,20 +21,20 @@ const Login = () => {
     mode: "onTouched",
   });
 
-  const loginHandler = async (data) => {
-    console.log("Click login");
+  const registerHandler = async (data) => {
+    console.log("Register click");
+    dispatch(registerNewUser(data, toast, reset, navigate, setLoader));
   };
-
   return (
     <div className="min-h-[calc(100vh-64px)] flex justify-center items-center ]">
       <form
-        onClick={handleSubmit(loginHandler)}
+        onClick={handleSubmit(registerHandler)}
         className="sm:w-[450px] w-[360px] shadow-[0_4px_12px_rgba(0,0,0,0.15)] py-8  sm:px-8 px-4 rounded-md"
       >
         <div className="flex flex-col items-center justify-center space-y-4">
-          <AiOutlineLogin className="text-slate-800 text-5xl" />
+          <FaUserPlus className="text-slate-800 text-5xl" />
           <h1 className="text-slate-800 text-center text-montserrat lg:text-3xl text-3xl font-bold">
-            Login Here
+            Register Here
           </h1>
         </div>
         <hr className="mt-2 mb-5 text-black" />
@@ -48,12 +50,23 @@ const Login = () => {
             errors={errors}
           />
           <InputField
+            label="Email"
+            required
+            id="email"
+            type="email"
+            message="*Email is required"
+            placeholder="Enter your email"
+            register={register}
+            errors={errors}
+          />
+          <InputField
             label="Password"
             required
             id="password"
             type="password"
             message="*Password is required"
             placeholder="Enter your password"
+            min={6}
             register={register}
             errors={errors}
           />
@@ -63,15 +76,15 @@ const Login = () => {
           type="submit"
           className="bg-linear-to-r from-purple-500 to-pink-600 flex gap-2 justify-center items-center text-white font-semibold w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-xs my-3"
         >
-          {loader ? <>Loading...</> : <>Login</>}
+          {loader ? <>Loading...</> : <>Register</>}
         </button>
         <p className="text-slate-800 text-center mt-6 text-sm">
-          Don't have an account?
+          Already have an account?
           <Link
             className="font-semibold underline hover:text-black "
-            to="/register"
+            to="/login"
           >
-            <span>SignUp</span>
+            <span>Login</span>
           </Link>
         </p>
       </form>
@@ -79,4 +92,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

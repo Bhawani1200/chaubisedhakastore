@@ -8,6 +8,8 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import { Toaster } from "react-hot-toast";
 import Cart from "./components/cart/Cart";
+import PrivateRoute from "./components/PrivateRoute";
+import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 
 function App() {
@@ -21,7 +23,10 @@ function App() {
           <Route path="/about" element={<About />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/cart" element={<Cart />}></Route>
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/" element={<PrivateRoute  />}>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/register" element={<Register />}></Route>
+          </Route>
         </Routes>
       </Router>
       <Toaster position="top-center" />

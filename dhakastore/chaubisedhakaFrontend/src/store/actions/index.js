@@ -165,16 +165,37 @@ export const removeFromCart = (data, toast) => (dispatch, getState) => {
 
 export const authenticateLoginUser =
   (sendData, toast, reset, navigate, setLoader) => async (dispatch) => {
-    const { data } = await api.post("/auth/signin", sendData);
-    dispatch({ type: "LOGIN_USER", payload: data });
-    localStorage.setItem("auth", JSON.stringify(data));
-    toast.success("Login success");
-    reset();
-    navigate("/");
     try {
+      setLoader(true);
+      const { data } = await api.post("/auth/signin", sendData);
+      dispatch({ type: "LOGIN_USER", payload: data });
+      localStorage.setItem("auth", JSON.stringify(data));
+      reset();
+      toast.success("Login success");
+      navigate("/");
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || "Internal server error");
+    } finally {
+      setLoader(false);
+    }
+  };
+
+export const registerNewUser =
+  (sendData, toast, reset, navigate, setLoader) => async (dispatch) => {
+    try {
+      setLoader(true);
+      const { data } = await api.post("/auth/signup", sendData);
+      reset();
+      toast.success(data?.message || "User registered successfully");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        error?.response?.data?.message ||
+          error?.response?.data?.password ||
+          "Internal server error"
+      );
     } finally {
       setLoader(false);
     }
