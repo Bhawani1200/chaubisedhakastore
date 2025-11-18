@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import InputField from "../shared/InputField";
-import { AiOutlineLogin } from "react-icons/ai";
+import { AiOutlineEye, AiOutlineLogin } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import Spinners from "../shared/Spinners";
+import { authenticateLoginUser } from "../../store/actions";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = () => setShowPassword(!showPassword);
 
   const {
     register,
@@ -21,6 +27,7 @@ const Login = () => {
 
   const loginHandler = async (data) => {
     console.log("Click login");
+    dispatch(authenticateLoginUser(data, toast, reset, navigate, setLoader));
   };
 
   return (
@@ -47,15 +54,18 @@ const Login = () => {
             register={register}
             errors={errors}
           />
+
           <InputField
             label="Password"
             required
             id="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             message="*Password is required"
             placeholder="Enter your password"
             register={register}
             errors={errors}
+            showPassword={showPassword}
+            onTogglePassword={togglePassword}
           />
         </div>
         <button
@@ -63,7 +73,15 @@ const Login = () => {
           type="submit"
           className="bg-linear-to-r from-purple-500 to-pink-600 flex gap-2 justify-center items-center text-white font-semibold w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-xs my-3"
         >
-          {loader ? <>Loading...</> : <>Login</>}
+          {loader ? (
+            <>
+              {" "}
+              <Spinners />
+              Loading...
+            </>
+          ) : (
+            <>Login</>
+          )}
         </button>
         <p className="text-slate-800 text-center mt-6 text-sm">
           Don't have an account?
