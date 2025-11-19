@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Skeleton from "../shared/Skeleton";
 import { FaAddressBook } from "react-icons/fa";
 
 const AddressInfo = () => {
+  const [openAddressModal, setOpenAddressModal] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState("");
+
+  const addNewAddressHandler = () => {
+    setSelectedAddress("")
+  };
+
   const noAddressExist = true;
   const isLoading = false;
 
   return (
-    <div className="pt-5">
+    <div className="pt-4 ">
       {noAddressExist ? (
         <div className="p-6 rounded-lg max-w-md mx-auto flex flex-col items-center justify-center">
           <FaAddressBook size={50} className="text-gray-500 mb-4" />
@@ -17,6 +24,13 @@ const AddressInfo = () => {
           <p className="mb-6 text-slate-800 text-center">
             Please add your address to complete the purchase.
           </p>
+
+          <button
+            onClick={addNewAddressHandler}
+            className="px-4 py-2 bg-blue-600 text-white font-medium rounded-sm hover:text-blue-700 transition-all "
+          >
+            Add Address
+          </button>
         </div>
       ) : (
         <div className="relative p-6 rounded-lg max-w-md mx-auto">
