@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import Skeleton from "../shared/Skeleton";
 import { FaAddressBook } from "react-icons/fa";
+import AddressInfoModal from "./AddressInfoModal";
+import AddAddressForm from "./AddAddressForm";
 
 const AddressInfo = () => {
   const [openAddressModal, setOpenAddressModal] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState("");
 
   const addNewAddressHandler = () => {
-    setSelectedAddress("")
+    setSelectedAddress("");
+    setOpenAddressModal(true);
   };
 
   const noAddressExist = true;
@@ -48,6 +51,12 @@ const AddressInfo = () => {
           )}
         </div>
       )}
+
+      <AddressInfoModal 
+      open={openAddressModal} 
+      setOpen={setOpenAddressModal}>
+        <AddAddressForm />
+      </AddressInfoModal>
     </div>
   );
 };
