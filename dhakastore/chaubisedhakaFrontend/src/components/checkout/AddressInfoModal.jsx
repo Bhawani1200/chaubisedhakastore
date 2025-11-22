@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import React from "react";
+import { FaTimes } from "react-icons/fa";
 
 const AddressInfoModal = ({ open, setOpen, children }) => {
   return (
@@ -14,13 +15,12 @@ const AddressInfoModal = ({ open, setOpen, children }) => {
       className="relative z-50"
     >
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="max-w-lg space-y-4 border bg-slate-100 p-12">
-        <div className="px-6 py-6">
-          {children}
-        </div>
-          <div className="flex gap-4">
-            <button onClick={() => setOpen(false)}>Cancel</button>
-            <button onClick={() => setOpen(false)}>Deactivate</button>
+        <DialogPanel className="relative w-full max-w-md mx-auto transform overflow-hidden bg-white rounded-lg shadow-xl transition-all">
+          <div className="px-8 py-2">{children}</div>
+          <div className="flex justify-end absolute right-4 top-2">
+            <button onClick={() => setOpen(false)} type="button">
+              <FaTimes size={25} className="text-slate-700"/>
+            </button>
           </div>
         </DialogPanel>
       </div>

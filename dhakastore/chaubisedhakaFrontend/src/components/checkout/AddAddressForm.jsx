@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { AiOutlineLogin } from "react-icons/ai";
 import InputField from "../shared/InputField";
 import Spinners from "../shared/Spinners";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { FaAddressBook, FaAddressCard } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const AddAddressForm = () => {
-  const [loader, setLoader] = useState(false);
+  const { btnLoader } = useSelector((state) => state.errors);
 
   const {
     register,
@@ -17,68 +18,95 @@ const AddAddressForm = () => {
     mode: "onTouched",
   });
 
-  const loginHandler = () => {};
+  const onSaveAddressHandler = async ({ data }) => {
+    console.log("Clicked me");
+  };
 
   return (
-    <div className="min-h-[calc(100vh-64px)] flex justify-center items-center ]">
-      <form
-        onClick={handleSubmit(loginHandler)}
-        className="sm:w-[450px] w-[360px] shadow-[0_4px_12px_rgba(0,0,0,0.15)] py-8  sm:px-8 px-4 rounded-md"
-      >
-        <div className="flex flex-col items-center justify-center space-y-4">
-          <AiOutlineLogin className="text-slate-800 text-5xl" />
-          <h1 className="text-slate-800 text-center text-montserrat lg:text-3xl text-3xl font-bold">
-            Login Here
-          </h1>
+    <div className="">
+      <form onClick={handleSubmit(onSaveAddressHandler)} className="">
+        <div className="flex justify-center items-center mb-4 font-semibold text-2xl text-slate-800 py-2 px-4">
+          <FaAddressCard className="mr-2 text-2xl" />
+          Add Address
         </div>
         <hr className="mt-2 mb-5 text-black" />
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           <InputField
-            label="UserName"
+            label="City"
             required
-            id="username"
+            id="city"
             type="text"
-            message="*Username is required"
-            placeholder="Enter your name"
+            message="*City is required"
+            placeholder="Enter your city name"
             register={register}
             errors={errors}
           />
 
           <InputField
-            label="Password"
+            label="State"
             required
-            id="password"
-            type="passowrd"
-            message="*Password is required"
-            placeholder="Enter your password"
+            id="state"
+            type="text"
+            message="*State is required"
+            placeholder="Enter your state"
+            register={register}
+            errors={errors}
+          />
+          <InputField
+            label="Country"
+            required
+            id="country"
+            type="text"
+            message="*Country is required"
+            placeholder="Enter your country"
+            register={register}
+            errors={errors}
+          />
+          <InputField
+            label="nagarOrGauPalika"
+            required
+            id="nagarOrGauPalika"
+            type="text"
+            message="*nagarOrGauPalika is required"
+            placeholder="Enter your nagarOrGauPalika"
+            register={register}
+            errors={errors}
+          />
+          <InputField
+            label="Ward"
+            required
+            id="ward"
+            type="number"
+            message="*Ward is required"
+            placeholder="Enter your ward"
+            register={register}
+            errors={errors}
+          />
+          <InputField
+            label="Pincode"
+            id="pincode"
+            type="text"
+            message="*Pincode is required"
+            placeholder="Enter your pincode"
             register={register}
             errors={errors}
           />
         </div>
         <button
-          disabled={loader}
+          disabled={btnLoader}
           type="submit"
-          className="bg-linear-to-r from-purple-500 to-pink-600 flex gap-2 justify-center items-center text-white font-semibold w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-xs my-3"
+          className="text-white px-4 py-2 rounded-m mt-4 bg-blue-500"
         >
-          {loader ? (
+          {btnLoader ? (
             <>
               {" "}
               <Spinners />
               Loading...
             </>
           ) : (
-            <>Login</>
+            <>Save</>
           )}
         </button>
-        <p className="text-slate-800 text-center mt-6 text-sm">
-          Don't have an account?
-          <Link
-            className="font-semibold underline hover:text-black "
-            to="/register"
-          >
-            <span>SignUp</span>
-          </Link>
-        </p>
       </form>
     </div>
   );
