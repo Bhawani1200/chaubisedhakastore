@@ -14,20 +14,19 @@ public class UserInfoResponse {
 
     private List<String> roles;
 
-    public UserInfoResponse(Long id,String jwtToken, String username, List<String> roles) {
+    public UserInfoResponse(Long id, String username, List<String> roles, String email, String jwtToken) {
         this.id = id;
-        this.jwtToken = jwtToken;
         this.username = username;
         this.roles = roles;
+        this.email = email;
+        this.jwtToken = jwtToken;
     }
 
     public UserInfoResponse(Long id, String username, List<String> roles) {
-
         this.id = id;
         this.username = username;
         this.roles = roles;
     }
-
 
     public Long getId() {
         return id;
@@ -45,14 +44,6 @@ public class UserInfoResponse {
         this.jwtToken = jwtToken;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -67,5 +58,13 @@ public class UserInfoResponse {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
