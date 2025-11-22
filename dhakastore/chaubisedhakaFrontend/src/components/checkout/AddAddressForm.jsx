@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import InputField from "../shared/InputField";
 import Spinners from "../shared/Spinners";
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { FaAddressBook, FaAddressCard } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { FaAddressCard } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 
-const AddAddressForm = () => {
+const AddAddressForm = ({ address, setOpenAddressModal }) => {
+  const dispatch = useDispatch();
   const { btnLoader } = useSelector((state) => state.errors);
 
   const {
@@ -18,8 +18,10 @@ const AddAddressForm = () => {
     mode: "onTouched",
   });
 
-  const onSaveAddressHandler = async ({ data }) => {
-    console.log("Clicked me");
+  const onSaveAddressHandler = async (data) => {
+    dispatch(
+      addUpdateUserAddress(data, toast, address?.addressId, setOpenAddressModal)
+    );
   };
 
   return (
