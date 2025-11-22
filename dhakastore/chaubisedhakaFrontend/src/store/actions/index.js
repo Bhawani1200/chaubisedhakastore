@@ -1,5 +1,6 @@
 import { data } from "react-router-dom";
 import api from "../../api/api";
+import { useSelector } from "react-redux";
 
 export const fetchProducts = (queryString) => async (dispatch) => {
   try {
@@ -208,6 +209,11 @@ export const logOutUser = (navigate) => (dispatch) => {
 };
 export const addUpdateUserAddress =
   (sendData, toast, addressId, setOpenAddressModal) => async (dispatch) => {
+    // const { user } = getState().auth;
+    // await api.post("/addresses", sendData, {
+    //   headers: { Authorization: "Bearer " + user.jwtToken },
+    // });
+
     dispatch({ type: "BUTTON_LOADER" });
     try {
       if (!addressId) {
@@ -215,7 +221,6 @@ export const addUpdateUserAddress =
       } else {
         await api.put("addresses/{addressId}", sendData);
       }
-
       toast.success("Address saved successfully");
     } catch (error) {
       console.log(error);
