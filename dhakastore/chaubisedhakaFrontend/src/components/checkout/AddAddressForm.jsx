@@ -45,6 +45,16 @@ const AddAddressForm = ({ address, setOpenAddressModal }) => {
             register={register}
             errors={errors}
           />
+          <InputField
+            label="Street"
+            required
+            id="street"
+            type="text"
+            message="*Street is required"
+            placeholder="Enter your street name"
+            register={register}
+            errors={errors}
+          />
 
           <InputField
             label="State"
@@ -67,25 +77,29 @@ const AddAddressForm = ({ address, setOpenAddressModal }) => {
             errors={errors}
           />
           <InputField
-            label="nagarOrGauPalika"
+            label="nagarOrGaupalika"
             required
-            id="nagarOrGauPalika"
+            id="nagarOrGaupalika" 
+            name="nagarOrGaupalika" 
             type="text"
-            message="*nagarOrGauPalika is required"
-            placeholder="Enter your nagarOrGauPalika"
+            message="*nagarOrGaupalika is required"
+            placeholder="Enter your nagarOrGaupalika"
             register={register}
             errors={errors}
           />
+
           <InputField
-            label="Ward"
+            label="Ward No"
             required
-            id="ward"
+            id="wardNo" 
+            name="wardNo"
             type="number"
-            message="*Ward is required"
+            message="*Ward number is required"
             placeholder="Enter your ward"
             register={register}
             errors={errors}
           />
+
           <InputField
             label="Pincode"
             id="pincode"

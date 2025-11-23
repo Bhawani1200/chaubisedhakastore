@@ -218,6 +218,7 @@ export const addUpdateUserAddress =
     try {
       if (!addressId) {
         const { data } = await api.post("/addresses", sendData);
+        console.log(data);
       } else {
         await api.put("addresses/{addressId}", sendData);
       }
