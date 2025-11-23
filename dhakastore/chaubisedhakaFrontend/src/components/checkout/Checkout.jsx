@@ -26,7 +26,7 @@ const Checkout = () => {
         ))}
       </Stepper>
       <div className="lg:w-[80%] mw-auto py-5">
-        {activeStep === 0 && <AddressInfo />}
+        {activeStep === 0 && <AddressInfo address={address} />}
       </div>
     </div>
   );

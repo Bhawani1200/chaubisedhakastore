@@ -3,8 +3,10 @@ import Skeleton from "../shared/Skeleton";
 import { FaAddressBook } from "react-icons/fa";
 import AddressInfoModal from "./AddressInfoModal";
 import AddAddressForm from "./AddAddressForm";
+import { useSelector } from "react-redux";
+import AddressList from "./AddressList";
 
-const AddressInfo = () => {
+const AddressInfo = ({ address }) => {
   const [openAddressModal, setOpenAddressModal] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState("");
 
@@ -13,8 +15,8 @@ const AddressInfo = () => {
     setOpenAddressModal(true);
   };
 
-  const noAddressExist = true;
-  const isLoading = false;
+  const noAddressExist = !address || address.length === 0;
+  const { isLoading, btnLoader } = useSelector((state) => state.auth);
 
   return (
     <div className="pt-4 ">
@@ -46,7 +48,11 @@ const AddressInfo = () => {
             </div>
           ) : (
             <div className="space-y-4 pt-6">
-              <p>Address list here...</p>
+              <AddressList
+                addresses={address}
+                setSelectedAddress={setSelectedAddress}
+                setOpenAddressModal={setOpenAddressModal}
+              />
             </div>
           )}
         </div>
