@@ -243,7 +243,15 @@ export const getUserAddresses = () => async (dispatch, getState) => {
     console.log(error);
     dispatch({
       type: "IS_ERROR",
-      payload: error?.response?.data?.message || "Failed to fetch users addresses ",
+      payload:
+        error?.response?.data?.message || "Failed to fetch users addresses ",
     });
   }
+};
+
+export const selectUserCheckoutAddress = (address) => {
+  return {
+    type: "SELECT_CHECKOUT_ADDRESS",
+    payload: address,
+  };
 };

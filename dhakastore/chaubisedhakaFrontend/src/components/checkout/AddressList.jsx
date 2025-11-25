@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PiCityFill } from "react-icons/pi";
 import {
   FaCheckCircle,
@@ -11,6 +11,7 @@ import {
 import { FaLocationCrosshairs, FaMapLocationDot } from "react-icons/fa6";
 import { IoFlagSharp } from "react-icons/io5";
 import { MdPlace } from "react-icons/md";
+import { selectUserCheckoutAddress } from "../../store/actions";
 
 const AddressList = ({
   addresses,
@@ -18,10 +19,10 @@ const AddressList = ({
   setOpenAddressModal,
 }) => {
   const dispatch = useDispatch();
-  const selectedUserAddress = addresses[0];
+  const { selectedUserCheckoutAddress } = useSelector((state) => state.auth);
 
   const handleAddressSelection = (addresses) => {
-    
+    dispatch(selectUserCheckoutAddress(addresses));
   };
 
   const onEditButtonHandler = (addresses) => {
@@ -40,7 +41,7 @@ const AddressList = ({
           key={address.addressId}
           onClick={() => handleAddressSelection(address)}
           className={`p-4 border rounded-md relative cursor-pointer ${
-            selectedUserAddress?.addressId === address.addressId
+            selectedUserCheckoutAddress?.addressId === address.addressId
               ? "bg-green-200"
               : "bg-white"
           }`}
@@ -50,7 +51,7 @@ const AddressList = ({
               <div className="flex items-center">
                 <PiCityFill size={35} className="mr-2 text-gray-600" />
                 <p className="font-semibold ">{address.city}</p>
-                {selectedUserAddress?.addressId === address.addressId && (
+                {selectedUserCheckoutAddress?.addressId === address.addressId && (
                   <FaCheckCircle className="text-green-500 ml-3" />
                 )}
               </div>
