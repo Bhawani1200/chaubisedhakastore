@@ -47,13 +47,25 @@ const AddressInfo = ({ address }) => {
               <Skeleton />
             </div>
           ) : (
-            <div className="space-y-4 pt-6">
-              <AddressList
-                addresses={address}
-                setSelectedAddress={setSelectedAddress}
-                setOpenAddressModal={setOpenAddressModal}
-              />
-            </div>
+            <>
+              <div className="space-y-4 pt-6">
+                <AddressList
+                  addresses={address}
+                  setSelectedAddress={setSelectedAddress}
+                  setOpenAddressModal={setOpenAddressModal}
+                />
+              </div>
+              {address.length > 0 && (
+                <div className="mt-4">
+                  <button
+                    onClick={addNewAddressHandler}
+                    className="px-4 py-2 bg-blue-600 text-white font-medium rounded-sm hover:text-blue-700 transition-all "
+                  >
+                    Add More
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
