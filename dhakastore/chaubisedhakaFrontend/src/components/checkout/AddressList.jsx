@@ -17,6 +17,7 @@ const AddressList = ({
   addresses,
   setSelectedAddress,
   setOpenAddressModal,
+  setOpenDeleteModal,
 }) => {
   const dispatch = useDispatch();
   const { selectedUserCheckoutAddress } = useSelector((state) => state.auth);
@@ -32,6 +33,7 @@ const AddressList = ({
 
   const onDeleteButtonHandler = (addresses) => {
     setSelectedAddress(addresses);
+    setOpenDeleteModal(true);
   };
 
   return (
@@ -51,7 +53,8 @@ const AddressList = ({
               <div className="flex items-center">
                 <PiCityFill size={35} className="mr-2 text-gray-600" />
                 <p className="font-semibold ">{address.city}</p>
-                {selectedUserCheckoutAddress?.addressId === address.addressId && (
+                {selectedUserCheckoutAddress?.addressId ===
+                  address.addressId && (
                   <FaCheckCircle className="text-green-500 ml-3" />
                 )}
               </div>

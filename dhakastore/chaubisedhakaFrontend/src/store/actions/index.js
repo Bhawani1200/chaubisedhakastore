@@ -220,7 +220,7 @@ export const addUpdateUserAddress =
       if (!addressId) {
         const { data } = await api.post("/addresses", sendData);
       } else {
-        await api.put(`/addresses/{addressId}`, sendData);
+        await api.put(`/addresses/${addressId}`, sendData);
       }
       dispatch(getUserAddresses());
       toast.success("Address saved successfully");
@@ -256,3 +256,22 @@ export const selectUserCheckoutAddress = (address) => {
     payload: address,
   };
 };
+
+export const deleteUserAddress =
+  (toast, addressId, setOpenDeleteModal) => async (dispatch) => {
+    try {
+      dispatch({ type: "BUTTON_LOADER" });
+      dispatch(getUserAddresses());
+      await api.delete(`/addresses/${addressId}`);
+      toast.success("Address deleted successfully");
+      dispatch({ type: "IS_SUCCESS" });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: "IS_ERROR",
+        payload: error?.response?.data?.message || "Internal server error",
+      });
+    } finally {
+      setOpenDeleteModal(false);
+    }
+  };
