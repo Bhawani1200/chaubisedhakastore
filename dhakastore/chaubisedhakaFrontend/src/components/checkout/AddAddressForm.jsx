@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "../shared/InputField";
 import Spinners from "../shared/Spinners";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,7 @@ const AddAddressForm = ({ address, setOpenAddressModal }) => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: "onTouched",
@@ -26,12 +27,22 @@ const AddAddressForm = ({ address, setOpenAddressModal }) => {
     );
   };
 
+  useEffect(() => {
+    setValue("city", address?.city);
+    setValue("street", address?.street);
+    setValue("state", address?.state);
+    setValue("country", address?.country);
+    setValue("nagarOrGaupalika", address?.nagarOrGaupalika);
+    setValue("wardNo", address?.wardNo);
+    setValue("pincode", address?.pincode);
+  }, [address]);
+
   return (
     <div className="">
-      <form onClick={handleSubmit(onSaveAddressHandler)} className="">
+      <form onSubmit={handleSubmit(onSaveAddressHandler)} className="">
         <div className="flex justify-center items-center mb-4 font-semibold text-2xl text-slate-800 py-2 px-4">
           <FaAddressCard className="mr-2 text-2xl" />
-          Add Address
+          {!address?.addressId ? "Add Address" : "update address"}
         </div>
         <hr className="mt-2 mb-5 text-black" />
         <div className="flex flex-col gap-4">
@@ -79,8 +90,8 @@ const AddAddressForm = ({ address, setOpenAddressModal }) => {
           <InputField
             label="nagarOrGaupalika"
             required
-            id="nagarOrGaupalika" 
-            name="nagarOrGaupalika" 
+            id="nagarOrGaupalika"
+            name="nagarOrGaupalika"
             type="text"
             message="*nagarOrGaupalika is required"
             placeholder="Enter your nagarOrGaupalika"
@@ -91,7 +102,7 @@ const AddAddressForm = ({ address, setOpenAddressModal }) => {
           <InputField
             label="Ward No"
             required
-            id="wardNo" 
+            id="wardNo"
             name="wardNo"
             type="number"
             message="*Ward number is required"

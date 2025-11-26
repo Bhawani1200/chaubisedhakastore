@@ -219,11 +219,12 @@ export const addUpdateUserAddress =
     try {
       if (!addressId) {
         const { data } = await api.post("/addresses", sendData);
-        console.log(data);
       } else {
-        await api.put("addresses/{addressId}", sendData);
+        await api.put(`/addresses/{addressId}`, sendData);
       }
+      dispatch(getUserAddresses());
       toast.success("Address saved successfully");
+      dispatch({ type: "IS_SUCCESS" });
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || "Internal server error");
