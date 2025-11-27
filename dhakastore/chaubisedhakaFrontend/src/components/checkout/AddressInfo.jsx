@@ -91,7 +91,7 @@ const AddressInfo = ({ address }) => {
       </AddressInfoModal>
 
       <DeleteModal
-        open={openAddressModal}
+        open={openDeleteModal}
         loader={btnLoader}
         setOpen={setOpenDeleteModal}
         title="Delete Address"

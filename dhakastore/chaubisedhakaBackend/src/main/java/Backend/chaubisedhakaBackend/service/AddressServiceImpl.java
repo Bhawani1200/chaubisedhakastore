@@ -6,6 +6,7 @@ import Backend.chaubisedhakaBackend.model.User;
 import Backend.chaubisedhakaBackend.payload.AddressDTO;
 import Backend.chaubisedhakaBackend.repositories.AddressRepository;
 import Backend.chaubisedhakaBackend.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,16 +83,41 @@ public class AddressServiceImpl implements AddressService{
         return modelMapper.map(updatedAddress,AddressDTO.class);
     }
 
-    @Override
-    public String deleteAddress(Long addressId) {
-        Address addFromDatabase=addressRepository.findById(addressId)
-                .orElseThrow(()->new ResourceNotFoundException("Address","addressId",addressId));
+//    @Override
+//    public String deleteAddress(Long addressId) {
+//        Address addFromDatabase=addressRepository.findById(addressId)
+//                .orElseThrow(()->new ResourceNotFoundException("Address","addressId",addressId));
+//
+//        User user=addFromDatabase.getUser();
+//        user.getAddresses().removeIf(address -> address.getAddressId().equals(addressId));
+//        userRepository.save(user);
+//        addressRepository.delete(addFromDatabase);
+//
+//        return "Address deleted successfully with addressId: "+addressId;
+//    }
+@Override
+@Transactional
+public String deleteAddress(Long addressId) {
 
-        User user=addFromDatabase.getUser();
-        user.getAddresses().removeIf(address -> address.getAddressId().equals(addressId));
+    Address address = addressRepository.findById(addressId)
+            .orElseThrow(() -> new ResourceNotFoundException("Address", "addressId", addressId));
+
+    User user = address.getUser();
+
+    if (user != null) {
+        // Remove from user's list
+        user.getAddresses().remove(address);
+
+        // Important: break the FK link
+        address.setUser(null);
+
         userRepository.save(user);
-        addressRepository.delete(addFromDatabase);
-
-        return "Address deleted successfully with addressId: "+addressId;
     }
+
+    // Now it's safe to delete
+    addressRepository.delete(address);
+
+    return "Address deleted successfully with addressId: " + addressId;
+}
+
 }
