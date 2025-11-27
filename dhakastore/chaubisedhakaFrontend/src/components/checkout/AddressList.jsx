@@ -42,7 +42,7 @@ const AddressList = ({
         <div
           key={address.addressId}
           onClick={() => handleAddressSelection(address)}
-          className={`p-4 border rounded-md relative cursor-pointer ${
+          className={`p-4 border rounded-md relative cursor-pointer  ${
             selectedUserCheckoutAddress?.addressId === address.addressId
               ? "bg-green-200"
               : "bg-white"
@@ -104,3 +104,6 @@ const AddressList = ({
 };
 
 export default AddressList;
+
+
+

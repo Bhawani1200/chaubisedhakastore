@@ -262,6 +262,7 @@ export const deleteUserAddress =
     try {
       dispatch({ type: "BUTTON_LOADER" });
       dispatch(getUserAddresses());
+      dispatch(clearCheckoutAddress());
       await api.delete(`/addresses/${addressId}`);
       toast.success("Address deleted successfully");
       dispatch({ type: "IS_SUCCESS" });
@@ -275,3 +276,9 @@ export const deleteUserAddress =
       setOpenDeleteModal(false);
     }
   };
+
+export const clearCheckoutAddress = () => {
+  return {
+    type: "REMOVE_CHECKOUT_ADDRESS",
+  };
+};
