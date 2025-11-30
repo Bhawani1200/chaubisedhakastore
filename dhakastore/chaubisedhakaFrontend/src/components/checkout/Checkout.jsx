@@ -6,6 +6,7 @@ import { getUserAddresses } from "../../store/actions";
 import toast from "react-hot-toast";
 import Skeleton from "../shared/Skeleton";
 import ErrorPage from "../shared/ErrorPage";
+import PaymentMethod from "./PaymentMethod";
 
 const steps = ["Address", "Payment Method", "Order Summary", "Payment"];
 
@@ -58,6 +59,7 @@ const Checkout = () => {
       ) : (
         <div className="lg:w-[80%] mx-auto py-5">
           {activeStep === 0 && <AddressInfo address={address} />}
+          {activeStep === 1 && <PaymentMethod />}
         </div>
       )}
       <div
