@@ -34,7 +34,6 @@ public class Address {
     @Size(min=4,message = "Country name must be atleast 4 characters")
     private String country;
 
-
     @NotBlank
     @Size(min=4,message = "This name must be atleast 4 characters")
     private String nagarOrGaupalika;
@@ -42,7 +41,6 @@ public class Address {
     @NotNull
     @Min(value = 1, message = "Ward number must be at least 1")
     private Long wardNo;
-
 
     private String pincode;
 

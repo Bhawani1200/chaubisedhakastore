@@ -5,6 +5,7 @@ import Backend.chaubisedhakaBackend.model.Cart;
 import Backend.chaubisedhakaBackend.model.CartItem;
 import Backend.chaubisedhakaBackend.model.Product;
 import Backend.chaubisedhakaBackend.payload.CartDTO;
+import Backend.chaubisedhakaBackend.payload.CartItemDTO;
 import Backend.chaubisedhakaBackend.payload.ProductDTO;
 import Backend.chaubisedhakaBackend.repositories.CartItemRepository;
 import Backend.chaubisedhakaBackend.repositories.CartRepository;
@@ -253,6 +254,21 @@ public class CartServiceImpl implements CartService{
 
         cartItem=cartItemRepository.save(cartItem);
 
+    }
+
+    @Override
+    public String createOrUpdateCartWIthItems(List<CartItemDTO> cartItems) {
+        String emailId=authUtil.loggedInEmail();
+
+        Cart existingCart=cartRepository.findCartByEmail(emailId);
+        if(existingCart == null){
+            existingCart=new Cart();
+            existingCart.setTotalPrice(0.00);
+            existingCart.setUser(authUtil.loggedInUser());
+            existingCart=cartRepository.save(existingCart);
+        }
+
+        return null;
     }
 
 }

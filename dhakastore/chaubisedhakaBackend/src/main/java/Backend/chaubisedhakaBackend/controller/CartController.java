@@ -2,6 +2,7 @@ package Backend.chaubisedhakaBackend.controller;
 
 import Backend.chaubisedhakaBackend.model.Cart;
 import Backend.chaubisedhakaBackend.payload.CartDTO;
+import Backend.chaubisedhakaBackend.payload.CartItemDTO;
 import Backend.chaubisedhakaBackend.repositories.CartRepository;
 import Backend.chaubisedhakaBackend.service.CartService;
 import Backend.chaubisedhakaBackend.util.AuthUtil;
@@ -24,6 +25,12 @@ public class CartController {
 
     @Autowired
     private AuthUtil authUtil;
+
+    @PostMapping("/cart/create")
+    public ResponseEntity<String>createOrUpdateCart(@RequestBody List<CartItemDTO> cartItems){
+        String response=cartService.createOrUpdateCartWIthItems(cartItems);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
 
     @PostMapping("/carts/products/{productId}/quantity/{quantity}")
     public ResponseEntity<CartDTO>addProductToCart(@PathVariable Long productId,
