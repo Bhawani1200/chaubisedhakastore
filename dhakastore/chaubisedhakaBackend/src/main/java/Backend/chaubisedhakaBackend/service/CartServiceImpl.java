@@ -38,9 +38,6 @@ public class CartServiceImpl implements CartService{
     @Autowired
     ModelMapper modelMapper;
 
-    @Autowired
-    CartItemDTO cartItemDTO;
-
     @Override
     public CartDTO addProductToCart(Long productId, Integer quantity) {
         Cart cart=createCart();
@@ -277,13 +274,13 @@ public class CartServiceImpl implements CartService{
         double totalPrice=0.00;
 
          for (CartItemDTO cartItemDTO:cartItems){
-             Long productId=cartItemDTO.getProductDTO().getProductId();
+             Long productId=cartItemDTO.getProductId();
              Integer quantity=cartItemDTO.getQuantity();
 
              Product product=productRepository.findById(productId)
                      .orElseThrow(()->new ResourceNotFoundException("Product","productId",productId));
 
-             product.setQuantity(product.getQuantity()-quantity);
+//             product.setQuantity(product.getQuantity()-quantity);
              totalPrice+=product.getSpecialPrice()*quantity;
 
              CartItem cartItem=new CartItem();
