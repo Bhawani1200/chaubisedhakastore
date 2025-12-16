@@ -38,6 +38,9 @@ public class CartServiceImpl implements CartService{
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    CartItemDTO cartItemDTO;
+
     @Override
     public CartDTO addProductToCart(Long productId, Integer quantity) {
         Cart cart=createCart();
@@ -256,6 +259,7 @@ public class CartServiceImpl implements CartService{
 
     }
 
+    @Transactional
     @Override
     public String createOrUpdateCartWIthItems(List<CartItemDTO> cartItems) {
         String emailId=authUtil.loggedInEmail();
@@ -266,9 +270,35 @@ public class CartServiceImpl implements CartService{
             existingCart.setTotalPrice(0.00);
             existingCart.setUser(authUtil.loggedInUser());
             existingCart=cartRepository.save(existingCart);
+        }else {
+            cartItemRepository.deleteAllByCardId(existingCart.getCartId());
         }
 
-        return null;
+        double totalPrice=0.00;
+
+         for (CartItemDTO cartItemDTO:cartItems){
+             Long productId=cartItemDTO.getProductDTO().getProductId();
+             Integer quantity=cartItemDTO.getQuantity();
+
+             Product product=productRepository.findById(productId)
+                     .orElseThrow(()->new ResourceNotFoundException("Product","productId",productId));
+
+             product.setQuantity(product.getQuantity()-quantity);
+             totalPrice+=product.getSpecialPrice()*quantity;
+
+             CartItem cartItem=new CartItem();
+             cartItem.setProduct(product);
+             cartItem.setQuantity(quantity);
+             cartItem.setCart(existingCart);
+             cartItem.setProductPrice(product.getSpecialPrice());
+             cartItem.setDiscount(product.getDiscount());
+             cartItemRepository.save(cartItem);
+
+
+        }
+        existingCart.setTotalPrice(totalPrice);
+        cartRepository.save(existingCart);
+        return "Cart updated/created with new items successfully";
     }
 
 }
