@@ -27,9 +27,18 @@ public class CartController {
     private AuthUtil authUtil;
 
     @PostMapping("/cart/create")
-    public ResponseEntity<String>createOrUpdateCart(@RequestBody List<CartItemDTO> cartItems){
-        String response=cartService.createOrUpdateCartWIthItems(cartItems);
+    public ResponseEntity<String> createOrUpdateCart(@RequestBody List<CartItemDTO> cartItems){
+        String response = cartService.createOrUpdateCartWIthItems(cartItems);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/carts/users/cart")
+    public ResponseEntity<CartDTO>getCartById(){
+        String emailId=authUtil.loggedInEmail();
+        Cart cart=cartRepository.findCartByEmail(emailId);
+        Long cartId=cart.getCartId();
+        CartDTO cartDTO=cartService.getCart(emailId,cartId);
+        return new ResponseEntity<>(cartDTO,HttpStatus.OK);
     }
 
     @PostMapping("/carts/products/{productId}/quantity/{quantity}")
@@ -45,14 +54,7 @@ public class CartController {
         return new ResponseEntity<List<CartDTO>>(cartDTOS,HttpStatus.FOUND);
     }
 
-    @GetMapping("/carts/users/cart")
-    public ResponseEntity<CartDTO>getCartById(){
-        String emailId=authUtil.loggedInEmail();
-        Cart cart=cartRepository.findCartByEmail(emailId);
-        Long cartId=cart.getCartId();
-        CartDTO cartDTO=cartService.getCart(emailId,cartId);
-        return new ResponseEntity<>(cartDTO,HttpStatus.OK);
-    }
+
 
     @PutMapping("/cart/products/{productId}/quantity/{operation}")
     public ResponseEntity<CartDTO> updateCartProduct(@PathVariable Long productId,
