@@ -6,7 +6,6 @@ import { getUserAddresses } from "../../store/actions";
 import toast from "react-hot-toast";
 import Skeleton from "../shared/Skeleton";
 import ErrorPage from "../shared/ErrorPage";
-import PaymentMethod from "./PaymentMethod";
 import OrderSummary from "./OrderSummary";
 
 const steps = ["Address", "Payment Method", "Order Summary", "Payment"];
@@ -62,7 +61,7 @@ const Checkout = () => {
       ) : (
         <div className="lg:w-[80%] mx-auto py-5">
           {activeStep === 0 && <AddressInfo address={address} />}
-          {activeStep === 1 && <PaymentMethod />}
+          {activeStep === 1 && <paymentMethod />}
           {activeStep === 2 && (
             <OrderSummary
               totalPrice={totalPrice}
@@ -70,6 +69,15 @@ const Checkout = () => {
               address={selectedUserCheckoutAddress}
               paymentMethod={paymentMethod}
             />
+          )}
+          {activeStep == 3 && (
+            <>
+              {paymentMethod === "Stripe" ? (
+                <StripePayment />
+              ) : (
+                <PaypalPayment />
+              )}
+            </>
           )}
         </div>
       )}
