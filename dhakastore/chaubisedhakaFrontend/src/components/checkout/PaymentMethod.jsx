@@ -55,6 +55,12 @@ const PaymentMethod = () => {
               label="Khalti"
               className="text-gray-700"
             />
+            <FormControlLabel
+              value="stripe"
+              control={<Radio color="primary" />}
+              label="Stripe"
+              className="text-gray-700"
+            />
           </RadioGroup>
         </FormControl>
       </FormControl>

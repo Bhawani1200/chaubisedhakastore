@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Skeleton from "../shared/Skeleton";
 import ErrorPage from "../shared/ErrorPage";
 import PaymentMethod from "./PaymentMethod";
+import OrderSummary from "./OrderSummary";
 
 const steps = ["Address", "Payment Method", "Order Summary", "Payment"];
 
@@ -18,9 +19,11 @@ const Checkout = () => {
     (state) => state.auth
   );
 
+  const { cart, totalPrice } = useSelector((state) => state.carts);
+
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
 
-  const paymentMethod = false;
+  const { paymentMethod } = useSelector((state) => state.payment);
 
   useEffect(() => {
     dispatch(getUserAddresses());
@@ -60,6 +63,14 @@ const Checkout = () => {
         <div className="lg:w-[80%] mx-auto py-5">
           {activeStep === 0 && <AddressInfo address={address} />}
           {activeStep === 1 && <PaymentMethod />}
+          {activeStep === 2 && (
+            <OrderSummary
+              totalPrice={totalPrice}
+              cart={cart}
+              address={selectedUserCheckoutAddress}
+              paymentMethod={paymentMethod}
+            />
+          )}
         </div>
       )}
       <div
