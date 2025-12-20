@@ -7,6 +7,9 @@ import toast from "react-hot-toast";
 import Skeleton from "../shared/Skeleton";
 import ErrorPage from "../shared/ErrorPage";
 import OrderSummary from "./OrderSummary";
+import PaymentMethod from "./PaymentMethod";
+import StripePayment from "./StripePayment";
+import PaypalPayment from "./PaypalPayment";
 
 const steps = ["Address", "Payment Method", "Order Summary", "Payment"];
 
@@ -61,7 +64,7 @@ const Checkout = () => {
       ) : (
         <div className="lg:w-[80%] mx-auto py-5">
           {activeStep === 0 && <AddressInfo address={address} />}
-          {activeStep === 1 && <paymentMethod />}
+          {activeStep === 1 && <PaymentMethod />}
           {activeStep === 2 && (
             <OrderSummary
               totalPrice={totalPrice}
