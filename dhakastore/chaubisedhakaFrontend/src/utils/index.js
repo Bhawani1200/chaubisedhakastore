@@ -1,3 +1,4 @@
+import { FaBoxOpen, FaHome, FaShoppingCart, FaStore, FaThList } from "react-icons/fa";
 import { image1, image2, image3 } from "./constants";
 
 export const bannerList = [
@@ -23,5 +24,34 @@ export const bannerList = [
     title: "Festive Splendor",
     subtitle: "Celebrate in style with our festive collection",
     description: "Perfect for weddings, festivals, and special occasions",
+  },
+];
+
+export const adminNavigation = [
+  {
+    name: "Dashboard",
+    href: "/admin",
+    icon: FaHome,
+    current: true,
+  },
+  {
+    name: "Orders",
+    href: "/admin/orders",
+    icon: FaShoppingCart,
+  },
+  {
+    name: "Products",
+    href: "/admin/products",
+    icon: FaBoxOpen,
+  },
+  {
+    name: "Categories",
+    href: "/admin/categories",
+    icon: FaThList,
+  },
+  {
+    name: "Sellers",
+    href: "/admin/sellers",
+    icon: FaStore,
   },
 ];

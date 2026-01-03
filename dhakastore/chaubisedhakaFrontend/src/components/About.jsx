@@ -1,4 +1,3 @@
-
 import ProductCard from "./shared/ProductCard";
 const products = [
   {
