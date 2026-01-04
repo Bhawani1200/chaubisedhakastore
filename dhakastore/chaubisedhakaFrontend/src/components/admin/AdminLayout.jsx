@@ -1,9 +1,17 @@
-import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import {
+  Button,
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+  TransitionChild,
+} from "@headlessui/react";
 
 import React, { useState } from "react";
 import Sidebar from "../shared/Sidebar";
-import { FaBars } from "react-icons/fa";
+import { FaBars  } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
+import { RxCross1 } from 'react-icons/rx';
 
 const AdminLayout = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -11,36 +19,33 @@ const AdminLayout = () => {
     <div>
       <Dialog
         open={sideBarOpen}
-        as="div"
-        className="relative z-10 focus:outline-none"
-        onClose={setSideBarOpen}
+        className="relative z-50 xl:hidden"
+        onClose={() => setSideBarOpen(false)}
       >
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4">
-            <DialogPanel
-              transition
-              className="w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
-            >
-              <DialogTitle
-                as="h3"
-                className="text-base/7 font-medium text-white"
-              >
-                Payment successful
-              </DialogTitle>
-              <p className="mt-2 text-sm/6 text-white/50">
-                Your payment has been successfully submitted. We’ve sent you an
-                email with all of the details of your order.
-              </p>
-              <div className="mt-4">
-                <Button
-                  className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700"
-                  onClick={close}
+        <DialogBackdrop
+          transition
+          className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"
+        />
+
+        <div className="fixed inset-0 flex">
+          <DialogPanel
+            transition
+            className="relative mr-16 flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out data-closed:-translate-x-full"
+          >
+            <TransitionChild>
+              <div className="absolute left-full top-0 flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
+                <button
+                  type="button"
+                  onClick={() => setSideBarOpen(false)}
+                  className="-m-2.5 p-2.5"
                 >
-                  Got it, thanks!
-                </Button>
+                  <span className="sr-only"> Close Sidebar</span>
+                  <RxCross1 className="text-white text-2xl" />
+                </button>
               </div>
-            </DialogPanel>
-          </div>
+            </TransitionChild>
+            <Sidebar />
+          </DialogPanel>
         </div>
       </Dialog>
 
