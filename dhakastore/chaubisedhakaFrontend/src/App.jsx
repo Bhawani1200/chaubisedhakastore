@@ -13,6 +13,11 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Checkout from "./components/checkout/Checkout";
 import AdminLayout from "./components/admin/AdminLayout";
+import DashBoard from "./components/admin/dashboard/DashBoard";
+import AdminProduct from "./components/admin/product/AdminProduct";
+import Sellers from "./components/admin/sellers/Sellers";
+import Category from "./components/admin/categories/Category";
+import Orders from "./components/admin/orders/Orders";
 
 function App() {
   return (
@@ -20,20 +25,28 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/products" element={<Products />}></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
+
           <Route path="/" element={<PrivateRoute />}>
-            <Route path="/checkout" element={<Checkout />}></Route>
+            <Route path="/checkout" element={<Checkout />} />
           </Route>
+
           <Route path="/" element={<PrivateRoute publicPage />}>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/register" element={<Register />}></Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Route>
-          <Route path="/" element={<PrivateRoute />}>
-            <Route path="/admin" element={<AdminLayout />}>             
+
+          <Route path="/" element={<PrivateRoute adminOnly />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="" element={<DashBoard />} />
+              <Route path="products" element={<AdminProduct />} />
+              <Route path="sellers" element={<Sellers />} />
+              <Route path="categories" element={<Category />} />
+              <Route path="orders" element={<Orders />} />
             </Route>
           </Route>
         </Routes>

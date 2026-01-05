@@ -9,9 +9,9 @@ import {
 
 import React, { useState } from "react";
 import Sidebar from "../shared/Sidebar";
-import { FaBars  } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
-import { RxCross1 } from 'react-icons/rx';
+import { RxCross1 } from "react-icons/rx";
 
 const AdminLayout = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
