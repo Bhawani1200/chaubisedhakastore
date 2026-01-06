@@ -334,7 +334,7 @@ export const analyticsAction = () => async (dispatch, getState) => {
     dispatch({ type: "IS_FETCHING" });
     const { data } = await api.get("/admin/app/analytics");
     dispatch({
-      type: "IS_SUCCESS",
+      type: "FETCH_ANALYTICS",
       payload: data,
     });
     dispatch({
