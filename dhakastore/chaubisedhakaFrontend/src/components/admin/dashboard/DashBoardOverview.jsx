@@ -16,7 +16,7 @@ const DashBoardOverview = ({ title, amount, icon, revenue = false }) => {
           </h3>
         </div>
         <h1 className="font-bold text-slate-800 text-3xl">
-          {revenue ? "$" : null}
+          {revenue ? "रु" : null}
           {revenue ? formatRevenue(convertedAmount) : convertedAmount}
         </h1>
       </div>
