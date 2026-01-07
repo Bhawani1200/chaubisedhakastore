@@ -344,7 +344,34 @@ export const analyticsAction = () => async (dispatch, getState) => {
     console.log(error);
     dispatch({
       type: "IS_ERROR",
-      payload: error?.response?.data?.message || "Failed to fetch analytics data",
+      payload:
+        error?.response?.data?.message || "Failed to fetch analytics data",
     });
   }
 };
+
+export const getOrdersForDashboard =
+  (isAdmin, queryString) => async (dispatch) => {
+    try {
+      dispatch({ type: "IS_FETCHING" });
+      // const endPoint = isAdmin ? "/admin/orders" : "/seller/orders";
+      const { data } = await api.get(`/admin/orders?${queryString}`);
+      dispatch({
+        type: "GET_ADMIN_ORDERS",
+        payload: data.content,
+        pageNumber: data.pageNumber,
+        pgeSize: data.pageSize,
+        totalElements: data.totalElements,
+        totalPages: data.totalPages,
+        lastPage: data.lastPage,
+      });
+      dispatch({ type: "IS_SUCCESS" });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: "IS_ERROR",
+        payload:
+          error?.response?.data?.message || "Failed to fetch orders data ",
+      });
+    }
+  };
