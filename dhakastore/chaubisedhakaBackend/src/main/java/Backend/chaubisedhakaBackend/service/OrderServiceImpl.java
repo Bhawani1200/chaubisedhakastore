@@ -135,10 +135,10 @@ public class OrderServiceImpl implements OrderService{
         List<OrderDTO> orderDTOs = orders.stream()
                 .map(order -> modelMapper.map(order, OrderDTO.class))
                 .toList();
-        OrderResponse orderResponse = new OrderResponse();
-        orderResponse.setContent(orderDTOs);
-        orderResponse.setPageNumber(pageOrders.getNumber());
-        orderResponse.setPageSize(pageOrders.getSize());
+       OrderResponse orderResponse=new OrderResponse();
+       orderResponse.setContent(orderDTOs);
+       orderResponse.setPageNumber(pageOrders.getNumber());
+       orderResponse.setPageSize(pageOrders.getSize());
         orderResponse.setTotalElements(pageOrders.getTotalElements());
         orderResponse.setTotalPages(pageOrders.getTotalPages());
         orderResponse.setLastPage(pageOrders.isLast());
