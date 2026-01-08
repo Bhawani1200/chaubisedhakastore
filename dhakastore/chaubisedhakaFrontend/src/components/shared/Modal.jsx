@@ -1,7 +1,5 @@
-import React from "react";
-
-import Modal from "@mui/material/Modal";
 import {
+  Description,
   Dialog,
   DialogBackdrop,
   DialogPanel,
@@ -9,7 +7,7 @@ import {
 } from "@headlessui/react";
 import { RxCross1 } from "react-icons/rx";
 
-const Modal = ({ open, setOpen, children, title = "" }) => {
+function Modal({ open, setOpen, children, title = "" }) {
   return (
     <>
       <Dialog
@@ -52,6 +50,6 @@ const Modal = ({ open, setOpen, children, title = "" }) => {
       </Dialog>
     </>
   );
-};
+}
 
 export default Modal;

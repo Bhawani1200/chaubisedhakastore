@@ -7,8 +7,14 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
+import Modal from "../../shared/Modal";
+import UpdateOrderForm from "./UpdateOrderForm";
 
 const OrderTable = ({ adminOrder, pagination }) => {
+  const [updateOpenModal, setUpdateOpenModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
+  const [loader,setLoader] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(
     pagination?.pageNumber + 1 || 1
   );
@@ -34,6 +40,10 @@ const OrderTable = ({ adminOrder, pagination }) => {
     navigate(`${pathname}?${params}`);
   };
 
+  const handleEdit = (order) => {
+    setUpdateOpenModal(true);
+  };
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-slate-800 text-center pb-6 uppercase ">
@@ -43,7 +53,7 @@ const OrderTable = ({ adminOrder, pagination }) => {
         <DataGrid
           className="w-full"
           rows={tableRecords}
-          columns={adminOrderTableColumn}
+          columns={adminOrderTableColumn(handleEdit)}
           paginationMode="server"
           rowCount={pagination?.totalElements || 0}
           initialState={{
@@ -66,6 +76,20 @@ const OrderTable = ({ adminOrder, pagination }) => {
           }}
         />
       </div>
+      <Modal
+        open={updateOpenModal}
+        setOpen={setUpdateOpenModal}
+        title="Update Order Status"
+      >
+        <UpdateOrderForm
+          setOpen={setUpdateOpenModal}
+          open={updateOpenModal}
+          loader={loader}
+          setLoader={setLoader}
+          selectedId={selectedItem.id}
+          selectedItem={selectedItem}
+        />
+      </Modal>
     </div>
   );
 };

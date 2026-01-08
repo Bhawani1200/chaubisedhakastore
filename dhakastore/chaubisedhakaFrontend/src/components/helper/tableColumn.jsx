@@ -1,6 +1,6 @@
 import { FaEdit } from "react-icons/fa";
 
-export const adminOrderTableColumn = [
+export const adminOrderTableColumn=(handleEdit)=> [
   {
     sortable: false,
     disableColumnMenu: true,
@@ -11,7 +11,7 @@ export const adminOrderTableColumn = [
     editable: false,
     headerClassName: "text-black font-semibold border text-center",
     cellClassName: "font-normal text-slate-700 border text-center",
-    renderHeader: (params) => <span>Order ID</span>
+    renderHeader: (params) => <span>Order ID</span>,
   },
   {
     sortable: false,
@@ -31,7 +31,7 @@ export const adminOrderTableColumn = [
     field: "totalAmount",
     headerName: "Total Amount",
     headerAlign: "center",
-    minWidth: 150,
+    minWidth: 180,
     editable: false,
     headerClassName: "text-black font-semibold border text-center",
     cellClassName: "font-normal text-slate-700 border text-center",
@@ -43,7 +43,7 @@ export const adminOrderTableColumn = [
     field: "status",
     headerName: "Status",
     headerAlign: "center",
-    minWidth: 150,
+    minWidth: 180,
     editable: false,
     headerClassName: "text-black font-semibold  text-center",
     cellClassName: "font-normal text-slate-700 border text-center",
@@ -75,7 +75,10 @@ export const adminOrderTableColumn = [
     renderCell: (params) => {
       return (
         <div className="flex justify-start items-center pt-2 space-x-2 h-full">
-          <button className="flex items-center bg-blue-600 px-4 rounded-lg text-white">
+          <button
+            onClick={() => handleEdit(params.row)}
+            className="flex items-center bg-blue-500 text-white px-4 h-9 rounded-md "
+          >
             <FaEdit className="mr-2" />
             Edit
           </button>
