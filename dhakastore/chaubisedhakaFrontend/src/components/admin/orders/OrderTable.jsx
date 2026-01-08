@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { adminOrderColumnTable } from "../../helper/TableColumn";
+import { adminOrderTableColumn } from "../../helper/tableColumn";
 import {
   useLocation,
   useNavigate,
@@ -23,13 +23,7 @@ const OrderTable = ({ adminOrder, pagination }) => {
       email: item.email,
       totalAmount: item.totalAmount,
       status: item.orderStatus,
-      orderDate: item.orderDate
-        ? new Date(item.orderDate).toLocaleString("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          })
-        : "NA",
+      orderDate: item.orderDate,
     };
   });
 
@@ -49,9 +43,9 @@ const OrderTable = ({ adminOrder, pagination }) => {
         <DataGrid
           className="w-full"
           rows={tableRecords}
-          columns={adminOrderColumnTable}
-          rowCount={pagination?.totalElements || 0}
+          columns={adminOrderTableColumn}
           paginationMode="server"
+          rowCount={pagination?.totalElements || 0}
           initialState={{
             pagination: {
               paginationModel: {
@@ -62,9 +56,9 @@ const OrderTable = ({ adminOrder, pagination }) => {
           }}
           onPaginationModelChange={handlePaginationChange}
           disableRowSelectionOnClick
+          disableColumnResize
           pageSizeOptions={[pagination?.pageSize || 10]}
           pagination
-          disableColumnResize
           paginationOptions={{
             showFirstButton: true,
             showLastButton: true,

@@ -361,7 +361,7 @@ export const getOrdersForDashboard =
         type: "GET_ADMIN_ORDERS",
         payload: data.content,
         pageNumber: data.pageNumber,
-        pgeSize: data.pageSize,
+        pageSize: data.pageSize,
         totalElements: data.totalElements,
         totalPages: data.totalPages,
         lastPage: data.lastPage,
