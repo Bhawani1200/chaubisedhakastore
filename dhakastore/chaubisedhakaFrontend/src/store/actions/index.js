@@ -356,6 +356,7 @@ export const getOrdersForDashboard =
       dispatch({ type: "IS_FETCHING" });
       // const endPoint = isAdmin ? "/admin/orders" : "/seller/orders";
       const { data } = await api.get(`/admin/orders?${queryString}`);
+
       dispatch({
         type: "GET_ADMIN_ORDERS",
         payload: data.content,

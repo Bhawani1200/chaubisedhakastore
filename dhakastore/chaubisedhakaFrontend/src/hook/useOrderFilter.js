@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { getOrdersForDashboard } from "../store/actions";
 
 const useOrderFilter = () => {
   const [searchParams] = useSearchParams();
@@ -20,6 +21,8 @@ const useOrderFilter = () => {
 
     const queryString = params.toString();
     console.log("QUERY STRING", queryString);
+
+    dispatch(getOrdersForDashboard(queryString, isAdmin));
   }, [dispatch, searchParams]);
 };
 

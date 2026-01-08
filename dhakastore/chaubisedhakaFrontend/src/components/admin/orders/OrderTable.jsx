@@ -23,11 +23,17 @@ const OrderTable = ({ adminOrder, pagination }) => {
       email: item.email,
       totalAmount: item.totalAmount,
       status: item.orderStatus,
-      date: item.orderDate,
+      orderDate: item.orderDate
+        ? new Date(item.orderDate).toLocaleString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })
+        : "NA",
     };
   });
 
-  const handlePagination = (paginationModel) => {
+  const handlePaginationChange = (paginationModel) => {
     const page = paginationModel.page + 1;
     setCurrentPage(page);
     params.set("page", page.toString());
@@ -39,32 +45,33 @@ const OrderTable = ({ adminOrder, pagination }) => {
       <h1 className="text-3xl font-bold text-slate-800 text-center pb-6 uppercase ">
         All Orders
       </h1>
-      <DataGrid
-        className="w-full"
-        rows={tableRecords}
-        columns={adminOrderColumnTable}
-        rowCount={pagination?.totalElements || 0}
-        paginationMode="server"
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: pagination?.pageSize || 10,
-              page: currentPage - 1,
+      <div>
+        <DataGrid
+          className="w-full"
+          rows={tableRecords}
+          columns={adminOrderColumnTable}
+          rowCount={pagination?.totalElements || 0}
+          paginationMode="server"
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: pagination?.pageSize || 10,
+                page: currentPage - 1,
+              },
             },
-          },
-        }}
-        onPaginationModelChange={handlePagination}
-        disableRowSelectionOnClick
-        pageSizeOptions={[pagination?.pageSize || 10]}
-        pagination
-        checkboxSelection
-        disableColumnResize
-        paginationOptions={{
-          showFirstButton: true,
-          showLastButton: true,
-          hideNextButton: currentPage === pagination?.totalPages,
-        }}
-      />
+          }}
+          onPaginationModelChange={handlePaginationChange}
+          disableRowSelectionOnClick
+          pageSizeOptions={[pagination?.pageSize || 10]}
+          pagination
+          disableColumnResize
+          paginationOptions={{
+            showFirstButton: true,
+            showLastButton: true,
+            hideNextButton: currentPage === pagination?.totalPages,
+          }}
+        />
+      </div>
     </div>
   );
 };
