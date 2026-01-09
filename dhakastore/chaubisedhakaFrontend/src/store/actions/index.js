@@ -381,9 +381,9 @@ export const getOrdersForDashboard =
      (orderId, orderStatus, toast, setLoader, isAdmin) => async (dispatch, getState) => {
     try {
         setLoader(true);
-        const endpoint = isAdmin ? "/admin/orders/" : "/seller/orders/";
-        const { data } = await api.put(`${endpoint}${orderId}/status`, { status: orderStatus});
-        toast.success(data.message || "Order updated successfully");
+        // const endpoint = isAdmin ? "/admin/orders/" : "/seller/orders/";
+        const { data } = await api.put(`/admin/orders/${orderId}/status`, { status: orderStatus});
+        toast.success(data?.message || "Order updated successfully");
         await dispatch(getOrdersForDashboard());
     } catch (error) {
         console.log(error);
