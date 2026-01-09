@@ -5,11 +5,15 @@ import Backend.chaubisedhakaBackend.model.User;
 import Backend.chaubisedhakaBackend.payload.OrderDTO;
 import Backend.chaubisedhakaBackend.payload.OrderRequestDTO;
 import Backend.chaubisedhakaBackend.payload.OrderResponse;
+import Backend.chaubisedhakaBackend.payload.OrderStatusUpdateDTO;
+import Backend.chaubisedhakaBackend.security.services.UserDetailsImpl;
 import Backend.chaubisedhakaBackend.service.OrderService;
 import Backend.chaubisedhakaBackend.util.AuthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -48,6 +52,14 @@ public class OrderController {
     ){
         OrderResponse orderResponse=orderService.getAllOrders(pageNumber,pageSize,sortBy,sortOrder);
         return new ResponseEntity<OrderResponse>(orderResponse,HttpStatus.OK);
+    }
+
+    @PutMapping("/admin/orders/{orderId}/status")
+    public ResponseEntity<OrderDTO>updateOrderStatus(@PathVariable Long orderId,
+                                                     @RequestBody OrderStatusUpdateDTO orderStatusUpdateDTO
+                                                     ){
+        OrderDTO order=orderService.updateOrder(orderId,orderStatusUpdateDTO.getStatus());
+        return new ResponseEntity<OrderDTO>(order,HttpStatus.OK);
     }
 
 }
