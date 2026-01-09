@@ -1,6 +1,7 @@
 import { data } from "react-router-dom";
 import api from "../../api/api";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 export const fetchProducts = (queryString) => async (dispatch) => {
   try {
@@ -400,8 +401,8 @@ export const dashboardProductsAction =
   (queryString, isAdmin) => async (dispatch) => {
     try {
       dispatch({ type: "IS_FETCHING" });
-      const endpoint = isAdmin ? "/admin/products" : "/seller/products";
-      const { data } = await api.get(`${endpoint}?${queryString}`);
+      // const endpoint = isAdmin ? "/admin/products" : "/seller/products";
+      const { data } = await api.get(`/admin/products?${queryString}`);
       dispatch({
         type: "FETCH_PRODUCTS",
         payload: data.content,
@@ -420,5 +421,23 @@ export const dashboardProductsAction =
           error?.response?.data?.message ||
           "Failed to fetch dashboard products",
       });
+    }
+  };
+
+export const updateProductFromDashboard =
+  (sendData, toast, reset, setLoader, setOpen, isAdmin) => async (dispatch) => {
+    try {
+      setLoader(true);
+      // const endpoint = isAdmin ? "/admin/products/" : "/seller/products/";
+      await api.put(`/admin/products?${sendData.id}`, sendData);
+      toast.success("Product update successful");
+      reset();
+      setLoader(false);
+      setOpen(false);
+      await dispatch(dashboardProductsAction());
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.description || "Product update failed"
+      );
     }
   };

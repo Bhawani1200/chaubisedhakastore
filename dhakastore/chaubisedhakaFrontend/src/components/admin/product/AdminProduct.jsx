@@ -8,28 +8,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { adminProductTableColumn } from "../../helper/tableColumn";
 import { useDashboardProductFilter } from "../../../hook/useProductFilter";
+import AddProductForm from "./AddProductForm";
+import Modal from "../../shared/Modal";
 
 const AdminProduct = () => {
   const { products, pagination } = useSelector((state) => state.products);
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
+
   const [selectedProduct, setSelectedProduct] = useState("");
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openProductViewModal, setOpenProductViewModal] = useState(false);
   const [openImageUploadModal, setOpenImageUploadModal] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(
     pagination?.pageNumber + 1 || 1
   );
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
-    useDashboardProductFilter();
+  useDashboardProductFilter();
 
   const emptyProduct = !products || products?.length === 0;
-
   const tableRecords = products?.map((item) => {
     return {
       id: item.productId,
@@ -133,6 +135,17 @@ const AdminProduct = () => {
           )}
         </>
       )}
+
+      <Modal
+        open={openUpdateModal || openAddModal}
+        setOpen={openUpdateModal ? setOpenUpdateModal : setOpenAddModal}
+        title={openUpdateModal ? "Update Modal" : "Add Modal"}>
+        <AddProductForm
+          setOpen={openUpdateModal ? setOpenUpdateModal : setOpenAddModal}
+          product={selectedProduct}
+          update={openUpdateModal}
+        />
+      </Modal>
     </div>
   );
 };
