@@ -377,18 +377,48 @@ export const getOrdersForDashboard =
     }
   };
 
-  export const updateOrderStatusFromDashboard =
-     (orderId, orderStatus, toast, setLoader, isAdmin) => async (dispatch, getState) => {
+export const updateOrderStatusFromDashboard =
+  (orderId, orderStatus, toast, setLoader, isAdmin) =>
+  async (dispatch, getState) => {
     try {
-        setLoader(true);
-        // const endpoint = isAdmin ? "/admin/orders/" : "/seller/orders/";
-        const { data } = await api.put(`/admin/orders/${orderId}/status`, { status: orderStatus});
-        toast.success(data?.message || "Order updated successfully");
-        await dispatch(getOrdersForDashboard());
+      setLoader(true);
+      // const endpoint = isAdmin ? "/admin/orders/" : "/seller/orders/";
+      const { data } = await api.put(`/admin/orders/${orderId}/status`, {
+        status: orderStatus,
+      });
+      toast.success(data?.message || "Order updated successfully");
+      await dispatch(getOrdersForDashboard());
     } catch (error) {
-        console.log(error);
-        toast.error(error?.response?.data?.message || "Internal Server Error");
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Internal Server Error");
     } finally {
-        setLoader(false)
+      setLoader(false);
     }
-};
+  };
+
+export const dashboardProductsAction =
+  (queryString, isAdmin) => async (dispatch) => {
+    try {
+      dispatch({ type: "IS_FETCHING" });
+      const endpoint = isAdmin ? "/admin/products" : "/seller/products";
+      const { data } = await api.get(`${endpoint}?${queryString}`);
+      dispatch({
+        type: "FETCH_PRODUCTS",
+        payload: data.content,
+        pageNumber: data.pageNumber,
+        pageSize: data.pageSize,
+        totalElements: data.totalElements,
+        totalPages: data.totalPages,
+        lastPage: data.lastPage,
+      });
+      dispatch({ type: "IS_SUCCESS" });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: "IS_ERROR",
+        payload:
+          error?.response?.data?.message ||
+          "Failed to fetch dashboard products",
+      });
+    }
+  };
