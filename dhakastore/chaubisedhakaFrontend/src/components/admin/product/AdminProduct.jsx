@@ -13,6 +13,7 @@ import Modal from "../../shared/Modal";
 import DeleteModal from "../../shared/DeleteModal";
 import { deleteProduct } from "../../../store/actions";
 import toast from "react-hot-toast";
+import ImageUploadForm from "./ImageUploadForm";
 
 const AdminProduct = () => {
   const { products, pagination } = useSelector((state) => state.products);
@@ -75,13 +76,7 @@ const AdminProduct = () => {
   };
   const onDeleteHandler = () => {
     dispatch(
-      deleteProduct(
-        setLoader,
-        selectedProduct?.id,
-        toast,
-        setOpenDeleteModal,
-    
-      )
+      deleteProduct(setLoader, selectedProduct?.id, toast, setOpenDeleteModal)
     );
   };
 
@@ -160,6 +155,17 @@ const AdminProduct = () => {
           setOpen={openUpdateModal ? setOpenUpdateModal : setOpenAddModal}
           product={selectedProduct}
           update={openUpdateModal}
+        />
+      </Modal>
+
+      <Modal
+        open={openImageUploadModal}
+        setOpen={setOpenImageUploadModal}
+        title="Add Product Image"
+      >
+        <ImageUploadForm
+          setOpen={setOpenImageUploadModal}
+          product={selectedProduct}
         />
       </Modal>
 

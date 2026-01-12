@@ -459,3 +459,20 @@ export const deleteProduct =
       toast.error(error?.response?.data?.message || "Some Error Occured");
     }
   };
+
+
+  export const updateProductImageFromDashboard = 
+    (formData, productId, toast, setLoader, setOpen, isAdmin) => async (dispatch) => {
+    try {
+        setLoader(true);
+        // const endpoint = isAdmin ? "/admin/products/" : "/seller/products/";
+        await api.put(`/admin/products/${productId}/image`, formData);
+        toast.success("Image upload successful");
+        setLoader(false);
+        setOpen(false);
+        await dispatch(dashboardProductsAction());
+    } catch (error) {
+        toast.error(error?.response?.data?.description || "Product Image upload failed");
+     
+    }
+};
