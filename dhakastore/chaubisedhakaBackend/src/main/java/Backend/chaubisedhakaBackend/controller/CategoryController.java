@@ -31,19 +31,20 @@ public class CategoryController {
         return new ResponseEntity<>(categoryResponse,HttpStatus.OK);
     }
 
-    @PostMapping("categories/create")
+
+    @PostMapping("/admin/categories")
     public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO){
         CategoryDTO savedCategoryDTO=categoryService.createCategory(categoryDTO);
         return new ResponseEntity<>(savedCategoryDTO,HttpStatus.OK);
     }
 
-    @DeleteMapping("/categories/delete/{categoryId}")
+    @DeleteMapping("/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable Long categoryId){
             CategoryDTO deletedObject = categoryService.deleteCategory(categoryId);
             return new ResponseEntity<>(deletedObject,HttpStatus.OK);
     }
 
-    @PutMapping("/categories/update/{categoryId}")
+    @PutMapping("/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO>updateCategory(@RequestBody CategoryDTO categoryDTO,
                                                 @PathVariable Long categoryId){
             CategoryDTO savedCategoryDTO=categoryService.updateCategory(categoryDTO, categoryId);
