@@ -397,7 +397,7 @@ export const updateOrderStatusFromDashboard =
   };
 
 export const dashboardProductsAction =
-  (queryString, isAdmin) => async (dispatch) => {
+  (isAdmin,queryString) => async (dispatch) => {
     try {
       dispatch({ type: "IS_FETCHING" });
       // const endpoint = isAdmin ? "/admin/products" : "/seller/products";

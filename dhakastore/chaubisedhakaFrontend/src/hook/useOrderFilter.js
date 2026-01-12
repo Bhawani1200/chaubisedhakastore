@@ -28,7 +28,7 @@ const useOrderFilter = () => {
 
     console.log("QUERY STRING", queryString);
 
-    dispatch(getOrdersForDashboard(queryString, isAdmin));
+    dispatch(getOrdersForDashboard(isAdmin,queryString));
   }, [dispatch, searchParams]);
 };
 

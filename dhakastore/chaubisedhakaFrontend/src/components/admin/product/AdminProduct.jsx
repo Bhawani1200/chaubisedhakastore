@@ -5,7 +5,7 @@ import Loader from "../../shared/Loader";
 import { FaBoxOpen } from "react-icons/fa";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { adminProductTableColumn } from "../../helper/tableColumn";
 import { useDashboardProductFilter } from "../../../hook/useProductFilter";
 import AddProductForm from "./AddProductForm";
@@ -14,6 +14,7 @@ import DeleteModal from "../../shared/DeleteModal";
 import { deleteProduct } from "../../../store/actions";
 import toast from "react-hot-toast";
 import ImageUploadForm from "./ImageUploadForm";
+import ProductViewModal from "../../shared/ProductViewModal";
 
 const AdminProduct = () => {
   const { products, pagination } = useSelector((state) => state.products);
@@ -31,7 +32,11 @@ const AdminProduct = () => {
     pagination?.pageNumber + 1 || 1
   );
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const pathname = useLocation().pathname;
+  const params = new URLSearchParams(searchParams);
 
   useDashboardProductFilter();
 
@@ -68,12 +73,12 @@ const AdminProduct = () => {
     setOpenProductViewModal(true);
   };
 
-  const handlePaginationChange = (paginationModel) => {
-    const page = paginationModel.page + 1;
-    setCurrentPage(page);
-    params.set("page", page.toString());
+  const handlePaginationChange = ({ page, pageSize }) => {
+    params.set("page", (page + 1).toString());
+    params.set("pageSize", pageSize.toString());
     navigate(`${pathname}?${params}`);
   };
+
   const onDeleteHandler = () => {
     dispatch(
       deleteProduct(setLoader, selectedProduct?.id, toast, setOpenDeleteModal)
@@ -122,13 +127,9 @@ const AdminProduct = () => {
                 )}
                 paginationMode="server"
                 rowCount={pagination?.totalElements || 0}
-                initialState={{
-                  pagination: {
-                    paginationModel: {
-                      pageSize: pagination?.pageSize || 10,
-                      page: currentPage - 1,
-                    },
-                  },
+                paginationModel={{
+                  page: pagination?.pageNumber ?? 0,
+                  pageSize: pagination?.pageSize ?? 5,
                 }}
                 onPaginationModelChange={handlePaginationChange}
                 disableRowSelectionOnClick
@@ -168,6 +169,12 @@ const AdminProduct = () => {
           product={selectedProduct}
         />
       </Modal>
+
+      <ProductViewModal
+        open={openProductViewModal}
+        setOpen={setOpenProductViewModal}
+        product={selectedProduct}
+      />
 
       <DeleteModal
         open={openDeleteModal}

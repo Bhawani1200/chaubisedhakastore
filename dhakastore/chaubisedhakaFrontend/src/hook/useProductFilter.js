@@ -51,7 +51,7 @@ export const useDashboardProductFilter = () => {
     params.set("pageNumber", currentPage - 1);
 
     const queryString = params.toString();
-    dispatch(dashboardProductsAction(queryString, isAdmin));
+    dispatch(dashboardProductsAction(isAdmin,queryString));
   }, [dispatch, searchParams]);
 };
 
