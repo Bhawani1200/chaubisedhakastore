@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Spinners from "../../shared/Spinners";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addNewProductFromDashboard,
   fetchCategories,
   updateProductFromDashboard,
 } from "../../../store/actions";
@@ -43,6 +44,16 @@ const AddProductForm = ({ setOpen, product, update = false }) => {
         ...data,
         categoryId: selectedCategory.categoryId,
       };
+      dispatch(
+        addNewProductFromDashboard(
+          sendData,
+          toast,
+          reset,
+          setLoader,
+          setOpen,
+          isAdmin
+        )
+      );
     } else {
       const sendData = {
         ...data,
@@ -201,7 +212,7 @@ const AddProductForm = ({ setOpen, product, update = false }) => {
                   <Spinners /> Loading...
                 </div>
               ) : (
-                "Update"
+                "Save"
               )}
             </Button>
           </div>
