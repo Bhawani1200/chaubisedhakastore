@@ -1,7 +1,6 @@
 import { data } from "react-router-dom";
 import api from "../../api/api";
 import { useSelector } from "react-redux";
-import toast from "react-hot-toast";
 
 export const fetchProducts = (queryString) => async (dispatch) => {
   try {
@@ -425,11 +424,13 @@ export const dashboardProductsAction =
   };
 
 export const updateProductFromDashboard =
-  (sendData, toast, reset, setLoader, setOpen, isAdmin) => async (dispatch) => {
+  (sendData, reset,toast, setLoader, setOpen, isAdmin) => async (dispatch) => {
     try {
       setLoader(true);
       // const endpoint = isAdmin ? "/admin/products/" : "/seller/products/";
-      await api.put(`/admin/products?${sendData.id}`, sendData);
+      await api.put(`/admin/products/${sendData.id}`, sendData);
+      console.log("Data being sent to server:", sendData);
+      console.log("SendData",sendData)
       toast.success("Product update successful");
       reset();
       setLoader(false);

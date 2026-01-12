@@ -4,8 +4,15 @@ import InputField from "../../shared/InputField";
 import Button from "@mui/material/Button";
 import Spinners from "../../shared/Spinners";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProductFromDashboard } from "../../../store/actions";
+import {
+  fetchCategories,
+  updateProductFromDashboard,
+} from "../../../store/actions";
 import toast from "react-hot-toast";
+import SelectTextField from "../../shared/SelectTextField";
+
+import ErrorPage from "../../shared/ErrorPage";
+import Skeleton from "../../shared/Skeleton";
 
 const AddProductForm = ({ setOpen, product, update = false }) => {
   const [loader, setLoader] = useState(false);
@@ -15,6 +22,8 @@ const AddProductForm = ({ setOpen, product, update = false }) => {
   const { categories } = useSelector((state) => state.products);
 
   const { user } = useSelector((state) => state.auth);
+
+  const isAdmin = user && user?.role?.includes("ROLE_ADMIN");
 
   const { errorMessage, categoryLoader } = useSelector((state) => state.errors);
 
@@ -46,7 +55,7 @@ const AddProductForm = ({ setOpen, product, update = false }) => {
           toast,
           setLoader,
           setOpen,
-         
+          isAdmin
         )
       );
     }
@@ -63,6 +72,26 @@ const AddProductForm = ({ setOpen, product, update = false }) => {
     }
   }, [product, update]);
 
+  useEffect(() => {
+    if (!update) {
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, update]);
+
+  useEffect(() => {
+    if (!categoryLoader && categories) {
+      setSelectedCategory(categories[0]);
+    }
+  }, [categories, categoryLoader]);
+
+  if (categoryLoader) {
+    return <Skeleton />;
+  }
+
+  if (errorMessage) {
+    return <ErrorPage />;
+  }
+
   return (
     <div className="py-5 relative h-full">
       <form className="space-y-4" onSubmit={handleSubmit(saveProductHandler)}>
@@ -77,6 +106,15 @@ const AddProductForm = ({ setOpen, product, update = false }) => {
             placeholder="Product Name"
             errors={errors}
           />
+
+          {!update && (
+            <SelectTextField
+              label="Select Categories"
+              select={selectedCategory}
+              setSelect={setSelectedCategory}
+              lists={categories}
+            />
+          )}
         </div>
         <div className="flex md:flex-row flex-col gap-4 w-full">
           <InputField
