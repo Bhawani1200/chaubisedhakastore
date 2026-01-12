@@ -10,6 +10,9 @@ import { adminProductTableColumn } from "../../helper/tableColumn";
 import { useDashboardProductFilter } from "../../../hook/useProductFilter";
 import AddProductForm from "./AddProductForm";
 import Modal from "../../shared/Modal";
+import DeleteModal from "../../shared/DeleteModal";
+import { deleteProduct } from "../../../store/actions";
+import toast from "react-hot-toast";
 
 const AdminProduct = () => {
   const { products, pagination } = useSelector((state) => state.products);
@@ -70,6 +73,18 @@ const AdminProduct = () => {
     params.set("page", page.toString());
     navigate(`${pathname}?${params}`);
   };
+  const onDeleteHandler = () => {
+    dispatch(
+      deleteProduct(
+        setLoader,
+        selectedProduct?.id,
+        toast,
+        setOpenDeleteModal,
+    
+      )
+    );
+  };
+
   return (
     <div>
       <div className="pt-6 pb-10 flex justify-end">
@@ -139,13 +154,22 @@ const AdminProduct = () => {
       <Modal
         open={openUpdateModal || openAddModal}
         setOpen={openUpdateModal ? setOpenUpdateModal : setOpenAddModal}
-        title={openUpdateModal ? "Update Modal" : "Add Modal"}>
+        title={openUpdateModal ? "Update Modal" : "Add Modal"}
+      >
         <AddProductForm
           setOpen={openUpdateModal ? setOpenUpdateModal : setOpenAddModal}
           product={selectedProduct}
           update={openUpdateModal}
         />
       </Modal>
+
+      <DeleteModal
+        open={openDeleteModal}
+        setOpen={setOpenDeleteModal}
+        loader={loader}
+        title="Delete Product"
+        onDeleteHandler={onDeleteHandler}
+      />
     </div>
   );
 };

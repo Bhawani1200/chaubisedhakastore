@@ -424,13 +424,13 @@ export const dashboardProductsAction =
   };
 
 export const updateProductFromDashboard =
-  (sendData, reset,toast, setLoader, setOpen, isAdmin) => async (dispatch) => {
+  (sendData, reset, toast, setLoader, setOpen, isAdmin) => async (dispatch) => {
     try {
       setLoader(true);
       // const endpoint = isAdmin ? "/admin/products/" : "/seller/products/";
       await api.put(`/admin/products/${sendData.id}`, sendData);
       console.log("Data being sent to server:", sendData);
-      console.log("SendData",sendData)
+      console.log("SendData", sendData);
       toast.success("Product update successful");
       reset();
       setLoader(false);
@@ -440,5 +440,22 @@ export const updateProductFromDashboard =
       toast.error(
         error?.response?.data?.description || "Product update failed"
       );
+    }
+  };
+
+export const deleteProduct =
+  (setLoader, productId, toast, setOpenDeleteModal, isAdmin) =>
+  async (dispatch, getState) => {
+    try {
+      setLoader(true);
+      // const endpoint = isAdmin ? "/admin/products/" : "/seller/products/";
+      await api.delete(`/admin/product/${productId}`);
+      toast.success("Product deleted successfully");
+      setLoader(false);
+      setOpenDeleteModal(false);
+      await dispatch(dashboardProductsAction());
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Some Error Occured");
     }
   };
