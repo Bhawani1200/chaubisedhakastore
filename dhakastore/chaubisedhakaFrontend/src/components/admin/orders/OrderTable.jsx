@@ -28,10 +28,9 @@ const OrderTable = ({ adminOrder, pagination }) => {
     };
   });
 
-  const handlePaginationChange = (paginationModel) => {
-    const page = paginationModel.page + 1;
-    setCurrentPage(page);
-    params.set("page", page.toString());
+  const handlePaginationChange = ({ page, pageSize }) => {
+    params.set("page", (page + 1).toString());
+    params.set("pageSize", pageSize.toString());
     navigate(`${pathname}?${params}`);
   };
 
@@ -53,13 +52,9 @@ const OrderTable = ({ adminOrder, pagination }) => {
           columns={adminOrderTableColumn(handleEdit)}
           paginationMode="server"
           rowCount={pagination?.totalElements || 0}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: pagination?.pageSize || 10,
-                page: currentPage - 1,
-              },
-            },
+          paginationModel={{
+            page: pagination?.pageNumber ?? 0,
+            pageSize: pagination?.pageSize ?? 10,
           }}
           onPaginationModelChange={handlePaginationChange}
           disableRowSelectionOnClick

@@ -3,7 +3,7 @@ const initialState = {
   pagination: {},
 };
 
-export const OrderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case "GET_ADMIN_ORDERS":
       return {
@@ -18,7 +18,6 @@ export const OrderReducer = (state = initialState, action) => {
           lastPage: action.lastPage,
         },
       };
-
     default:
       return state;
   }

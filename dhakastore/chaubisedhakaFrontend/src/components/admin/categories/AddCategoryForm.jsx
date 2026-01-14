@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { createCategoryDashboardAction, updateCategoryDashboardAction } from "../../../store/actions";
+import InputField from "../../shared/InputField";
 
 
 const AddCategoryForm = ({ setOpen, open, category, update = false }) => {
@@ -66,7 +67,7 @@ const AddCategoryForm = ({ setOpen, open, category, update = false }) => {
           <button
             disabled={open}
             type="submit"
-            className={`font-metropolis rounded-[5px]  bg-custom-blue hover:bg-blue-800 text-white  py-2.5 px-4 text-sm font-medium`}
+            className={`font-metropolis rounded-[5px]  bg-blue-700 hover:bg-blue-800 text-white  py-2.5 px-4 text-sm font-medium`}
           >
             {open ? "Loading.." : update ? "Update" : "Save"}
           </button>

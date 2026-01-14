@@ -12,7 +12,7 @@ import ErrorPage from "../../shared/ErrorPage";
 import Loader from "../../shared/Loader";
 import AddCategoryForm from "./AddCategoryForm";
 import { DeleteModal } from "../../../components/shared/DeleteModal";
-import Modal from "@mui/material/Modal";
+import Modal from "../../shared/Modal";
 
 const Category = () => {
   const [searchParams] = useSearchParams();
@@ -61,11 +61,9 @@ const Category = () => {
     );
   };
 
-  const handlePaginationChange = (paginationModel) => {
-    const page = paginationModel.page + 1; // Adjust to 1-based index
-    setCurrentPage(page);
-
-    params.set("page", page.toString());
+  const handlePaginationChange = ({ page, pageSize }) => {
+    params.set("page", (page + 1).toString());
+    params.set("pageSize", pageSize.toString());
     navigate(`${pathname}?${params}`);
   };
 
@@ -78,7 +76,7 @@ const Category = () => {
       <div className="pt-6 pb-10 flex justify-end">
         <button
           onClick={() => setOpenModal(true)}
-          className="bg-custom-blue hover:bg-blue-800 text-white font-semibold py-2 px-4 flex items-center gap-2 rounded-md shadow-md transition-colors hover:text-slate-300 duration-300"
+          className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-4 flex items-center gap-2 rounded-md shadow-md transition-colors hover:text-slate-300 duration-300"
         >
           <FaThList className="text-xl" />
           Add Category
@@ -109,13 +107,9 @@ const Category = () => {
                 columns={categoryTableColumns(handleEdit, handleDelete)}
                 paginationMode="server"
                 rowCount={pagination?.totalElements || 0}
-                initialState={{
-                  pagination: {
-                    paginationModel: {
-                      pageSize: pagination?.pageSize || 10,
-                      page: currentPage - 1,
-                    },
-                  },
+                paginationModel={{
+                  page: pagination?.pageNumber ?? 0,
+                  pageSize: pagination?.pageSize ?? 10,
                 }}
                 onPaginationModelChange={handlePaginationChange}
                 disableRowSelectionOnClick
