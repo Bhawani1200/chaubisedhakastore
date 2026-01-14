@@ -5,7 +5,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import { FaFolderOpen, FaThList } from "react-icons/fa";
 import toast from "react-hot-toast";
 
-import { categoryTableColumns } from "../../helper/tableColumn";
+import {
+  adminOrderTableColumn,
+  categoryTableColumns,
+} from "../../helper/tableColumn";
 import useCategoryFilter from "../../../hook/useCategoryFilter";
 import { deleteCategoryDashboardAction } from "../../../store/actions";
 import ErrorPage from "../../shared/ErrorPage";
@@ -67,6 +70,7 @@ const Category = () => {
     navigate(`${pathname}?${params}`);
   };
 
+
   const emptyCategories = !categories || categories?.length === 0;
 
   if (errorMessage) return <ErrorPage message={errorMessage} />;
@@ -122,6 +126,7 @@ const Category = () => {
                   hideNextButton: currentPage === pagination?.totalPages,
                 }}
               />
+           
             </div>
           )}
         </>

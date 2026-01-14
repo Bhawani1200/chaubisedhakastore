@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { fetchCategories } from "../store/actions";
+import { getAllCategoriesDashboard } from "../store/actions";
 
 const useCategoryFilter = () => {
   const [searchParams] = useSearchParams(); // Access search params from the URL
@@ -21,7 +21,7 @@ const useCategoryFilter = () => {
     const queryString = params.toString();
 
     // Dispatch action to fetch categories using the constructed query string
-    dispatch(fetchCategories(queryString));
+    dispatch(getAllCategoriesDashboard(queryString));
   }, [dispatch, searchParams]);
 };
 

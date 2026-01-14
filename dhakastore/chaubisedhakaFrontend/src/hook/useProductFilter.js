@@ -47,11 +47,15 @@ export const useDashboardProductFilter = () => {
     const currentPage = searchParams.get("page")
       ? Number(searchParams.get("page"))
       : 1;
+    const pageSize = searchParams.get("pageSize")
+      ? Number(searchParams.get("pageSize"))
+      : 10;
 
     params.set("pageNumber", currentPage - 1);
+    params.set("pageSize", pageSize);
 
     const queryString = params.toString();
-    dispatch(dashboardProductsAction(isAdmin,queryString));
+    dispatch(dashboardProductsAction(isAdmin, queryString));
   }, [dispatch, searchParams]);
 };
 
