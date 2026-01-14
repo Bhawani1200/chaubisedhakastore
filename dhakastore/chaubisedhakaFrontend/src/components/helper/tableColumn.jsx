@@ -234,7 +234,6 @@ export const adminOrderTableColumn = (handleEdit) => [
   },
 ];
 
-//table column for categories in admin panel
 export const categoryTableColumns = (handleEdit, handleDelete) => [
   {
     sortable: false,

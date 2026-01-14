@@ -2,12 +2,8 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
+import { createCategoryDashboardAction, updateCategoryDashboardAction } from "../../../store/actions";
 
-import {
-  createCategoryDashboardAction,
-  updateCategoryDashboardAction,
-} from "../../../store/actions";
-import InputField from "../../shared/InputField";
 
 const AddCategoryForm = ({ setOpen, open, category, update = false }) => {
   const dispatch = useDispatch();
@@ -24,8 +20,10 @@ const AddCategoryForm = ({ setOpen, open, category, update = false }) => {
 
   const addNewCategoryHandler = (data) => {
     if (!update) {
+      //dispatch createCategoryDashboardAction
       dispatch(createCategoryDashboardAction(data, setOpen, reset, toast));
     } else {
+      //dispatch updateCategoryDashboardAction
       dispatch(
         updateCategoryDashboardAction(data, setOpen, category.id, reset, toast)
       );
@@ -68,7 +66,7 @@ const AddCategoryForm = ({ setOpen, open, category, update = false }) => {
           <button
             disabled={open}
             type="submit"
-            className={`font-metropolis rounded-[5px]  bg-blue-700 hover:bg-blue-800 text-white  py-2.5 px-4 text-sm font-medium`}
+            className={`font-metropolis rounded-[5px]  bg-custom-blue hover:bg-blue-800 text-white  py-2.5 px-4 text-sm font-medium`}
           >
             {open ? "Loading.." : update ? "Update" : "Save"}
           </button>

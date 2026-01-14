@@ -129,7 +129,7 @@ const AdminProduct = () => {
                 rowCount={pagination?.totalElements || 0}
                 paginationModel={{
                   page: pagination?.pageNumber ?? 0,
-                  pageSize: pagination?.pageSize ?? 5,
+                  pageSize: pagination?.pageSize ?? 10,
                 }}
                 onPaginationModelChange={handlePaginationChange}
                 disableRowSelectionOnClick

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { fetchCategories } from "../store/actions";
 
+import { fetchCategories } from "../store/actions";
 
 const useCategoryFilter = () => {
   const [searchParams] = useSearchParams(); // Access search params from the URL

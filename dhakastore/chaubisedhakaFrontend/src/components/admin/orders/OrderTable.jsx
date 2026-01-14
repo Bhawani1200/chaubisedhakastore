@@ -1,12 +1,7 @@
-import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { adminOrderTableColumn } from "../../helper/tableColumn";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { useState } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Modal from "../../shared/Modal";
 import UpdateOrderForm from "./UpdateOrderForm";
 
@@ -14,14 +9,14 @@ const OrderTable = ({ adminOrder, pagination }) => {
   const [updateOpenModal, setUpdateOpenModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   const [loader, setLoader] = useState(false);
-
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(
     pagination?.pageNumber + 1 || 1
   );
+
   const [searchParams] = useSearchParams();
-  const pathname = useLocation().pathname;
-  const navigate = useNavigate();
   const params = new URLSearchParams(searchParams);
+  const pathname = useLocation().pathname;
 
   const tableRecords = adminOrder?.map((item) => {
     return {
@@ -29,13 +24,14 @@ const OrderTable = ({ adminOrder, pagination }) => {
       email: item.email,
       totalAmount: item.totalAmount,
       status: item.orderStatus,
-      orderDate: item.orderDate,
+      date: item.orderDate,
     };
   });
 
-  const handlePaginationChange = ({ page, pageSize }) => {
-    params.set("page", (page + 1).toString());
-    params.set("pageSize", pageSize.toString());
+  const handlePaginationChange = (paginationModel) => {
+    const page = paginationModel.page + 1;
+    setCurrentPage(page);
+    params.set("page", page.toString());
     navigate(`${pathname}?${params}`);
   };
 
@@ -46,9 +42,10 @@ const OrderTable = ({ adminOrder, pagination }) => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-slate-800 text-center pb-6 uppercase ">
+      <h1 className="text-slate-800 text-3xl text-center font-bold pb-6 uppercase">
         All Orders
       </h1>
+
       <div>
         <DataGrid
           className="w-full"
@@ -56,9 +53,13 @@ const OrderTable = ({ adminOrder, pagination }) => {
           columns={adminOrderTableColumn(handleEdit)}
           paginationMode="server"
           rowCount={pagination?.totalElements || 0}
-          paginationModel={{
-            page: pagination?.pageNumber ?? 0,
-            pageSize: pagination?.pageSize ?? 5,
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: pagination?.pageSize || 10,
+                page: currentPage - 1,
+              },
+            },
           }}
           onPaginationModelChange={handlePaginationChange}
           disableRowSelectionOnClick
@@ -72,6 +73,7 @@ const OrderTable = ({ adminOrder, pagination }) => {
           }}
         />
       </div>
+
       <Modal
         open={updateOpenModal}
         setOpen={setUpdateOpenModal}

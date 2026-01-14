@@ -27,7 +27,7 @@ export const productReducer = (state = initialState, action) => {
         pagination: {
           ...state.pagination,
           pageNumber: action.pageNumber,
-          pgeSize: action.pageSize,
+          pageSize: action.pageSize,
           totalElements: action.totalElements,
           totalPages: action.totalPages,
           lastPage: action.lastPage,

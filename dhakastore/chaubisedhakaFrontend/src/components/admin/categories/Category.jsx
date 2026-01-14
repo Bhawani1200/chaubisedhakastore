@@ -1,17 +1,18 @@
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import useCategoryFilter from "../../../hook/useCategoryFilter";
-import toast from "react-hot-toast";
-import { FaFolderOpen, FaThList } from "react-icons/fa";
-import Loader from "../../shared/Loader";
 import { DataGrid } from "@mui/x-data-grid";
-import AddCategoryForm from "./AddCategoryForm";
+import { FaFolderOpen, FaThList } from "react-icons/fa";
+import toast from "react-hot-toast";
 
-import Modal from "../../shared/Modal";
-import { useState } from "react";
-import DeleteModal from "../../shared/DeleteModal";
 import { categoryTableColumns } from "../../helper/tableColumn";
+import useCategoryFilter from "../../../hook/useCategoryFilter";
+import { deleteCategoryDashboardAction } from "../../../store/actions";
 import ErrorPage from "../../shared/ErrorPage";
+import Loader from "../../shared/Loader";
+import AddCategoryForm from "./AddCategoryForm";
+import { DeleteModal } from "../../../components/shared/DeleteModal";
+import Modal from "@mui/material/Modal";
 
 const Category = () => {
   const [searchParams] = useSearchParams();
@@ -60,9 +61,11 @@ const Category = () => {
     );
   };
 
-  const handlePaginationChange = ({ page, pageSize }) => {
-    params.set("page", (page + 1).toString());
-    params.set("pageSize", pageSize.toString());
+  const handlePaginationChange = (paginationModel) => {
+    const page = paginationModel.page + 1; // Adjust to 1-based index
+    setCurrentPage(page);
+
+    params.set("page", page.toString());
     navigate(`${pathname}?${params}`);
   };
 
@@ -75,7 +78,7 @@ const Category = () => {
       <div className="pt-6 pb-10 flex justify-end">
         <button
           onClick={() => setOpenModal(true)}
-          className="bg-blue-600 hover:bg-blue-800 text-white font-semibold py-2 px-4 flex items-center gap-2 rounded-md shadow-md transition-colors hover:text-slate-300 duration-300"
+          className="bg-custom-blue hover:bg-blue-800 text-white font-semibold py-2 px-4 flex items-center gap-2 rounded-md shadow-md transition-colors hover:text-slate-300 duration-300"
         >
           <FaThList className="text-xl" />
           Add Category
@@ -106,9 +109,13 @@ const Category = () => {
                 columns={categoryTableColumns(handleEdit, handleDelete)}
                 paginationMode="server"
                 rowCount={pagination?.totalElements || 0}
-                paginationModel={{
-                  page: pagination?.pageNumber ?? 0,
-                  pageSize: pagination?.pageSize ?? 10,
+                initialState={{
+                  pagination: {
+                    paginationModel: {
+                      pageSize: pagination?.pageSize || 10,
+                      page: currentPage - 1,
+                    },
+                  },
                 }}
                 onPaginationModelChange={handlePaginationChange}
                 disableRowSelectionOnClick
