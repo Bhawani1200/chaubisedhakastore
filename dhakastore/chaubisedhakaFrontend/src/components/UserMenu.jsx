@@ -1,5 +1,4 @@
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import React from "react";
@@ -10,12 +9,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { IoExitOutline } from "react-icons/io5";
 import BackDrop from "./BackDrop";
 import { logOutUser } from "../store/actions";
+import { MdAdminPanelSettings } from "react-icons/md";
 
 const UserMenu = () => {
   const { user } = useSelector((state) => state.auth);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isAdmin = user && user?.roles.includes("ROLE_ADMIN");
+  const isSeller = user && user?.roles.includes("ROLE_SELLER");
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -59,12 +62,24 @@ const UserMenu = () => {
             <span className="font-bold text-[16px] mt-1">{user?.username}</span>
           </MenuItem>
         </Link>
+
         <Link to="/profile/orders">
           <MenuItem className="flex gap-2" onClick={handleClose}>
             <FaShoppingCart className="text-xl" />
             <span className="font-semibold">Orders</span>
           </MenuItem>
         </Link>
+
+        {(isAdmin || isSeller) && (
+          <Link to={isAdmin ? "/admin" : "/admin/orders"}>
+            <MenuItem className="flex gap-2" onClick={handleClose}>
+              <MdAdminPanelSettings className="text-xl" />
+              <span className="font-semibold">
+                {isAdmin ? "Admin Panel" : "Seller Panel"}
+              </span>
+            </MenuItem>
+          </Link>
+        )}
 
         <MenuItem className="flex gap-2" onClick={logOutHandler}>
           <div className="font-semibold w-full flex  items-center gap-2 bg-linear-to-tr from-purple-500 to-rose-500 px-4 py-1 text-white rounded-md ">
