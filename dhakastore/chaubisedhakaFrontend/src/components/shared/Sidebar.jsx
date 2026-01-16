@@ -2,7 +2,7 @@ import React from "react";
 import { FaTachometerAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { adminNavigation } from "../../utils";
+import { adminNavigation, sellerNavigation } from "../../utils";
 import { ClassNames } from "@emotion/react";
 import classNames from "classnames";
 
@@ -13,7 +13,7 @@ const Sidebar = ({ isProfileLayout = false }) => {
 
   const isAdmin = user && user?.roles?.includes("ROLE_ADMIN");
 
-  const sideBarLayout = adminNavigation;
+  const sideBarLayout = isAdmin ? adminNavigation : sellerNavigation;
 
   return (
     <div className="flex grow flex-col gap-y-7 overflow-y-auto px-6 pb-4 bg-slate-800">

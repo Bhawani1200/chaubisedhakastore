@@ -45,8 +45,8 @@ function App() {
               <Route path="" element={<DashBoard />} />
               <Route path="products" element={<AdminProduct />} />
               <Route path="sellers" element={<Sellers />} />
-              <Route path="categories" element={<Category />} />
               <Route path="orders" element={<Orders />} />
+              <Route path="categories" element={<Category />} />
             </Route>
           </Route>
         </Routes>

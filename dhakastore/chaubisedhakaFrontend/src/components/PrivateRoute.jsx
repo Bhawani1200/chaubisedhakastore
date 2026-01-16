@@ -12,8 +12,10 @@ const PrivateRoute = ({ publicPage = false, adminOnly = false }) => {
   if (publicPage) {
     return user ? <Navigate to="/" /> : <Outlet />;
   }
+
+  
   if (adminOnly) {
-    if (isSeller ) {
+    if (isSeller && !isAdmin) {
       const sellerAllowedPaths = ["/admin/orders", "/admin/products"];
       const sellerAllowed = sellerAllowedPaths.some((path) =>
         location.pathname.startsWith(path)
@@ -24,6 +26,8 @@ const PrivateRoute = ({ publicPage = false, adminOnly = false }) => {
       }
     }
   }
+
+
   if (!isAdmin && !isSeller) {
     return <Navigate to="/" />;
   }
