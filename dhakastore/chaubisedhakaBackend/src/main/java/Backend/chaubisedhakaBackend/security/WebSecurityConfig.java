@@ -73,8 +73,9 @@ public class WebSecurityConfig {
                         auth -> auth.
                                 requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
-                                .requestMatchers("/h2-console/**").permitAll()
-                                .requestMatchers("/api/admin/**").permitAll()
+//                                .requestMatchers("/h2-console/**").permitAll()
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/seller/**").hasAnyRole("ADMIN","SELLER")
                                 .requestMatchers("/api/public/**").permitAll()
                                 .requestMatchers("/api/test/**").permitAll()
                                 .requestMatchers("/images/**").permitAll()
