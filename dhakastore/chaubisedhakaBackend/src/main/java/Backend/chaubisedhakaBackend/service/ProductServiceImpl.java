@@ -1,6 +1,7 @@
 package Backend.chaubisedhakaBackend.service;
 
 import Backend.chaubisedhakaBackend.model.Cart;
+import Backend.chaubisedhakaBackend.model.User;
 import Backend.chaubisedhakaBackend.payload.CartDTO;
 import Backend.chaubisedhakaBackend.repositories.CartRepository;
 import Backend.chaubisedhakaBackend.repositories.CategoryRepository;
@@ -11,6 +12,7 @@ import Backend.chaubisedhakaBackend.model.Category;
 import Backend.chaubisedhakaBackend.model.Product;
 import Backend.chaubisedhakaBackend.payload.ProductDTO;
 import Backend.chaubisedhakaBackend.payload.ProductResponse;
+import Backend.chaubisedhakaBackend.util.AuthUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,6 +55,9 @@ public class ProductServiceImpl implements ProductService{
     @Value("${image.base.url}")
     private String imageBaseUrl;
 
+    @Autowired
+    AuthUtil authUtil;
+
     @Override
     public ProductDTO addProduct(ProductDTO productDTO, Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
@@ -70,6 +75,7 @@ public class ProductServiceImpl implements ProductService{
         if (isProductNotPresent) {
             Product product = modelMapper.map(productDTO, Product.class);
             product.setCategory(category);
+            product.setUser(authUtil.loggedInUser());
             product.setImage("product.png");
             double specialPrice = product.getPrice() -
                     ((product.getDiscount() * 0.01) * product.getPrice());
@@ -233,6 +239,7 @@ public class ProductServiceImpl implements ProductService{
         return modelMapper.map(updatedProduct,ProductDTO.class);
     }
 
+
     @Override
     public ProductResponse getAllProductsForAdmin(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
         Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
@@ -261,6 +268,39 @@ public class ProductServiceImpl implements ProductService{
         productResponse.setLastPage(pageProducts.isLast());
         return productResponse;
     }
+
+    @Override
+    public ProductResponse getAllProductsForSeller(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
+
+        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+
+        User user = authUtil.loggedInUser();
+        Page<Product> pageProducts = productRepository.findByUser(user, pageDetails);
+
+        List<Product> products = pageProducts.getContent();
+
+        List<ProductDTO> productDTOS = products.stream()
+                .map(product -> {
+                    ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+                    productDTO.setImage(constructImageUrl(product.getImage()));
+                    return productDTO;
+                })
+                .toList();
+
+        ProductResponse productResponse = new ProductResponse();
+        productResponse.setContent(productDTOS);
+        productResponse.setPageNumber(pageProducts.getNumber());
+        productResponse.setPageSize(pageProducts.getSize());
+        productResponse.setTotalElements(pageProducts.getTotalElements());
+        productResponse.setTotalPages(pageProducts.getTotalPages());
+        productResponse.setLastPage(pageProducts.isLast());
+        return productResponse;
+    }
+
 
 
 }
