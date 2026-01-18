@@ -452,9 +452,9 @@ export const addNewProductFromDashboard =
       setOpen(false);
       await dispatch(dashboardProductsAction());
     } catch (error) {
-      console.error(err);
+      console.error(error);
       toast.error(
-        err?.response?.data?.description || "Product creation failed"
+        error?.response?.data?.description || "Product creation failed"
       );
     } finally {
       setLoader(false);
