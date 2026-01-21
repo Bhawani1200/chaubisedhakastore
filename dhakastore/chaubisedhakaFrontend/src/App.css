@@ -1,0 +1,121 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body{
+  font-family: "Lato", sans-serif;
+}
+
+.bg-purple{
+  background: #3158c4;
+}
+
+.headerWrapper .top-strip{
+  padding: 8px 0px;
+}
+
+.headerWrapper .top-strip p{
+  color: #fafff5;
+  font-size: 20px;
+}
+
+.headerWrapper .header {
+  width: 100%;
+  height: auto;
+  padding: 10px 0px;
+}
+
+.logoWrapper img{
+  width: 120px;
+  height: 60px;
+}
+
+.headerWrapper .header .part2 .countryDrop{
+ width: 170px;
+ height: 60px;
+ min-width: 170px;
+ justify-content: start;
+ border: 1px solid rgba(0,0,0,0.1);
+ border-radius: 7px;
+ padding: 10px 15px !important;
+ color: #000 !important;
+}
+
+.headerWrapper .header .part2 .countryDrop{
+  text-align: left;
+  justify-content: flex-start !important;
+   gap: 15px;
+}
+
+.headerWrapper .header .part2 .countryDrop .name{
+  font-size: 14px !important;
+  color: #233a95;
+  text-transform: capitalize !important;
+  font-weight: 700;
+  line-height: 16px;
+}
+.headerWrapper .header .part2 .countryDrop .lable{
+  font-size: 14px !important;
+  color: rgba(0,0,0,0.4);
+  text-transform: capitalize !important;
+  line-height: 16px;
+}
+
+.headerWrapper .header .part2 .countryDrop span.ml-auto svg{
+  opacity: 0.7;
+ margin-left: 4px;
+ margin-bottom: 12px;
+}
+
+header .headerSearch{
+  width: 60%;
+  height: 60px;
+  background-color: #f3f4f7;
+  padding: 10px;
+  position: relative;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+header .headerSearch input{
+ background: transparent !important;
+ outline: none !important;
+ font-size: 18px;
+ color: rgba(0,0,0,0.8);
+ width: 100%;
+ height: 30px;
+ border: 0px !important;
+ padding: 0px 20px;
+}
+
+header .headerSearch .button{
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  z-index: 100;
+  min-width: 40px !important;
+  height: 40px !important;
+  width: 40px !important;
+  border-radius: 50% !important;
+  color: #000;
+}
+
+header .headerSearch .button svg{
+  font-size: 25px;
+}
+
+header .part3 .circle{
+  align-items: center;
+  justify-content: center;
+  min-width: 45px !important;
+  width: 45px !important;
+  height: 45px !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  border-radius: 50% !important;
+  color: #000;
+}
+header .part3 .circle svg{
+  font-size: 22px;
+}

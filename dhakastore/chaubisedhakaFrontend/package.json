@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^2.9.2",
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.1",
+    "bootstrap": "^5.3.8",
     "classnames": "^2.5.1",
     "cldr-data": "^36.0.4",
     "globalize": "^1.7.1",
