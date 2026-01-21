@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect } from "react";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +30,7 @@ const Products = () => {
       {isLoading ? (
         <Loader />
       ) : errorMessage ? (
-        <div className="flex justify-center items-center h-[200px]">
+        <div className="flex justify-center items-center h-50">
           <FaExclamationTriangle className="text-slate-800 text-3xl mr-2" />
           <span className="text-slate-800 text-l font-medium">
             {errorMessage}

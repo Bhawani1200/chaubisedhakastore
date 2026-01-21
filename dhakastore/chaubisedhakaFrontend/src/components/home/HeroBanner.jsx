@@ -1,79 +1,80 @@
-// import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
-// import { bannerList } from "../../utils";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/css";
-// import "swiper/css/navigation";
-// import "swiper/css/pagination";
-// import "swiper/css/scrollbar";
-// import "swiper/css/autoplay";
-// import "swiper/css/effect-fade";
+// // import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
+// // import { bannerList } from "../../utils";
+// // import { Swiper, SwiperSlide } from "swiper/react";
+// // import "swiper/css";
+// // import "swiper/css/navigation";
+// // import "swiper/css/pagination";
+// // import "swiper/css/scrollbar";
+// // import "swiper/css/autoplay";
+// // import "swiper/css/effect-fade";
 
-// import { Link } from "react-router-dom";
-// import { Button } from "@headlessui/react";
 
-// const colors = ["bg-[#FDC200]", "bg-[#FF2C2C]", "bg-[#21AD61]"];
+// // import { Link } from "react-router-dom";
+// // import { Button } from "@headlessui/react";
 
-// const HeroBanner = () => {
-//   return (
-//     <div className="py-2 rounded-md">
-//       <Swiper
-//         grabCursor={true}
-//         autoplay={{
-//           delay: 4000,
-//           disableOnInteraction: false,
-//         }}
-//         navigation
-//         modules={[Pagination, EffectFade, Navigation, Autoplay]}
-//         pagination={{ clickable: true }}
-//         scrollbar={{ draggable: true }}
-//         slidesPerView={1}
-//       >
-//         {bannerList.map((item, i) => (
-//           <SwiperSlide key={item.id}>
-//             <div
-//               className={`carousel-item rounded-md sm:h-[500px] h-96 ${colors[i]}`}
-//             >
-//               <div className="flex justify-center items-center">
-//                 <div className="lg:flex hidden justify-center w-1/2 p-8">
-//                   <div className="text-center">
-//                     <h3 className="text-3xl text-white font-bold">
-//                       {item.title}
-//                     </h3>
-//                     <h1 className="text-5xl text-white font-bold mt-2">
-//                       {item.subtitle}
-//                     </h1>
-//                     <p className="font-bold text-white mt-4">
-//                       {item.description}
-//                     </p>
-//                     <Link
-//                       className="bg-black text-white mt-4 inline-block py-2 px-4 rounded hover:bg-gray-800"
-//                       to="/products"
-//                     >
-//                       Shop
-//                     </Link>
-//                   </div>
-//                   <div className="w-full flex justify-center lg:w-1/2 p-4">
-//                     <img src={item?.image}
-//                      className="w-[600px] h-[500px] object-cover"/>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </SwiperSlide>
-//         ))}
-//       </Swiper>
-//     </div>
-//   );
-// };
+// // const colors = ["bg-[#FDC200]", "bg-[#FF2C2C]", "bg-[#21AD61]"];
 
-// export default HeroBanner;
+// // const HeroBanner = () => {
+// //   return (
+// //     <div className="py-2 rounded-md">
+// //       <Swiper
+// //         grabCursor={true}
+// //         autoplay={{
+// //           delay: 4000,
+// //           disableOnInteraction: false,
+// //         }}
+// //         navigation
+// //         modules={[Pagination, EffectFade, Navigation, Autoplay]}
+// //         pagination={{ clickable: true }}
+// //         scrollbar={{ draggable: true }}
+// //         slidesPerView={1}
+// //       >
+// //         {bannerList.map((item, i) => (
+// //           <SwiperSlide key={item.id}>
+// //             <div
+// //               className={`carousel-item rounded-md sm:h-[500px] h-96 ${colors[i]}`}
+// //             >
+// //               <div className="flex justify-center items-center">
+// //                 <div className="lg:flex hidden justify-center w-1/2 p-8">
+// //                   <div className="text-center">
+// //                     <h3 className="text-3xl text-white font-bold">
+// //                       {item.title}
+// //                     </h3>
+// //                     <h1 className="text-5xl text-white font-bold mt-2">
+// //                       {item.subtitle}
+// //                     </h1>
+// //                     <p className="font-bold text-white mt-4">
+// //                       {item.description}
+// //                     </p>
+// //                     <Link
+// //                       className="bg-black text-white mt-4 inline-block py-2 px-4 rounded hover:bg-gray-800"
+// //                       to="/products"
+// //                     >
+// //                       Shop
+// //                     </Link>
+// //                   </div>
+// //                   <div className="w-full flex justify-center lg:w-1/2 p-4">
+// //                     <img src={item?.image}
+// //                      className="w-[600px] h-[500px] object-cover"/>
+// //                   </div>
+// //                 </div>
+// //               </div>
+// //             </div>
+// //           </SwiperSlide>
+// //         ))}
+// //       </Swiper>
+// //     </div>
+// //   );
+// // };
 
+// // export default HeroBanner;
+import React from "react";
 import { useState, useEffect } from "react";
 // import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@headlessui/react";
 import { bannerList } from "../../utils";
 import { Link } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -91,7 +92,7 @@ const HeroSection = () => {
 
   const prevSlide = () => {
     setCurrentSlide(
-      (prev) => (prev - 1 + bannerList.length) % bannerList.length
+      (prev) => (prev - 1 + bannerList.length) % bannerList.length,
     );
   };
 
@@ -174,6 +175,11 @@ const HeroSection = () => {
         ))}
       </div>
     </section>
+
+ 
   );
 };
 export default HeroSection;
+
+
+

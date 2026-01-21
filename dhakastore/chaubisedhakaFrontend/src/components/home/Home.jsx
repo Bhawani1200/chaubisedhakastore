@@ -1,3 +1,4 @@
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HeroBanner from "../home/HeroBanner";
 import { useEffect } from "react";
@@ -34,7 +35,7 @@ const Home = () => {
           <Loader />
         ) : errorMessage ? (
           HeroBanner(
-            <div className="flex justify-center items-center h-[200px]">
+            <div className="flex justify-center items-center h-50">
               <FaExclamationTriangle className="text-slate-800 text-3xl mr-2" />
               <span className="text-slate-800 text-l font-medium">
                 {errorMessage}

@@ -1,3 +1,4 @@
+import React from "react";
 import { MdArrowBack, MdShoppingCart } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
