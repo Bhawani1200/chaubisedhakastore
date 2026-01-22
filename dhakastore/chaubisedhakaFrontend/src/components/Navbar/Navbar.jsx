@@ -136,10 +136,11 @@ import React from "react";
 import Logo2 from "./logo/logo2.jpg";
 import { Link } from "react-router-dom";
 import CountryDropDown from "./DropDown/CountryDropDown";
-import { IoSearchSharp } from "react-icons/io5";
+import { IoBagAdd, IoSearchSharp } from "react-icons/io5";
 import { Button } from "@mui/material";
-import { FaUser  } from "react-icons/fa";
-import { TiShoppingCart } from "react-icons/ti";
+import { FaUser } from "react-icons/fa";import { TiShoppingCart } from "react-icons/ti";
+import SearchBox from "./DropDown/SearchBox";
+import Category from "./DropDown/Category";
 const Navbar = () => {
   return (
     <div className="headerWrapper">
@@ -162,27 +163,29 @@ const Navbar = () => {
 
             <div className="col-sm-10 d-flex align-items-center part2 gap-6">
               <CountryDropDown />
-
-              <div className="headerSearch ml-3 mr-3">
-                <input type="text" placeholder="search for products.." />
-                <Button className="button">
-                  <IoSearchSharp />
-                </Button>
-              </div>
+              <SearchBox />
 
               <div className="part3 d-flex align-items-center ms-auto">
                 <Button className="circle mr-5">
                   <FaUser />
                 </Button>
-                <div className="ms-auto classTab">
+                <div className="ms-auto classTab d-flex align-items-center">
                   <span className="price">$400</span>
-                  <Button className="circle ml-4"><TiShoppingCart /></Button>
+                  <div className="position-relative ml-2">
+                    <Button className="circle ">
+                      <IoBagAdd />
+                    </Button>
+                    <span className="count d-flex align-items-center justify-content-center">
+                      1
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </header>
+      <Category />
     </div>
   );
 };
