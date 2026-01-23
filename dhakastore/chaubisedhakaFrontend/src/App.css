@@ -77,7 +77,8 @@ body{
  margin-bottom: 12px;
 }
 
-header .headerSearch{
+
+ .headerSearch{
   width: 60%;
   height: 60px;
   background-color: #f3f4f7;
@@ -86,7 +87,7 @@ header .headerSearch{
   border-radius: 5px;
   border: 1px solid rgba(0,0,0,0.1);
 }
-header .headerSearch input{
+ .headerSearch input{
  background: transparent !important;
  outline: none !important;
  font-size: 18px;
@@ -97,14 +98,14 @@ header .headerSearch input{
  padding: 0px 20px;
 }
 
-header .headerSearch input::-webkit-input-placeholder{
+ .headerSearch input::-webkit-input-placeholder{
 color: rgba(0,0,0,0.6);
 }
 
-header .headerSearch .button{
+ .headerSearch button{
   position: absolute;
   top: 10px;
-  right: 15px;
+  right: 10px;
   z-index: 100;
   min-width: 40px !important;
   height: 40px !important;
@@ -113,11 +114,12 @@ header .headerSearch .button{
   color: #000;
 }
 
-header .headerSearch .button svg{
+ .headerSearch button svg{
   font-size: 25px;
+  opacity: 0.8;
 }
 
-header .part3 .circle{
+ .part3 .circle{
   align-items: center;
   justify-content: center;
   min-width: 45px !important;
@@ -127,7 +129,7 @@ header .part3 .circle{
   border-radius: 50% !important;
   color: #000;
 }
-header .part3 .circle svg{
+ .part3 .circle svg{
   font-size: 22px;
 }
 
@@ -199,7 +201,7 @@ nav .navPart2 ul li a{
  text-transform: uppercase;
  display: flex;
  align-items: center;
- padding: 10px 20px;
+ padding: 8px 18px;
  transition: all 0.3s ease-in-out;
  border-radius: 15px;
 }
@@ -212,3 +214,23 @@ nav .navPart2 ul li a svg{
   font-size: 20px;
   gap: 2px;
 }
+.locationModal .MuiPaper-elevation{
+  padding: 25px;
+}
+
+.locationModal .countryList{
+  margin-bottom: 0px;
+}
+.locationModal .countryList li{
+  width: 100%;
+  list-style: none;
+}
+.locationModal .countryList button{
+  width: 100%;
+  text-transform: capitalize !important;
+  color: #000 !important;
+  justify-content: flex-start !important;
+
+}
+
+
