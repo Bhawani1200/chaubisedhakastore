@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Dialog } from "@mui/material";
 import { FaAngleDown } from "react-icons/fa";
-import { IoSearchSharp } from "react-icons/io5";
+import { IoClose, IoSearchSharp } from "react-icons/io5";
+import Slide from "@mui/material/Slide";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const CountryDropDown = () => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
   return (
     <>
-      <Button className="countryDrop">
+      <Button className="countryDrop" onClick={() => setIsOpenModal(true)}>
         <div className="info d-flex flex-column">
           <span className="lable">Your Location</span>
           <span className="name">Nepal</span>
@@ -16,8 +22,15 @@ const CountryDropDown = () => {
         </span>
       </Button>
 
-      <Dialog open={true} className="locationModal">
-        <h4>Choose your delivery location.</h4>
+      <Dialog
+        open={isOpenModal}
+        className="locationModal"
+        onClose={() => setIsOpenModal(false)}
+      >
+        <h4 className="mb-0">Choose your delivery location.</h4>
+        <Button className="btn" onClick={() => setIsOpenModal(false)}>
+          <IoClose />
+        </Button>
         <p>Enter your address and we will specify offer for your area.</p>
         <div className="headerSearch w-100">
           <input type="text" placeholder="Search your area..." />
@@ -26,60 +39,62 @@ const CountryDropDown = () => {
           </Button>
         </div>
 
-        <ul className="countryList">
+        <ul className="countryList mt-3">
           <li>
-            <Button>Nepal</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Nepal</Button>
           </li>
           <li>
-            <Button>India</Button>
+            <Button onClick={() => setIsOpenModal(false)}>India</Button>
           </li>
           <li>
-            <Button>Bhutan</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Bhutan</Button>
           </li>
           <li>
-            <Button>USA</Button>
+            <Button onClick={() => setIsOpenModal(false)}>USA</Button>
           </li>
           <li>
-            <Button>China</Button>
+            <Button onClick={() => setIsOpenModal(false)}>China</Button>
           </li>
           <li>
-            <Button>Japan</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Japan</Button>
           </li>
           <li>
-            <Button>South Korea</Button>
+            <Button onClick={() => setIsOpenModal(false)}>South Korea</Button>
           </li>
           <li>
-            <Button>Bangladesh</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Bangladesh</Button>
           </li>
           <li>
-            <Button>Sri Lanka</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Sri Lanka</Button>
           </li>
           <li>
-            <Button>Pakistan</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Pakistan</Button>
           </li>
           <li>
-            <Button>Thailand</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Thailand</Button>
           </li>
           <li>
-            <Button>Singapore</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Singapore</Button>
           </li>
           <li>
-            <Button>Malaysia</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Malaysia</Button>
           </li>
           <li>
-            <Button>Australia</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Australia</Button>
           </li>
           <li>
-            <Button>United Kingdom</Button>
+            <Button onClick={() => setIsOpenModal(false)}>
+              United Kingdom
+            </Button>
           </li>
           <li>
-            <Button>Canada</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Canada</Button>
           </li>
           <li>
-            <Button>Germany</Button>
+            <Button onClick={() => setIsOpenModal(false)}>Germany</Button>
           </li>
           <li>
-            <Button>France</Button>
+            <Button onClick={() => setIsOpenModal(false)}>France</Button>
           </li>
         </ul>
       </Dialog>

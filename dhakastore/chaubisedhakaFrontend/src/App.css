@@ -17,7 +17,17 @@ body{
   .container ,.container-lg,.container-md,.container-sm,.container-xl{
     max-width: 1200px;
   }
+}
 
+::-webkit-scrollbar{
+  width: 8px !important;
+  height: 8ox !important;
+}
+::-webkit-scrollbar-thumb{
+  background: #ccc !important;
+}
+::-webkit-scrollbar-track{
+  background: transparent !important;
 }
 
 .headerWrapper .top-strip{
@@ -193,7 +203,7 @@ nav .navPart2 ul{
   margin-bottom: 0px;
   gap: 10px;
 }
-nav .navPart2 ul li a{
+nav .navPart2 ul li a button{
  font-size: 16px;
  font-weight: 800;
  text-decoration: none;
@@ -204,6 +214,9 @@ nav .navPart2 ul li a{
  padding: 8px 18px;
  transition: all 0.3s ease-in-out;
  border-radius: 15px;
+}
+nav .navPart2 ul li a{
+  text-decoration: none;
 }
 
 nav .navPart2 ul li a:hover{
@@ -216,21 +229,43 @@ nav .navPart2 ul li a svg{
 }
 .locationModal .MuiPaper-elevation{
   padding: 25px;
+  position: relative;
 }
 
 .locationModal .countryList{
   margin-bottom: 0px;
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  margin: 0px;
+  padding: 0px;
 }
 .locationModal .countryList li{
   width: 100%;
   list-style: none;
+
 }
-.locationModal .countryList button{
+.locationModal .countryList li button{
   width: 100%;
   text-transform: capitalize !important;
   color: #000 !important;
   justify-content: flex-start !important;
-
+  padding: 10px 20px !important;
 }
+
+.locationModal .btn{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #000 !important;
+  min-width: 40px !important;
+  width: 40px;
+  height: 40px;
+ border-radius: 50%;
+}
+.locationModal .btn svg{
+  font-size: 22px;
+}
+
 
 

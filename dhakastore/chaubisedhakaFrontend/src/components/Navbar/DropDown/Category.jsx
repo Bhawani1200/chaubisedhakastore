@@ -24,23 +24,23 @@ const Category = () => {
           <div className="navPart2 col-sm-10 d-flex align-items-center">
             <ul className="list list-inline ms-auto ">
               <li className="list-inline-item">
-                <Link to="/">Boys</Link>
+                <Link to="/"><Button>Boys</Button></Link>
               </li>
               <li className="list-inline-item">
-                <Link to="/">Girls</Link>
+                <Link to="/"><Button>Girls</Button></Link>
               </li>
               <li className="list-inline-item">
-                <Link to="/">Unisex</Link>
-              </li>
+                <Link to="/"><Button>Unisex</Button></Link>
+              </li> 
               <li className="list-inline-item">
-                <Link to="/">Kids</Link>
-              </li>
+                <Link to="/"><Button>Kids</Button></Link>
+              </li> 
               <li className="list-inline-item">
-                <Link to="/">Shoe Cleaner</Link>
-              </li>
+                <Link to="/"><Button>Shoe Cleaner</Button></Link>
+              </li> 
               <li className="list-inline-item">
-                <Link to="/">Contact Us</Link>
-              </li>
+                <Link to="/"><Button>Contact Us</Button></Link>
+              </li> 
             </ul>
           </div>
         </div>
