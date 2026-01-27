@@ -1,5 +1,5 @@
-import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css'
+import React, { createContext, useEffect, useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Products from "./components/products/Products";
 import About from "./components/About";
@@ -18,43 +18,65 @@ import Category from "./components/admin/categories/Category";
 import Orders from "./components/admin/orders/Orders";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/home/Home";
+import axios from "axios";
 
+const MyContext = createContext();
 function App() {
+  const [countryList,setCountryList]=useState([]);
+  
+  useEffect(()=>{
+  getCountry("https://countriesnow.space/api/v0.1/countries/")
+  },[])
+
+  const getCountry=async(url)=>{
+    const response=await axios.get(url).then((res)=>{
+      setCountryList(res.data.data);
+    })
+  }
+const values={
+  countryList
+  
+}
   return (
     <React.Fragment>
-      <Router>
-        {/* <Header /> */}
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/cart" element={<Cart />} />
+      <MyContext.Provider value={values}>
+        <Router>
+          {/* <Header /> */}
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/cart" element={<Cart />} />
 
-          <Route path="/" element={<PrivateRoute />}>
-            <Route path="/checkout" element={<Checkout />} />
-          </Route>
-
-          <Route path="/" element={<PrivateRoute publicPage />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Route>
-
-          <Route path="/" element={<PrivateRoute adminOnly />}>
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="" element={<DashBoard />} />
-              <Route path="products" element={<AdminProduct />} />
-              <Route path="sellers" element={<Sellers />} />
-              <Route path="orders" element={<Orders />} />
-              <Route path="categories" element={<Category />} />
+            <Route path="/" element={<PrivateRoute />}>
+              <Route path="/checkout" element={<Checkout />} />
             </Route>
-          </Route>
-        </Routes>
-      </Router>
-      <Toaster position="top-center" />
+
+            <Route path="/" element={<PrivateRoute publicPage />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Route>
+
+            <Route path="/" element={<PrivateRoute adminOnly />}>
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="" element={<DashBoard />} />
+                <Route path="products" element={<AdminProduct />} />
+                <Route path="sellers" element={<Sellers />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="categories" element={<Category />} />
+              </Route>
+            </Route>
+          </Routes>
+        </Router>
+        <Toaster position="top-center" />
+      </MyContext.Provider>
     </React.Fragment>
   );
 }
 
 export default App;
+export {
+  MyContext
+};

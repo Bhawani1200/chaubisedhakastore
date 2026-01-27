@@ -132,16 +132,21 @@
 // };
 
 // export default Navbar;
-import React from "react";
+import React, { useContext } from "react";
 import Logo2 from "./logo/logo2.jpg";
 import { Link } from "react-router-dom";
 import CountryDropDown from "./DropDown/CountryDropDown";
 import { IoBagAdd, IoSearchSharp } from "react-icons/io5";
 import { Button } from "@mui/material";
-import { FaUser } from "react-icons/fa";import { TiShoppingCart } from "react-icons/ti";
+import { FaUser } from "react-icons/fa";
+import { TiShoppingCart } from "react-icons/ti";
 import SearchBox from "./DropDown/SearchBox";
 import Category from "./DropDown/Category";
+import { MyContext } from "../../App";
+
 const Navbar = () => {
+  const context = useContext(MyContext);
+
   return (
     <div className="headerWrapper">
       <div className="top-strip bg-purple">
@@ -162,7 +167,8 @@ const Navbar = () => {
             </div>
 
             <div className="col-sm-10 d-flex align-items-center part2 gap-6">
-              <CountryDropDown />
+              {context.countryList.length!==0 && <CountryDropDown />}
+
               <SearchBox />
 
               <div className="part3 d-flex align-items-center ms-auto">

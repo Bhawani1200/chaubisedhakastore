@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Dialog } from "@mui/material";
 import { FaAngleDown } from "react-icons/fa";
 import { IoClose, IoSearchSharp } from "react-icons/io5";
 import Slide from "@mui/material/Slide";
+import { MyContext } from "../../../App";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -10,6 +11,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const CountryDropDown = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(null);
+  const context = useContext(MyContext);
+
+  const selectCountry = (index) =>{
+     setIsOpenModal(false);
+  setSelectedTab(index);
+  }
   return (
     <>
       <Button className="countryDrop" onClick={() => setIsOpenModal(true)}>
@@ -40,62 +48,19 @@ const CountryDropDown = () => {
         </div>
 
         <ul className="countryList mt-3">
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Nepal</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>India</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Bhutan</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>USA</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>China</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Japan</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>South Korea</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Bangladesh</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Sri Lanka</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Pakistan</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Thailand</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Singapore</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Malaysia</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Australia</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>
-              United Kingdom
-            </Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Canada</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>Germany</Button>
-          </li>
-          <li>
-            <Button onClick={() => setIsOpenModal(false)}>France</Button>
-          </li>
+          {context.countryList?.length !== 0 &&
+            context.countryList?.map((item, index) => {
+              return (
+                <li key={index}>
+                  <Button
+                    onClick={() => selectCountry(index)}
+                    className={`${selectedTab === index ? "active" : ""}`}
+                  >
+                    {item.country}
+                  </Button>
+                </li>
+              );
+            })}
         </ul>
       </Dialog>
     </>
