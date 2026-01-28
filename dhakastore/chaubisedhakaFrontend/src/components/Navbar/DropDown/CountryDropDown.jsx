@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Dialog } from "@mui/material";
 import { FaAngleDown } from "react-icons/fa";
 import { IoClose, IoSearchSharp } from "react-icons/io5";
@@ -12,12 +12,33 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const CountryDropDown = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState(null);
+  const [countryList, setCountryList] = useState([]);
+
   const context = useContext(MyContext);
 
-  const selectCountry = (index) =>{
-     setIsOpenModal(false);
-  setSelectedTab(index);
-  }
+  const selectCountry = (index,country) => {
+    setIsOpenModal(false);
+    setSelectedTab(index);
+    context.setSelectedCountry(country)
+  };
+
+  useEffect(() => {
+    setCountryList(context.countryList);
+  }, []);
+
+  const filterList = (e) => {
+    const keyword = e.target.value.toLowerCase();
+
+    if (keyword !== "") {
+      const list = countryList.filter((item) => {
+        return item.country.toLowerCase().includes(keyword);
+      });
+      setCountryList(list);
+    } else {
+      setCountryList(context.countryList);
+    }
+  };
+
   return (
     <>
       <Button className="countryDrop" onClick={() => setIsOpenModal(true)}>
@@ -41,19 +62,23 @@ const CountryDropDown = () => {
         </Button>
         <p>Enter your address and we will specify offer for your area.</p>
         <div className="headerSearch w-100">
-          <input type="text" placeholder="Search your area..." />
+          <input
+            type="text"
+            placeholder="Search your area..."
+            onChange={filterList}
+          />
           <Button>
             <IoSearchSharp />
           </Button>
         </div>
 
         <ul className="countryList mt-3">
-          {context.countryList?.length !== 0 &&
-            context.countryList?.map((item, index) => {
+          {countryList?.length !== 0 &&
+            countryList?.map((item, index) => {
               return (
                 <li key={index}>
                   <Button
-                    onClick={() => selectCountry(index)}
+                    onClick={() => selectCountry(index,index.country)}
                     className={`${selectedTab === index ? "active" : ""}`}
                   >
                     {item.country}
