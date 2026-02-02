@@ -16,10 +16,10 @@ const CountryDropDown = () => {
 
   const context = useContext(MyContext);
 
-  const selectCountry = (index,country) => {
+  const selectCountry = (index, country) => {
     setIsOpenModal(false);
     setSelectedTab(index);
-    context.setSelectedCountry(country)
+    context.setSelectedCountry(country);
   };
 
   useEffect(() => {
@@ -44,7 +44,13 @@ const CountryDropDown = () => {
       <Button className="countryDrop" onClick={() => setIsOpenModal(true)}>
         <div className="info d-flex flex-column">
           <span className="lable">Your Location</span>
-          <span className="name">Nepal</span>
+          <span className="name">
+            {context.selectedCountry !== ""
+              ? context.selectedCountry.length > 0
+                ? context.selectedCountry?.substr(0, 10) +"..."
+                : context.selectedCountry
+              : "Select Location"}
+          </span>
         </div>
         <span className="ml-auto">
           <FaAngleDown />
@@ -78,7 +84,7 @@ const CountryDropDown = () => {
               return (
                 <li key={index}>
                   <Button
-                    onClick={() => selectCountry(index,index.country)}
+                    onClick={() => selectCountry(index, item.country)}
                     className={`${selectedTab === index ? "active" : ""}`}
                   >
                     {item.country}

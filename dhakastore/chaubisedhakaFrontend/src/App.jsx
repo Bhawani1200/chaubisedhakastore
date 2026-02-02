@@ -22,21 +22,23 @@ import axios from "axios";
 
 const MyContext = createContext();
 function App() {
-  const [countryList,setCountryList]=useState([]);
-  
-  useEffect(()=>{
-  getCountry("https://countriesnow.space/api/v0.1/countries/")
-  },[])
+  const [countryList, setCountryList] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
 
-  const getCountry=async(url)=>{
-    const response=await axios.get(url).then((res)=>{
+  useEffect(() => {
+    getCountry("https://countriesnow.space/api/v0.1/countries/");
+  }, []);
+
+  const getCountry = async (url) => {
+    const response = await axios.get(url).then((res) => {
       setCountryList(res.data.data);
-    })
-  }
-const values={
-  countryList
-  setSelectedCountry
-}
+    });
+  };
+  const values = {
+    countryList,
+    selectedCountry,
+    setSelectedCountry
+  };
   return (
     <React.Fragment>
       <MyContext.Provider value={values}>
@@ -77,6 +79,4 @@ const values={
 }
 
 export default App;
-export {
-  MyContext
-};
+export { MyContext };
