@@ -22,6 +22,7 @@
     "bootstrap": "^5.3.8",
     "classnames": "^2.5.1",
     "cldr-data": "^36.0.4",
+    "framer-motion": "^12.31.0",
     "globalize": "^1.7.1",
     "iana-tz-data": "^2019.1.0",
     "lucide-react": "^0.553.0",

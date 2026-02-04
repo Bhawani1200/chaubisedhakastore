@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Products from "./components/products/Products";
 import About from "./components/About";
@@ -19,6 +19,7 @@ import Orders from "./components/admin/orders/Orders";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/home/Home";
 import axios from "axios";
+import NavbarBottom from "./components/Navbar/NavbarBottom";
 
 const MyContext = createContext();
 function App() {
@@ -45,6 +46,7 @@ function App() {
         <Router>
           {/* <Header /> */}
           <Navbar />
+          <NavbarBottom />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />
