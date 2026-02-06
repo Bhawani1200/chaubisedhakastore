@@ -203,7 +203,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { MdClose } from "react-icons/md";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { motion } from "framer-motion";
-import { navBarList } from "../../constants/index.jsx";
+import { navBarList } from "../../constants/index.js";
 import Image from "../designLayouts/Image.jsx";
 import { logo1 } from "../../assets/logo/index.jsx";
 import Flex from "../designLayouts/Flex.jsx";
@@ -232,7 +232,7 @@ const Navbar = () => {
         <Flex className="flex items-center justify-between h-full">
           <Link to="/">
             <div>
-              <Image className="w-20 object-cover" imgSrc={logo1} />
+              <Image className="w-40 object-cover" imgSrc={logo1} />
             </div>
           </Link>
           <div>
@@ -247,7 +247,7 @@ const Navbar = () => {
                   {navBarList.map(({ _id, title, link }) => (
                     <NavLink
                       key={_id}
-                      className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-4 decoration-1 hover:text-[#262626] md:border-r-2 border-r-gray-300 hoverEffect last:border-r-0"
+                      className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#0c0808] hover:underline underline-offset-4 decoration-1 hover:text-[#262626] md:border-r-2 border-r-gray-300 hoverEffect last:border-r-0"
                       to={link}
                       state={{ data: location.pathname.split("/")[1] }}
                     >
@@ -272,7 +272,7 @@ const Navbar = () => {
                   <div className="w-full h-full bg-primeColor p-6">
                     <img
                       className="w-28 mb-6"
-                      src={logoLight}
+                      src={logo1}
                       alt="logoLight"
                     />
                     <ul className="text-gray-200 flex flex-col gap-2">
@@ -294,7 +294,7 @@ const Navbar = () => {
                     <div className="mt-4">
                       <h1
                         onClick={() => setCategory(!category)}
-                        className="flex justify-between text-base cursor-pointer items-center font-titleFont mb-2"
+                        className="flex justify-between text-base text-gray-900 cursor-pointer items-center font-titleFont mb-2"
                       >
                         Shop by Category{" "}
                         <span className="text-lg">{category ? "-" : "+"}</span>
