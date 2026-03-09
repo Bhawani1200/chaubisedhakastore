@@ -1,13 +1,13 @@
-import React from 'react'
-import Banner from '../Banner/Banner'
+// import React from 'react'
+// import Banner from '../Banner/Banner'
 
-const Home = () => {
-  return (
-    <div className='w-full mx-auto'>
-    <Banner/>
+// const Home = () => {
+//   return (
+//     <div className='w-full mx-auto'>
+//     <Banner/>
       
-    </div>
-  )
-}
+//     </div>
+//   )
+// }
 
-export default Home
+// export default Home

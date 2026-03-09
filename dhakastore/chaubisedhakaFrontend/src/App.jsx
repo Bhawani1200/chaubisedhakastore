@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Products from "./components/products/Products";
 import About from "./components/About";
@@ -16,10 +15,9 @@ import AdminProduct from "./components/admin/product/AdminProduct";
 import Sellers from "./components/admin/sellers/Sellers";
 import Category from "./components/admin/categories/Category";
 import Orders from "./components/admin/orders/Orders";
-import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/home/Home";
 import axios from "axios";
-import NavbarBottom from "./components/Navbar/NavbarBottom";
+import Navigation from "./components/Navbar/Navigation";
 
 const MyContext = createContext();
 function App() {
@@ -38,15 +36,15 @@ function App() {
   const values = {
     countryList,
     selectedCountry,
-    setSelectedCountry
+    setSelectedCountry,
   };
   return (
     <React.Fragment>
       <MyContext.Provider value={values}>
         <Router>
-          {/* <Header /> */}
-          <Navbar />
-          <NavbarBottom />
+          <Navigation />
+          {/* <Navbar /> */}
+          {/* <NavbarBottom /> */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />
@@ -58,10 +56,10 @@ function App() {
               <Route path="/checkout" element={<Checkout />} />
             </Route>
 
-            <Route path="/" element={<PrivateRoute publicPage />}>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-            </Route>
+            {/* PrivateRoute added */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<PrivateRoute publicPage />}></Route>
 
             <Route path="/" element={<PrivateRoute adminOnly />}>
               <Route path="/admin" element={<AdminLayout />}>

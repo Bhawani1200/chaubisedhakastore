@@ -1,7 +1,7 @@
-import React from "react";
+// import React from "react";
 
-const Flex = ({ children, className }) => {
-  return <div className={className}>{children}</div>;
-};
+// const Flex = ({ children, className }) => {
+//   return <div className={className}>{children}</div>;
+// };
 
-export default Flex;
+// export default Flex;
