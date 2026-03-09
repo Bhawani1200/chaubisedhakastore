@@ -132,80 +132,136 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-linear-to-br from-black via-gray-900 to-black px-4">
-      
-      <form
-        onSubmit={handleSubmit(loginHandler)}
-        className="w-full max-w-md backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.6)] py-10 px-8 rounded-2xl"
-      >
-        
-        {/* HEADER */}
-        <div className="flex flex-col items-center justify-center space-y-3 mb-6">
-          <AiOutlineLogin className="text-purple-500 text-5xl drop-shadow-lg" />
-          <h1 className="text-white text-3xl font-bold tracking-wide">
-            Welcome Back
-          </h1>
-          <p className="text-gray-400 text-sm">
-            Login to continue
-          </p>
-        </div>
-
-        <hr className="border-white/10 mb-6" />
-
-        {/* INPUTS */}
-        <div className="flex flex-col gap-4 text-white">
-          <InputField
-            label="Username"
-            required
-            id="username"
-            type="text"
-            message="*Username is required"
-            placeholder="Enter your username"
-            register={register}
-            errors={errors}
-          />
-
-          <InputField
-            label="Password"
-            required
-            id="password"
-            type={showPassword ? "text" : "password"}
-            message="*Password is required"
-            placeholder="Enter your password"
-            register={register}
-            errors={errors}
-            showPassword={showPassword}
-            onTogglePassword={togglePassword}
-          />
-        </div>
-
-        {/* BUTTON */}
-        <button
-          disabled={loader}
-          type="submit"
-          className="mt-6 bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 flex gap-2 justify-center items-center text-white font-semibold w-full py-3 rounded-lg shadow-lg transition-all duration-200 hover:scale-[1.02]"
+    <div className="min-h-screen flex text-gray-900 bg-white font-bodyFont">
+      {/* LEFT COLUMN - Form */}
+      <div className="w-full lg:w-1/2 flex justify-center items-center px-6 sm:px-12 xl:px-24">
+        <form
+          onSubmit={handleSubmit(loginHandler)}
+          className="w-full max-w-[450px]"
         >
-          {loader ? (
-            <>
-              <Spinners />
-              Logging in...
-            </>
-          ) : (
-            <>Login</>
-          )}
-        </button>
+          {/* HEADER */}
+          <div className="flex flex-col space-y-2 mb-8">
+            <h1 className="text-[#111] text-3xl md:text-4xl font-bold tracking-tight">
+              Welcome !
+            </h1>
+            <h2 className="text-[#111] text-3xl md:text-4xl font-bold tracking-tight pb-6">
+              Log into your account
+            </h2>
 
-        {/* FOOTER */}
-        <p className="text-gray-400 text-center mt-6 text-sm">
-          Don’t have an account?{" "}
-          <Link
-            className="font-semibold text-purple-400 hover:text-pink-500 transition"
-            to="/register"
+            {/* Social Logins - visual only per reference */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button type="button" className="flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2.5 hover:bg-gray-50 transition-colors">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
+                <span className="text-[13px] font-semibold">Google</span>
+              </button>
+              <button type="button" className="flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2.5 hover:bg-gray-50 transition-colors">
+                <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook" className="w-5 h-5" />
+                <span className="text-[13px] font-semibold text-gray-700">Facebook</span>
+              </button>
+              <button type="button" className="flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2.5 hover:bg-gray-50 transition-colors sm:col-span-1">
+                <span className="text-[13px] font-semibold">Mobile</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="relative flex py-5 items-center">
+            <div className="flex-grow border-t border-gray-300"></div>
+            <span className="shrink-0 px-4 text-gray-500 text-xs font-semibold">or continue with email</span>
+            <div className="flex-grow border-t border-gray-300"></div>
+          </div>
+
+          {/* INPUTS */}
+          <div className="flex flex-col gap-5 mt-2">
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="username" className="text-sm font-bold text-[#111]">
+                Email <span className="text-red-500">*</span>
+              </label>
+              <input
+                {...register("username", { required: true })}
+                id="username"
+                type="text"
+                placeholder="Enter your email"
+                className="w-full border border-gray-300 rounded-md px-4 py-3 outline-none focus:border-blue-600 transition-colors placeholder:text-gray-400 text-sm"
+              />
+              {errors.username && <p className="text-red-500 text-xs mt-1">*Username is required</p>}
+            </div>
+
+            <div className="flex flex-col gap-1.5 relative">
+              <label htmlFor="password" className="text-sm font-bold text-[#111]">
+                Password <span className="text-red-500">*</span>
+              </label>
+              <div className="relative">
+                <input
+                  {...register("password", { required: true })}
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className="w-full border border-gray-300 rounded-md px-4 py-3 outline-none focus:border-blue-600 transition-colors placeholder:text-gray-400 text-sm"
+                />
+                <button 
+                  type="button" 
+                  onClick={togglePassword}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800"
+                >
+                  <AiOutlineEye className="text-lg" />
+                </button>
+              </div>
+              {errors.password && <p className="text-red-500 text-xs mt-1">*Password is required</p>}
+            </div>
+
+            <div className="flex w-full">
+              <a href="#" className="text-blue-600 text-[13px] font-bold hover:underline">
+                Forgot password ?
+              </a>
+            </div>
+          </div>
+
+          {/* BUTTON */}
+          <button
+            disabled={loader}
+            type="submit"
+            className="mt-6 bg-[#2563EB] hover:bg-blue-700 flex gap-2 justify-center items-center text-white font-bold w-full py-3.5 rounded-full shadow-md transition-colors"
           >
-            Sign Up
-          </Link>
-        </p>
-      </form>
+            {loader ? (
+              <>
+                <Spinners />
+                Logging in...
+              </>
+            ) : (
+              "Log in"
+            )}
+          </button>
+
+          {/* FOOTER */}
+          <p className="text-gray-500 text-center mt-6 text-sm font-medium">
+            Don't you have an account?{" "}
+            <Link
+              className="text-[#2563EB] font-bold hover:underline"
+              to="/register"
+            >
+              Create an account
+            </Link>
+          </p>
+        </form>
+      </div>
+
+      {/* RIGHT COLUMN - Image Background */}
+      <div className="hidden lg:block lg:w-1/2 relative bg-[#1E3A8A] overflow-hidden">
+        {/* Placeholder image layer - replace with actual shoe image */}
+        <div 
+          className="absolute inset-x-8 inset-y-8 bg-cover bg-center rounded-2xl shadow-2xl z-10"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')" }}
+        >
+          {/* Overlay gradient text area if desired */}
+          <div className="absolute bottom-0 left-0 w-full p-12 bg-gradient-to-t from-black/80 to-transparent rounded-b-2xl">
+            <h2 className="text-white text-3xl font-bold mb-2">Exclusive Sneakers</h2>
+            <p className="text-gray-200">Sign in to uncover our latest collection.</p>
+          </div>
+        </div>
+        
+        {/* Abstract vector shape in background */}
+        <div className="absolute top-0 right-0 w-3/4 h-full bg-[#3B82F6] rounded-l-[100px] opacity-70 -translate-y-10 scale-110 blur-xl mix-blend-screen" />
+      </div>
     </div>
   );
 };

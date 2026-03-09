@@ -15,9 +15,9 @@ import AdminProduct from "./components/admin/product/AdminProduct";
 import Sellers from "./components/admin/sellers/Sellers";
 import Category from "./components/admin/categories/Category";
 import Orders from "./components/admin/orders/Orders";
-import Home from "./components/home/Home";
 import axios from "axios";
 import Navigation from "./components/Navbar/Navigation";
+import Home from "./components/home/Home";
 
 const MyContext = createContext();
 function App() {
@@ -43,8 +43,6 @@ function App() {
       <MyContext.Provider value={values}>
         <Router>
           <Navigation />
-          {/* <Navbar /> */}
-          {/* <NavbarBottom /> */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />

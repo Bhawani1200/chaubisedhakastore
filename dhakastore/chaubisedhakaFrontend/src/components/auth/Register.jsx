@@ -127,90 +127,121 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-black via-gray-900 to-black px-4">
-
-      <form
-        onSubmit={handleSubmit(registerHandler)}
-        className="w-full max-w-md backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.6)] py-10 px-8 rounded-2xl"
-      >
-        
-        {/* HEADER */}
-        <div className="flex flex-col items-center justify-center space-y-3 mb-6">
-          <FaUserPlus className="text-pink-500 text-5xl drop-shadow-lg" />
-          <h1 className="text-white text-3xl font-bold tracking-wide">
-            Create Account
-          </h1>
-          <p className="text-gray-400 text-sm">
-            Register to get started
-          </p>
-        </div>
-
-        <hr className="border-white/10 mb-6" />
-
-        {/* INPUTS */}
-        <div className="flex flex-col gap-4 text-white">
-          <InputField
-            label="Username"
-            required
-            id="username"
-            type="text"
-            message="*Username is required"
-            placeholder="Enter your name"
-            register={register}
-            errors={errors}
-          />
-
-          <InputField
-            label="Email"
-            required
-            id="email"
-            type="email"
-            message="*Email is required"
-            placeholder="Enter your email"
-            register={register}
-            errors={errors}
-          />
-
-          <InputField
-            label="Password"
-            required
-            id="password"
-            type="password"
-            message="*Password is required"
-            placeholder="Enter your password"
-            min={6}
-            register={register}
-            errors={errors}
-          />
-        </div>
-
-        {/* BUTTON */}
-        <button
-          disabled={loader}
-          type="submit"
-          className="mt-6 bg-linear-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 flex gap-2 justify-center items-center text-white font-semibold w-full py-3 rounded-lg shadow-lg transition-all duration-200 hover:scale-[1.02]"
+    <div className="min-h-screen flex bg-black font-bodyFont text-white overflow-hidden">
+      
+      {/* LEFT COLUMN - Decorative Image Side */}
+      <div className="hidden lg:flex lg:w-1/2 p-6 relative">
+        <div 
+          className="w-full h-full rounded-[40px] bg-cover bg-center overflow-hidden ring-1 ring-white/10 shadow-2xl"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1552346154-21d32810aba3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')" }}
         >
-          {loader ? (
-            <>
-              <Spinners />
-              Creating Account...
-            </>
-          ) : (
-            <>Register</>
-          )}
-        </button>
+          {/* Optional: Add a subtle overlay so it blends nicely with the dark theme */}
+          <div className="absolute inset-0 bg-black/20 rounded-[40px]"></div>
+        </div>
+      </div>
 
-        {/* FOOTER */}
-        <p className="text-gray-400 text-center mt-6 text-sm">
-          Already have an account?{" "}
-          <Link
-            className="font-semibold text-purple-400 hover:text-pink-500 transition"
-            to="/login"
-          >
-            Login
-          </Link>
-        </p>
-      </form>
+      {/* RIGHT COLUMN - Form Side */}
+      <div className="w-full lg:w-1/2 flex justify-center items-center py-10 px-6 sm:px-12 xl:px-24">
+        <div className="w-full max-w-[500px]">
+          
+          <div className="mb-12 text-center">
+            <h2 className="text-4xl font-bold mb-4 tracking-tight">Sign Up Account</h2>
+            <p className="text-gray-400 text-base">Enter your personal data to create your account.</p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-5 mb-10">
+            <button className="flex items-center justify-center gap-3 border border-[#333] hover:bg-[#111] transition-colors rounded-xl py-4 text-base font-medium">
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
+              Google
+            </button>
+            <button className="flex items-center justify-center gap-3 border border-[#333] hover:bg-[#111] transition-colors rounded-xl py-4 text-base font-medium">
+              <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook" className="w-5 h-5" />
+              Facebook
+            </button>
+          </div>
+
+          <div className="relative flex items-center py-5 mb-6">
+            <div className="flex-grow border-t border-[#333]"></div>
+            <span className="shrink-0 px-4 text-gray-500 text-sm font-medium uppercase tracking-wider">Or</span>
+            <div className="flex-grow border-t border-[#333]"></div>
+          </div>
+
+          <form onSubmit={handleSubmit(registerHandler)} className="flex flex-col gap-6">
+            
+            {/* Split row for name representation (Username effectively fits here) */}
+            <div className="flex flex-col gap-3">
+              <label htmlFor="username" className="text-sm font-semibold text-gray-300">
+                Username
+              </label>
+              <input
+                {...register("username", { required: true })}
+                id="username"
+                type="text"
+                placeholder="eg. John Francisco"
+                className="w-full bg-[#1A1A1A] border border-transparent focus:border-[#4C1D95] rounded-xl px-5 py-4 outline-none transition-colors placeholder:text-gray-500 text-base"
+              />
+              {errors.username && <p className="text-red-500 text-sm mt-1">*Username is required</p>}
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <label htmlFor="email" className="text-sm font-semibold text-gray-300">
+                Email
+              </label>
+              <input
+                {...register("email", { required: true })}
+                id="email"
+                type="email"
+                placeholder="eg. johnfrans@gmail.com"
+                className="w-full bg-[#1A1A1A] border border-transparent focus:border-[#4C1D95] rounded-xl px-5 py-4 outline-none transition-colors placeholder:text-gray-500 text-base"
+              />
+              {errors.email && <p className="text-red-500 text-sm mt-1">*Email is required</p>}
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <label htmlFor="password" className="text-sm font-semibold text-gray-300">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  {...register("password", { required: true, minLength: 6 })}
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  className="w-full bg-[#1A1A1A] border border-transparent focus:border-[#4C1D95] rounded-xl px-5 py-4 outline-none transition-colors placeholder:text-gray-500 text-base"
+                />
+              </div>
+              <p className="text-gray-500 text-[13px] mt-1">Must be at least 8 characters.</p>
+              {errors.password && <p className="text-red-500 text-sm mt-1">*Password is required</p>}
+            </div>
+
+            <button
+              disabled={loader}
+              type="submit"
+              className="mt-8 bg-white hover:bg-gray-100 text-black flex gap-2 justify-center items-center font-bold w-full py-4 rounded-xl shadow-lg transition-colors text-lg"
+            >
+              {loader ? (
+                <>
+                  <Spinners />
+                  Creating...
+                </>
+              ) : (
+                "Sign Up"
+              )}
+            </button>
+
+            <p className="text-gray-400 text-center mt-8 text-base font-medium">
+              Already have an account?{" "}
+              <Link
+                className="text-white hover:text-gray-300 font-bold transition-colors"
+                to="/login"
+              >
+                Log In
+              </Link>
+            </p>
+          </form>
+
+        </div>
+      </div>
     </div>
   );
 };
