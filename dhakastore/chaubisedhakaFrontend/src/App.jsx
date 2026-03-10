@@ -18,6 +18,7 @@ import Orders from "./components/admin/orders/Orders";
 import axios from "axios";
 import Navigation from "./components/Navbar/Navigation";
 import Home from "./components/home/Home";
+import ProductDetails from "./components/products/ProductDetails";
 
 const MyContext = createContext();
 function App() {
@@ -46,6 +47,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/cart" element={<Cart />} />

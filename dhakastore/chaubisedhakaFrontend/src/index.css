@@ -35,3 +35,17 @@
 /* .scrollbar-hide::-webkit-scrollbar {
   display: none;
 } */
+
+.new-launches-slider .slick-track {
+  display: flex !important;
+}
+
+.new-launches-slider .slick-slide {
+  height: inherit !important;
+  display: flex !important;
+  justify-content: center;
+}
+
+.new-launches-slider .slick-slide > div {
+  width: 100%;
+}

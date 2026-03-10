@@ -1,0 +1,174 @@
+import React, { useState } from "react";
+import { FaShoppingCart, FaStar } from "react-icons/fa";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/actions";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+
+const LaunchCard = ({
+  productId,
+  productName,
+  image,
+  description,
+  quantity,
+  price,
+  discount,
+  specialPrice,
+  rating,
+  reviewCount,
+  colors = [],
+}) => {
+  const [colorIndex, setColorIndex] = useState(0);
+  const isAvailable = quantity && Number(quantity) > 0;
+  const dispatch = useDispatch();
+
+  const addToCartHandler = () => {
+    dispatch(
+      addToCart(
+        {
+          image,
+          productName,
+          description,
+          specialPrice,
+          productId,
+          price,
+          quantity,
+        },
+        1,
+        toast
+      )
+    );
+  };
+
+  const discountPct =
+    discount ||
+    (price && specialPrice
+      ? Math.round(((price - specialPrice) / price) * 100)
+      : null);
+
+  const displayPrice = specialPrice || price;
+
+  const prevColor = () =>
+    setColorIndex((i) => (i - 1 + colors.length) % colors.length);
+  const nextColor = () =>
+    setColorIndex((i) => (i + 1) % colors.length);
+
+  return (
+    <div className="h-full bg-white rounded-2xl shadow-md overflow-hidden flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 relative">
+      {/* New Badge */}
+      <span className="absolute top-3 left-3 z-10 bg-green-600 text-white text-[10px] xl:text-xs font-semibold px-2 py-0.5 rounded-sm">
+        New
+      </span>
+
+      {/* Product Image */}
+      <Link to={`/product/${productId}`} className="block">
+        <div className="relative bg-gray-50 flex items-center justify-center h-48 sm:h-60 md:h-72 xl:h-80 2xl:h-96 overflow-hidden">
+          <img
+            src={image}
+            alt={productName}
+            className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+          />
+        </div>
+      </Link>
+
+      {/* Card Body */}
+      <div className="p-4 sm:p-5 xl:p-6 flex flex-col gap-2.5 xl:gap-4 flex-1">
+        {/* Rating */}
+        {rating && (
+          <div className="flex items-center gap-1.5 xl:gap-2">
+            <FaStar className="text-yellow-400 text-sm xl:text-base" />
+            <span className="text-sm xl:text-base font-semibold text-gray-700">
+              {rating}
+            </span>
+            {reviewCount && (
+              <span className="text-xs xl:text-sm text-gray-400">({reviewCount})</span>
+            )}
+          </div>
+        )}
+
+        {/* Color Swatches Row */}
+        {colors.length > 0 && (
+          <div className="flex items-center gap-2">
+            {/* Prev Arrow */}
+            <button
+              onClick={prevColor}
+              className="w-5 h-5 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 transition"
+              aria-label="Previous color"
+            >
+              <ChevronLeft size={11} />
+            </button>
+
+            {/* Swatches */}
+            <div className="flex gap-1.5 xl:gap-2">
+              {colors.slice(0, 4).map((color, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setColorIndex(idx)}
+                  title={color.label}
+                  className={`w-6 h-6 xl:w-8 xl:h-8 rounded-full border-2 transition-all duration-150 ${
+                    colorIndex === idx
+                      ? "border-gray-700 scale-110"
+                      : "border-transparent"
+                  }`}
+                  style={{ backgroundColor: color.hex || color }}
+                />
+              ))}
+            </div>
+
+            {/* Next Arrow */}
+            <button
+              onClick={nextColor}
+              className="w-5 h-5 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 transition"
+              aria-label="Next color"
+            >
+              <ChevronRight size={11} />
+            </button>
+          </div>
+        )}
+
+        {/* Product Name */}
+        <Link to={`/product/${productId}`}>
+          <p className="text-sm xl:text-base 2xl:text-lg text-green-700 font-medium leading-tight line-clamp-1 hover:underline underline-offset-4">
+            {productName}
+          </p>
+        </Link>
+
+        {/* Price Row */}
+        <div className="flex items-baseline gap-2 xl:gap-3 flex-wrap">
+          <span className="text-base xl:text-lg 2xl:text-xl font-bold text-gray-800">
+            ₹{Number(displayPrice).toLocaleString("en-IN")}
+          </span>
+          {specialPrice && price && (
+            <>
+              <span className="text-sm xl:text-base text-gray-400 line-through">
+                ₹{Number(price).toLocaleString("en-IN")}
+              </span>
+              {discountPct && (
+                <span className="text-sm xl:text-base text-green-600 font-semibold">
+                  {discountPct}% Off
+                </span>
+              )}
+            </>
+          )}
+        </div>
+
+        {/* Add To Cart */}
+        <button
+          onClick={addToCartHandler}
+          disabled={!isAvailable}
+          className={`mt-auto w-full flex items-center justify-center gap-2 py-2.5 xl:py-4 rounded-lg text-sm xl:text-base 2xl:text-lg font-semibold transition-colors duration-200 ${
+            isAvailable
+              ? "bg-gray-900 text-white hover:bg-gray-700"
+              : "bg-gray-200 text-gray-400 cursor-not-allowed"
+          }`}
+        >
+          <FaShoppingCart className="text-base xl:text-lg 2xl:text-xl" />
+          {isAvailable ? "Add to Cart" : "Stock Out"}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default LaunchCard;
