@@ -43,7 +43,7 @@ const Banner = () => {
     dots: true,
     infinite: true,
     autoplay: !isPaused,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 30000,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,

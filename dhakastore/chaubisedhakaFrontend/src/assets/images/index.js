@@ -5,9 +5,9 @@ import spfFour from "./products/offer4.jpg";
 
 
 import bannerImgOne from "./banner/bannerImgOne.jpg";
-import bannerImgTwo from "./banner/bannerImageTwo.jpg";
+import bannerImgTwo from "./banner/bannerImgTwo.jpg";
 import bannerImgThree from "./banner/bannerImgThree.jpg";
-import bannerImgFour from "./banner/banneImgFour.jpg";
+import bannerImgFour from "./banner/bannerImgFour.jpg";
 import bannerImgFive from "./banner/bannerImgFive.jpg";
 
 export {
