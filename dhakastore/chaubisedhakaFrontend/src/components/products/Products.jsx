@@ -9,6 +9,9 @@ import Loader from "../shared/Loader";
 
 import ProductCard from "../shared/ProductCard";
 import PaginationForProduct from "../shared/PaginationForProducts";
+import ProductSidebar from "./ProductSidebar";
+import Image from "../designLayouts/Image";
+import { bannerImgOne, bannerImgTwo } from "../../assets/images";
 
 const Products = () => {
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
@@ -25,31 +28,62 @@ const Products = () => {
   }, [dispatch]);
 
   return (
-    <div className="lg:px-14 sm:px-8 px-4 py-14 2xl:w-[90%] 2xl:mx-auto">
-      <Filter categories={categories ? categories : []} />
-      {isLoading ? (
-        <Loader />
-      ) : errorMessage ? (
-        <div className="flex justify-center items-center h-50">
-          <FaExclamationTriangle className="text-slate-800 text-3xl mr-2" />
-          <span className="text-slate-800 text-l font-medium">
-            {errorMessage}
-          </span>
-        </div>
-      ) : (
-        <div className="min-h-[700]">
-          <div className="pb-6 pt-14 grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-y-6 gap-x-6">
-            {products &&
-              products.map((item, i) => <ProductCard key={i} {...item} />)}
+    <div className="max-w-[1600px] mx-auto lg:px-14 sm:px-8 px-4 py-14 flex flex-col lg:flex-row gap-10">
+      {/* Sidebar Filter */}
+      <ProductSidebar />
+
+      <div className="flex-1">
+        <Filter categories={categories ? categories : []} />
+        {isLoading ? (
+          <Loader />
+        ) : errorMessage ? (
+          <div className="flex justify-center items-center h-50">
+            <FaExclamationTriangle className="text-slate-800 text-3xl mr-2" />
+            <span className="text-slate-800 text-l font-medium">
+              {errorMessage}
+            </span>
           </div>
-          <div className="flex justify-center pt-10">
-            <PaginationForProduct 
-            numberOfPage={pagination?.totalPages}
-            totalProducts={pagination?.totalElements}
-             />
+        ) : (
+          <div className="min-h-[700]">
+            <div className="pb-6 pt-10 grid 2xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-2 gap-y-10 gap-x-8">
+              {products &&
+                products.map((item, i) => (
+                  <React.Fragment key={item.productId || i}>
+                    {/* Insert Photo Section 1 after 4th product */}
+                    {i === 4 && (
+                      <div className="col-span-full h-[400px] rounded-3xl overflow-hidden relative group cursor-pointer mb-6">
+                        <Image imgSrc={bannerImgOne} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-10">
+                          <h2 className="text-white text-4xl font-black uppercase tracking-tighter">New Arrivals</h2>
+                          <p className="text-white/80 font-medium">Explore the latest in fashion</p>
+                        </div>
+                      </div>
+                    )}
+                    
+                    <ProductCard {...item} />
+
+                    {/* Insert Photo Section 2 after 8th product */}
+                    {i === 8 && (
+                      <div className="col-span-full lg:col-span-2 h-[400px] rounded-3xl overflow-hidden relative group cursor-pointer my-6">
+                        <Image imgSrc={bannerImgTwo} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex flex-col justify-center p-10">
+                          <h2 className="text-white text-4xl font-black uppercase tracking-tighter max-w-md">Collections | Exclusive</h2>
+                          <button className="bg-white text-black px-6 py-2.5 rounded-full font-bold w-fit mt-4">Discover More</button>
+                        </div>
+                      </div>
+                    )}
+                  </React.Fragment>
+                ))}
+            </div>
+            <div className="flex justify-center pt-10">
+              <PaginationForProduct 
+                numberOfPage={pagination?.totalPages}
+                totalProducts={pagination?.totalElements}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

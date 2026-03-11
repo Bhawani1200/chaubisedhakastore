@@ -126,12 +126,12 @@ const Navigation = () => {
 
           {/* Account */}
           {user ? (
-            <div className="hidden sm:flex flex-col items-center justify-center cursor-pointer text-[#111] hover:text-gray-600 transition-colors group">
+            <Link to="/login" className="hidden sm:flex flex-col items-center justify-center cursor-pointer text-[#111] hover:text-gray-600 transition-colors group">
               <FiUser className="text-2xl xl:text-[28px] group-hover:scale-110 transition-transform" />
               <span className="text-[11px] xl:text-xs mt-1.5 font-semibold tracking-wider uppercase">
                 {user?.firstName || user?.name || "PROFILE"}
               </span>
-            </div>
+            </Link>
           ) : (
             <Link to="/login" className="hidden sm:flex flex-col items-center justify-center cursor-pointer text-[#111] hover:text-gray-600 transition-colors group">
               <FiUser className="text-2xl xl:text-[28px] group-hover:scale-110 transition-transform" />
@@ -175,17 +175,26 @@ const Navigation = () => {
 
           <div className="mt-4 bg-gray-50 p-4 border-t border-gray-100 grid grid-cols-2 gap-4">
                {user ? (
-                 <span className="text-base font-medium text-gray-700 flex items-center justify-center gap-2 border border-gray-200 py-2.5 rounded-md bg-white">
+                 <Link to="/login" 
+                   onClick={() => setMobileMenuOpen(false)}
+                   className="text-base font-medium text-gray-700 flex items-center justify-center gap-2 border border-gray-200 py-2.5 rounded-md bg-white"
+                 >
                    <FiUser className="text-lg" /> {user?.firstName || user?.name || "Profile"}
-                 </span>
+                 </Link>
                ) : (
-                 <Link to="/login" className="text-base font-medium text-gray-700 flex items-center justify-center gap-2 border border-gray-200 py-2.5 rounded-md bg-white">
+                 <Link to="/login" 
+                   onClick={() => setMobileMenuOpen(false)}
+                   className="text-base font-medium text-gray-700 flex items-center justify-center gap-2 border border-gray-200 py-2.5 rounded-md bg-white"
+                 >
                    <FiUser className="text-lg" /> Account
                  </Link>
                )}
-               <span className="text-base font-medium text-gray-700 flex items-center justify-center gap-2 border border-gray-200 py-2.5 rounded-md bg-white">
+               <Link to="/stores" 
+                 onClick={() => setMobileMenuOpen(false)}
+                 className="text-base font-medium text-gray-700 flex items-center justify-center gap-2 border border-gray-200 py-2.5 rounded-md bg-white"
+               >
                  <MdStorefront className="text-lg" /> Stores
-               </span>
+               </Link>
           </div>
         </div>
       )}
