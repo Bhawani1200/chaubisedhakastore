@@ -21,8 +21,8 @@ const ProductsLayout = () => {
   return (
     <div className="w-full bg-white font-sans">
       <div className="mt-5 mx-auto border-b border-gray-200" />
-      <div className="max-w-[1600px] mx-auto border-b border-gray-200">
-        <div className="border-t border-gray-200 px-4 sm:px-8 md:px-12 lg:px-16 py-10 lg:py-14">
+      <div className="max-w-full mx-auto border-b border-gray-200">
+        <div className="border-t border-gray-200 px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
           {/* Icons Row: Breadcrumb placed just above the heading */}
           <div className="flex items-center text-gray-400 text-[14px] mb-6">
             <Home

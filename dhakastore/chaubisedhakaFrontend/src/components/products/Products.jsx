@@ -12,12 +12,14 @@ import PaginationForProduct from "../shared/PaginationForProducts";
 import ProductSidebar from "./ProductSidebar";
 import Image from "../designLayouts/Image";
 import { bannerImgOne, bannerImgTwo } from "../../assets/images";
+import ProductsLayout from "./ProductsLayout";
+
 
 const Products = () => {
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
 
   const { products, categories, pagination } = useSelector(
-    (state) => state.products
+    (state) => state.products,
   );
 
   const dispatch = useDispatch();
@@ -28,7 +30,9 @@ const Products = () => {
   }, [dispatch]);
 
   return (
-    <div className="max-w-[1600px] mx-auto lg:px-14 sm:px-8 px-4 py-14 flex flex-col lg:flex-row gap-10">
+    <>
+      <ProductsLayout />
+      <div className="max-w-[1600px] mx-auto lg:px-14 sm:px-8 px-4 py-14 flex flex-col lg:flex-row gap-10">
       {/* Sidebar Filter */}
       <ProductSidebar />
 
@@ -52,23 +56,37 @@ const Products = () => {
                     {/* Insert Photo Section 1 after 4th product */}
                     {i === 4 && (
                       <div className="col-span-full h-[400px] rounded-3xl overflow-hidden relative group cursor-pointer mb-6">
-                        <Image imgSrc={bannerImgOne} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <Image
+                          imgSrc={bannerImgOne}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-10">
-                          <h2 className="text-white text-4xl font-black uppercase tracking-tighter">New Arrivals</h2>
-                          <p className="text-white/80 font-medium">Explore the latest in fashion</p>
+                          <h2 className="text-white text-4xl font-black uppercase tracking-tighter">
+                            New Arrivals
+                          </h2>
+                          <p className="text-white/80 font-medium">
+                            Explore the latest in fashion
+                          </p>
                         </div>
                       </div>
                     )}
-                    
+
                     <ProductCard {...item} />
 
                     {/* Insert Photo Section 2 after 8th product */}
                     {i === 8 && (
                       <div className="col-span-full lg:col-span-2 h-[400px] rounded-3xl overflow-hidden relative group cursor-pointer my-6">
-                        <Image imgSrc={bannerImgTwo} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <Image
+                          imgSrc={bannerImgTwo}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
                         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex flex-col justify-center p-10">
-                          <h2 className="text-white text-4xl font-black uppercase tracking-tighter max-w-md">Collections | Exclusive</h2>
-                          <button className="bg-white text-black px-6 py-2.5 rounded-full font-bold w-fit mt-4">Discover More</button>
+                          <h2 className="text-white text-4xl font-black uppercase tracking-tighter max-w-md">
+                            Collections | Exclusive
+                          </h2>
+                          <button className="bg-white text-black px-6 py-2.5 rounded-full font-bold w-fit mt-4">
+                            Discover More
+                          </button>
                         </div>
                       </div>
                     )}
@@ -76,7 +94,7 @@ const Products = () => {
                 ))}
             </div>
             <div className="flex justify-center pt-10">
-              <PaginationForProduct 
+              <PaginationForProduct
                 numberOfPage={pagination?.totalPages}
                 totalProducts={pagination?.totalElements}
               />
@@ -85,6 +103,7 @@ const Products = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 
