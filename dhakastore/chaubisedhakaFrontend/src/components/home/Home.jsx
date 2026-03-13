@@ -1,16 +1,21 @@
 import React from "react";
 import Banner from "../Banner/Banner";
-import NewLaunches from "./NewLaunches";
+
 import ProductsLayout from "../products/ProductsLayout";
 import ProductSidebar from "../products/ProductSidebar";
+import Features from "../Info/Features";
+import CategoryShowcase from "../Category/CategoryShowcase";
+import NewLaunches from "../Category/NewLaunches";
 
 const Home = () => {
   return (
     <div className="w-full mx-auto">
       <Banner />
+      <CategoryShowcase />
       <NewLaunches />
       <ProductsLayout />
       <ProductSidebar />
+      <Features />
     </div>
   );
 };
