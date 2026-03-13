@@ -1,11 +1,11 @@
 import React from "react";
 import Banner from "../Banner/Banner";
-
 import ProductsLayout from "../products/ProductsLayout";
 import ProductSidebar from "../products/ProductSidebar";
 import Features from "../Info/Features";
 import CategoryShowcase from "../Category/CategoryShowcase";
 import NewLaunches from "../Category/NewLaunches";
+import Offer from "../Info/Offer";
 
 const Home = () => {
   return (
@@ -16,6 +16,7 @@ const Home = () => {
       <ProductsLayout />
       <ProductSidebar />
       <Features />
+      <Offer />
     </div>
   );
 };

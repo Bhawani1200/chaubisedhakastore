@@ -1,5 +1,5 @@
-import React from "react";
-import { ChevronRight } from "lucide-react";
+import React, { useRef } from "react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const CATEGORIES = [
@@ -46,6 +46,22 @@ const CATEGORIES = [
 ];
 
 const CategoryShowcase = () => {
+  const scrollRef = useRef(null);
+
+  const scroll = (dir) => {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+
+    // Get the first visible card to determine scroll amount
+    const firstCard = container.querySelector("[data-category-card]");
+    if (firstCard) {
+      const cardWidth = firstCard.offsetWidth;
+      const gap = parseInt(window.getComputedStyle(container).gap) || 24;
+      const scrollAmount = cardWidth + gap;
+      container.scrollBy({ left: dir * scrollAmount, behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="w-full bg-white py-10 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-12 xl:px-16">
       <div className="w-full">
@@ -60,57 +76,118 @@ const CategoryShowcase = () => {
             </p>
           </div>
 
-          <Link
-            to="/shop"
-            className="inline-flex items-center gap-1 text-sm sm:text-base font-semibold text-indigo-600 hover:text-indigo-700"
-          >
-            View All
-            <ChevronRight size={18} />
-          </Link>
+          <div className="flex items-center gap-4">
+            {/* Scroll arrows — show when more than 4 cards */}
+            {CATEGORIES.length > 4 && (
+              <div className="hidden md:flex items-center gap-2">
+                <button
+                  onClick={() => scroll(-1)}
+                  aria-label="Previous categories"
+                  className="w-10 h-10 rounded-full border border-gray-300 bg-white flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:border-gray-500 transition shadow-sm"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  onClick={() => scroll(1)}
+                  aria-label="Next categories"
+                  className="w-10 h-10 rounded-full border border-gray-300 bg-white flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:border-gray-500 transition shadow-sm"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            )}
+            <Link
+              to="/shop"
+              className="inline-flex items-center gap-1 text-sm sm:text-base font-semibold text-indigo-600 hover:text-indigo-700"
+            >
+              View All
+              <ChevronRight size={18} />
+            </Link>
+          </div>
         </div>
 
-        {/* Category Cards */}
-        <div className="flex gap-4 md:gap-6 overflow-x-auto pb-3 md:pb-0 md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:overflow-visible">
-          {CATEGORIES.map((category) => (
-            <Link
-              key={category.key}
-              to={`/shop?category=${category.key}`}
-              className="group relative flex-1 min-w-[70%] xs:min-w-[55%] sm:min-w-[45%] md:min-w-0"
-            >
-              <div
-                className={`relative h-72 sm:h-80 md:h-[22rem] lg:h-[24rem] rounded-[30px] overflow-hidden shadow-lg bg-gradient-to-br ${category.bg}`}
-              >
-                {/* Category image */}
-                <img
-                  src={category.image}
-                  alt={category.label}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                {/* Dark gradient overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
+        {/* Category Cards — 4 visible, scroll for 5th+ */}
+        <div className="relative group/carousel">
+          {/* Side Navigation Arrows - Visible on hover or touch devices */}
+          <button
+            onClick={() => scroll(-1)}
+            aria-label="Previous categories"
+            className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-xl hover:bg-white/20 transition-all opacity-0 group-hover/carousel:opacity-100 md:opacity-0 md:group-hover/carousel:opacity-100 hidden sm:flex"
+          >
+            <ChevronLeft size={24} />
+          </button>
 
-                {/* Content */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-7 md:p-8">
-                  <p className="text-[11px] tracking-[0.28em] text-white/80 uppercase mb-1">
-                    CATEGORY
-                  </p>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-[0.16em] mb-2">
-                    {category.label}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-white/80 max-w-xs mb-4">
-                    {category.description}
-                  </p>
-                  <div className="inline-flex items-center text-[11px] sm:text-xs font-semibold tracking-[0.18em] uppercase text-white/90">
-                    Explore Now
-                    <ChevronRight
-                      size={16}
-                      className="ml-1 transition-transform group-hover:translate-x-0.5"
-                    />
+          <button
+            onClick={() => scroll(1)}
+            aria-label="Next categories"
+            className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-xl hover:bg-white/20 transition-all opacity-0 group-hover/carousel:opacity-100 md:opacity-0 md:group-hover/carousel:opacity-100 hidden sm:flex"
+          >
+            <ChevronRight size={24} />
+          </button>
+
+          {/* mobile view arrows - always visible on very small screens */}
+          <div className="flex sm:hidden absolute inset-x-0 top-1/2 -translate-y-1/2 justify-between px-2 pointer-events-none z-10">
+            <button
+              onClick={() => scroll(-1)}
+              className="w-10 h-10 rounded-full bg-black/30 backdrop-blur-md flex items-center justify-center text-white pointer-events-auto"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={() => scroll(1)}
+              className="w-10 h-10 rounded-full bg-black/30 backdrop-blur-md flex items-center justify-center text-white pointer-events-auto"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          <div
+            ref={scrollRef}
+            className="flex gap-4 md:gap-6 overflow-x-auto overflow-y-hidden pb-3 scroll-smooth snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {CATEGORIES.map((category) => (
+              <Link
+                key={category.key}
+                to={`/shop?category=${category.key}`}
+                data-category-card
+                className="group relative flex-shrink-0 min-w-full sm:min-w-[45%] md:min-w-[calc(25%-18px)] md:w-[calc(25%-18px)] snap-start"
+              >
+                <div
+                  className={`relative h-80 sm:h-80 md:h-[22rem] lg:h-[24rem] rounded-[30px] overflow-hidden shadow-lg bg-gradient-to-br ${category.bg}`}
+                >
+                  {/* Category image */}
+                  <img
+                    src={category.image}
+                    alt={category.label}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  {/* Dark gradient overlay for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
+
+                  {/* Content */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-7 md:p-8">
+                    <p className="text-[11px] tracking-[0.28em] text-white/80 uppercase mb-1">
+                      CATEGORY
+                    </p>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-[0.16em] mb-2">
+                      {category.label}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-white/80 max-w-xs mb-4">
+                      {category.description}
+                    </p>
+                    <div className="inline-flex items-center text-[11px] sm:text-xs font-semibold tracking-[0.18em] uppercase text-white/90">
+                      Explore Now
+                      <ChevronRight
+                        size={16}
+                        className="ml-1 transition-transform group-hover:translate-x-0.5"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -118,4 +195,3 @@ const CategoryShowcase = () => {
 };
 
 export default CategoryShowcase;
-
