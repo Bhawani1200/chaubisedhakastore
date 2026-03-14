@@ -6,6 +6,7 @@ import Features from "../Info/Features";
 import CategoryShowcase from "../Category/CategoryShowcase";
 import NewLaunches from "../Category/NewLaunches";
 import Offer from "../Info/Offer";
+import Shop from "../shopInfo/Shop";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <ProductSidebar />
       <Features />
       <Offer />
+      <Shop />
     </div>
   );
 };

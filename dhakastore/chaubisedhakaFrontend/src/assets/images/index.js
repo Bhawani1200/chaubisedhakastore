@@ -9,6 +9,7 @@ import bannerImgTwo from "./banner/bannerImgTwo.jpg";
 import bannerImgThree from "./banner/bannerImgThree.jpg";
 import bannerImgFour from "./banner/bannerImgFour.jpg";
 import bannerImgFive from "./banner/bannerImgFive.jpg";
+import store from "./banner/store.jpg";
 
 export {
   // Special Offers
@@ -22,5 +23,6 @@ export {
   bannerImgTwo,
   bannerImgThree,
   bannerImgFour,
-  bannerImgFive
+  bannerImgFive,
+  store
 };

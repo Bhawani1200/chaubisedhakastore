@@ -26,15 +26,15 @@ const features = [
 
 const Features = () => {
   return (
-    <section className="w-full bg-white py-12 md:py-16 px-4 sm:px-6 lg:px-12 xl:px-16">
-      <div className="max-w-[1600px] mx-auto">
+    <section className="w-full bg-white py-12 md:py-16 px-4 sm:px-8 lg:px-12">
+      <div className="max-w-[1800px] mx-auto">
         {/* Section Header */}
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-10 md:mb-12 tracking-tight">
           We Supported By
         </h2>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-12">
           {features.map((feature) => {
             const IconComponent = feature.icon;
             return (

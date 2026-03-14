@@ -1,6 +1,9 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { store } from "../../assets/images";
+
+
 
 const Offer = () => {
   const scrollRef = useRef(null);
@@ -20,8 +23,8 @@ const Offer = () => {
   };
 
   return (
-    <section className="w-full bg-white py-12 px-4 sm:px-6 lg:px-12 xl:px-16">
-      <div className="max-w-[1600px] mx-auto relative group/carousel">
+    <section className="w-full bg-white py-12 px-4 sm:px-8 lg:px-12">
+      <div className="max-w-[1800px] mx-auto relative group/carousel">
         {/* Side Navigation Arrows - Visible on screens smaller than lg */}
         <button
           onClick={() => scroll(-1)}
@@ -101,7 +104,7 @@ const Offer = () => {
             </div>
             <div className="absolute right-0 top-0 bottom-0 w-1/2 overflow-hidden pointer-events-none">
               <img
-                src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800&q=80"
+                src={store}
                 alt="Colorful Lifestyle Sneaker"
                 className="w-full h-full object-contain scale-110 -rotate-12 group-hover:rotate-0 transition-transform duration-700"
               />
