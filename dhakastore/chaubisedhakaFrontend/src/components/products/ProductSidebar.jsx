@@ -30,6 +30,19 @@ const FilterSection = ({ title, children, defaultOpen = false }) => {
 };
 
 const ProductSidebar = () => {
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(4499);
+
+  const handleMinChange = (e) => {
+    const value = Math.min(Number(e.target.value), maxPrice - 1);
+    setMinPrice(value);
+  };
+
+  const handleMaxChange = (e) => {
+    const value = Math.max(Number(e.target.value), minPrice + 1);
+    setMaxPrice(value);
+  };
+
   return (
     <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-10 py-10">
       {/* Filter Sidebar */}
@@ -53,8 +66,31 @@ const ProductSidebar = () => {
           </div>
         </FilterSection>
 
-        <FilterSection title="Product type | Category"></FilterSection>
-        <FilterSection title="Collections | Usage"></FilterSection>
+        <FilterSection title="Product type | Category" defaultOpen={true}>
+          <div className="space-y-3">
+            {[
+              "Sneakers",
+              "Running Shoes",
+              "Basketball",
+              "Lifestyle",
+              "Training & Gym",
+            ].map((opt) => (
+              <label
+                key={opt}
+                className="flex items-center gap-3 cursor-pointer group"
+              >
+                <input
+                  type="checkbox"
+                  className="w-5 h-5 rounded border-gray-300 text-black focus:ring-black"
+                />
+                <span className="text-lg text-gray-700 group-hover:text-black font-medium transition-colors">
+                  {opt}
+                </span>
+              </label>
+            ))}
+          </div>
+        </FilterSection>
+        {/* <FilterSection title="Collections | Usage"></FilterSection> */}
 
         <FilterSection title="Size">
           <div className="grid grid-cols-4 gap-2">
@@ -83,9 +119,107 @@ const ProductSidebar = () => {
           </div>
         </FilterSection>
 
-        <FilterSection title="Price"></FilterSection>
-        <FilterSection title="Discounts"></FilterSection>
-        <FilterSection title="Availability"></FilterSection>
+        <FilterSection title="Price" defaultOpen={true}>
+          <div className="space-y-4">
+            <div className="relative h-1 bg-gray-200 rounded-full mt-6 mb-8 mx-2">
+              <div
+                className="absolute h-full bg-black rounded-full"
+                style={{
+                  left: `${(minPrice / 4499) * 100}%`,
+                  right: `${100 - (maxPrice / 4499) * 100}%`,
+                }}
+              />
+              <input
+                type="range"
+                min="0"
+                max="4499"
+                value={minPrice}
+                onChange={handleMinChange}
+                className="absolute inset-0 w-full h-1 bg-transparent appearance-none pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-black [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-md [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:bg-black [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white"
+              />
+              <input
+                type="range"
+                min="0"
+                max="4499"
+                value={maxPrice}
+                onChange={handleMaxChange}
+                className="absolute inset-0 w-full h-1 bg-transparent appearance-none pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-black [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-md [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:bg-black [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white"
+              />
+            </div>
+            <div className="flex items-center justify-between gap-3">
+              <div className="relative flex-1">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-medium whitespace-nowrap">
+                  ₹
+                </span>
+                <input
+                  type="number"
+                  value={minPrice}
+                  onChange={handleMinChange}
+                  className="w-full pl-8 pr-3 py-3 border border-gray-300 rounded-2xl text-base focus:ring-1 focus:ring-black outline-none transition-all"
+                />
+              </div>
+              <span className="text-gray-400 font-medium text-sm px-1">to</span>
+              <div className="relative flex-1">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-medium whitespace-nowrap">
+                  ₹
+                </span>
+                <input
+                  type="number"
+                  value={maxPrice}
+                  onChange={handleMaxChange}
+                  className="w-full pl-8 pr-3 py-3 border border-gray-300 rounded-2xl text-base focus:ring-1 focus:ring-black outline-none transition-all"
+                />
+              </div>
+            </div>
+          </div>
+        </FilterSection>
+
+        <FilterSection title="Discounts" defaultOpen={true}>
+          <div className="space-y-5">
+            {[
+              { label: "30% and above", count: 402 },
+              { label: "40% and above", count: 314 },
+              { label: "50% and above", count: 206 },
+              { label: "60% and above", count: 97 },
+              { label: "70% and above", count: 30 },
+            ].map((d) => (
+              <label
+                key={d.label}
+                className="flex items-center justify-between cursor-pointer group"
+              >
+                <div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    className="w-5 h-5 rounded border-gray-300 text-black focus:ring-black cursor-pointer"
+                  />
+                  <span className="text-base text-gray-700 font-medium group-hover:text-black transition-colors">
+                    {d.label}
+                  </span>
+                </div>
+                <span className="text-sm text-gray-400 font-medium">
+                  ({d.count})
+                </span>
+              </label>
+            ))}
+          </div>
+        </FilterSection>
+
+        <FilterSection title="Availability" defaultOpen={true}>
+          <div className="py-2">
+            <label className="flex items-center justify-between cursor-pointer group">
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  className="w-5 h-5 rounded border-gray-300 text-black focus:ring-black cursor-pointer"
+                />
+                <span className="text-base text-gray-700 font-medium group-hover:text-black transition-colors">
+                  In stock only
+                </span>
+              </div>
+              <span className="text-sm text-gray-400 font-medium">(542)</span>
+            </label>
+          </div>
+        </FilterSection>
       </div>
 
       {/* Product Image Grid */}
